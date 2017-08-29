@@ -57,7 +57,7 @@ def check_gauntlet():
             break
 
     # custom sort dictionary values into a list
-    keyorder = ['Gaius', 'Leo', 'Robin', 'Corrin']
+    keyorder = ['Gaius', 'Frederick', 'Xander' ,'Leo', 'Robin', 'Tiki', 'Corrin', 'Elise']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
 
     # tweet if unit in battle is at (severe?) disadvantage
@@ -69,18 +69,19 @@ def check_gauntlet():
         a_score = int(a[1].replace(',', ''))
         b_score = int(b[1].replace(',', ''))
 
-        # TODO: add disadvantage multiplier to tweet
+        # TODO: calculate disadvantage multiplier variables
         current_hour = "???"
-        multiplier = "???"
-        disadvantage = b_score - a_score
-        disadvantage_abs = abs(disadvantage)
+        multiplier = 3.7 # TODO: compute based on current hour of round
+        disadvantage_a = float(b_score) / float(a_score)
+        disadvantage_b = float(a_score) / float(b_score)
+        disadvantage_abs = format (abs(b_score - a_score), ',d') #absolute difference formatted with commas (cuz MERICA)
 
-        # compare unit scores, then tweet if multiplier is active for losing team
-        if (disadvantage > 0): # team a is losing
-            tweet = "#Team%s is losing by %d with a %s multiplier up! Come show some support!" % (a_name, disadvantage_abs, multiplier)
+        # compare unit scores, then tweet if multiplier is active for losing team (other team has 10% more flags)
+        if (disadvantage_a > 1.10): # team a is losing
+            tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
             print(tweet)
-        elif (disadvantage < 0): # team_b is losing
-            tweet = "#Team%s is losing by %d with a %s multiplier up! Come show some support!" % (b_name, disadvantage_abs, multiplier)
+        elif (disadvantage_b > 1.10): # team_b is losing
+            tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
             print(tweet)
 
     # close mechanize browser
