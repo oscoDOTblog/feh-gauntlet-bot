@@ -1,0 +1,11 @@
+# virtualenv 
+bin/
+include/
+lib/
+local/
+
+# Twitter API Keys
+secrets.py
+secrets.pyc
+
+
