@@ -38,7 +38,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_1()
+    round_vars = round_1_vars()
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     count = len(unit_dict)
@@ -62,6 +62,7 @@ def check_gauntlet():
     # custom sort dictionary values into a list
     keyorder = ['Gaius', 'Frederick', 'Xander' ,'Leo', 'Robin', 'Tiki', 'Corrin', 'Elise']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
+    print(unit_scores)
 
     # pairwise compare units in battle to detect disadvantages
     for (a, b) in pairwise_compare(unit_scores):
@@ -84,17 +85,30 @@ def check_gauntlet():
         multiplier = (current_hour * 0.1) + 3.1
 
         # variables for checking if multiplier is up for either team
-        disadvantage_a = float(b_score) / float(a_score)
-        disadvantage_b = float(a_score) / float(b_score)
+        disadvantage_a = float(a_score) / float(b_score)
+        disadvantage_b = float(b_score) / float(a_score)
         disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
 
-        # tweet if multiplier is active for losing team (other team has 10% more flags)
-        if (disadvantage_a > 1.10): # team a is losing
-            tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
-            print(tweet)
-        elif (disadvantage_b > 1.10): # team_b is losing
-            tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
-            print(tweet)
+        # Twitter authentication
+        auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
+        auth.set_access_token(A_TOKEN, A_TOKEN_SECRET)
+        api = tweepy.API(auth)
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+        # Tweet if multiplier is active for losing team (other team has 10% more flags)
+        try:
+            if (disadvantage_a > 1.10): # Team A is losing
+                tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
+                api.update_status(tweet)
+            elif (disadvantage_b > 1.10): # team_b is losing
+                tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
+                api.update_status(tweet)
+            print("Try success!")
+        except:
+            # TODO: Implement logging on the event of failture
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print("Tweet failed at %s" % timestamp)
+
 
     # close mechanize browser
     br.close()
