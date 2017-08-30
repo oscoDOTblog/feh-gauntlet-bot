@@ -60,7 +60,7 @@ def check_gauntlet():
             break
 
     # custom sort dictionary values into a list
-    keyorder = ['Chrom', 'Hector', 'Roy' ,'Ike', 'Camilla', 'Tharja', 'Lucina', 'Lyn']
+    keyorder = ['Ike', 'Roy', 'Hector' ,'Chrom', 'Lyn', 'Lucina', 'Tharja', 'Camilla']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(unit_scores)
@@ -98,10 +98,10 @@ def check_gauntlet():
         # Tweet if multiplier is active for losing team (other team has 10% more flags)
         try:
             if (disadvantage_a > 1.10): # Team A is losing
-                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
+                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars #CYL" % (b_name, disadvantage_abs, multiplier)
                 api.update_status(tweet)
             elif (disadvantage_b > 1.10): # team_b is losing
-                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
+                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars #CYL " % (a_name, disadvantage_abs, multiplier)
                 api.update_status(tweet)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
         except:
