@@ -150,6 +150,6 @@ def pairwise_compare(iterable):
 # It's showtime
 if __name__ == "__main__":
     #Check scores every hour
-    #while True:
-    check_gauntlet()
-    #    time.sleep(1800)
+    while True:
+        check_gauntlet()
+        time.sleep(60*60)
