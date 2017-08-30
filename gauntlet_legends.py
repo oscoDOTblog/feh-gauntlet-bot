@@ -15,7 +15,7 @@ def check_gauntlet():
 
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
-    br.open('https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/5')
+    br.open('https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/6')
 
     # select locale form
     br.select_form(action="/voting_gauntlet/locale")
@@ -60,7 +60,7 @@ def check_gauntlet():
             break
 
     # custom sort dictionary values into a list
-    keyorder = ['Gaius', 'Frederick', 'Xander' ,'Leo', 'Robin', 'Tiki', 'Corrin', 'Elise']
+    keyorder = ['Chrom', 'Hector', 'Roy' ,'Ike', 'Camilla', 'Tharja', 'Lucina', 'Lyn']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(unit_scores)
@@ -98,10 +98,10 @@ def check_gauntlet():
         # Tweet if multiplier is active for losing team (other team has 10% more flags)
         try:
             if (disadvantage_a > 1.10): # Team A is losing
-                tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
+                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
                 api.update_status(tweet)
             elif (disadvantage_b > 1.10): # team_b is losing
-                tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
+                tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
                 api.update_status(tweet)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
         except:
@@ -118,20 +118,20 @@ def check_gauntlet():
     br.close()
 
 def round_1_vars():
-    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Gaius': False, 'Frederick': False, 'Xander': False, 'Leo': False, 'Robin': False, 'Tiki': False, 'Corrin': False, 'Elise': False}
+    round_start = datetime.strptime('Aug 31 2017 3:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Chrom': False, 'Hector': False, 'Roy': False, 'Ike': False, 'Camilla': False, 'Tharja': False, 'Lucina': False, 'Lyn': False}
     round_vars = [round_start, unit_dict]
     return round_vars
 
 def round_2_vars():
-    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Gaius': False, 'Leo': False, 'Robin': False, 'Corrin': False, }
+    round_start = datetime.strptime('Sept 2 2017 3:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Ike': False, 'Ike': False, 'Ike': False, 'Ike': False, }
     round_vars = [round_start, unit_dict]
     return round_vars
 
 def final_round_vars():
-    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Gaius': False, 'Corrin': False}
+    round_start = datetime.strptime('Sept 4 2017 3:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Ike': False, 'Ike': False}
     round_vars = [round_start, unit_dict]
     return round_vars
 
