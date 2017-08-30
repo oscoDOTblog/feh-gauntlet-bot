@@ -1,6 +1,7 @@
 """ By Oscar K. Sandoval (https://github.com/mtfalls/) """
 #!/usr/bin/env python
 import sys
+from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
@@ -37,7 +38,9 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    unit_dict = round_2()
+    round_vars = round_1()
+    round_start = round_vars[0]
+    unit_dict = round_vars[1]
     count = len(unit_dict)
 
     # get units' current score by interating through all p elements
@@ -60,8 +63,10 @@ def check_gauntlet():
     keyorder = ['Gaius', 'Frederick', 'Xander' ,'Leo', 'Robin', 'Tiki', 'Corrin', 'Elise']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
 
-    # tweet if unit in battle is at (severe?) disadvantage
+    # pairwise compare units in battle to detect disadvantages
     for (a, b) in pairwise_compare(unit_scores):
+
+        # obtain name of units battling
         a_name = a[0]
         b_name = b[0]
 
@@ -69,39 +74,52 @@ def check_gauntlet():
         a_score = int(a[1].replace(',', ''))
         b_score = int(b[1].replace(',', ''))
 
-        # TODO: calculate disadvantage multiplier variables
-        current_hour = "???"
-        multiplier = 3.7 # TODO: compute based on current hour of round
+        # calculate disadvantage multiplier based on hour of round
+        # divmod is a little complex so,
+        # 1) divide the total seconds from time_elapsed into hours (60*60)
+        # 2) divmod return a list with the quotient as [0] and remainder as [1]
+        time_now = datetime.now()
+        time_elapsed =  time_now - round_start
+        current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
+        multiplier = (current_hour * 0.1) + 3.1
+
+        # variables for checking if multiplier is up for either team
         disadvantage_a = float(b_score) / float(a_score)
         disadvantage_b = float(a_score) / float(b_score)
-        disadvantage_abs = format (abs(b_score - a_score), ',d') #absolute difference formatted with commas (cuz MERICA)
+        disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
 
-        # compare unit scores, then tweet if multiplier is active for losing team (other team has 10% more flags)
+        # tweet if multiplier is active for losing team (other team has 10% more flags)
         if (disadvantage_a > 1.10): # team a is losing
-            tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
+            tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL " % (a_name, disadvantage_abs, multiplier)
             print(tweet)
         elif (disadvantage_b > 1.10): # team_b is losing
-            tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
+            tweet = "TEST: #Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VotingGauntlet #CYL" % (b_name, disadvantage_abs, multiplier)
             print(tweet)
 
     # close mechanize browser
     br.close()
 
-def round_1():
-    print("pizza")
+def round_1_vars():
+    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Gaius': False, 'Frederick': False, 'Xander': False, 'Leo': False, 'Robin': False, 'Tiki': False, 'Corrin': False, 'Elise': False}
+    round_vars = [round_start, unit_dict]
+    return round_vars
 
-def round_2():
+def round_2_vars():
+    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Gaius': False, 'Leo': False, 'Robin': False, 'Corrin': False, }
-    return unit_dict
+    round_vars = [round_start, unit_dict]
+    return round_vars
 
-def final_round():
+def final_round_vars():
+    round_start = datetime.strptime('Aug 29 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Gaius': False, 'Corrin': False}
-    return unit_dict
+    round_vars = [round_start, unit_dict]
+    return round_vars
 
 def pairwise_list(iterable):
     it = iter(iterable)
     a = next(it, None)
-
     for b in it:
         yield (a, b)
         a = b
