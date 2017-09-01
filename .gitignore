@@ -8,4 +8,5 @@ local/
 secrets.py
 secrets.pyc
 
-
+# nohup
+nohup.out

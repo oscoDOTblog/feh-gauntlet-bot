@@ -1,6 +1,7 @@
 """ By Oscar K. Sandoval (https://github.com/mtfalls/) """
 #!/usr/bin/env python
 import sys
+import time
 from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
