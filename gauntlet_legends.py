@@ -3,6 +3,7 @@
 import sys
 import time
 from datetime import datetime
+import decimal
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
@@ -92,17 +93,19 @@ def check_gauntlet():
         multiplier = (current_hour * 0.1) + 3.1
 
         # variables for checking if multiplier is up for either team
-        disadvantage_a = float(a_score) / float(b_score)
-        disadvantage_b = float(b_score) / float(a_score)
+        disadvantage_a = float(truncate(float(a_score) / float(b_score), 2))
+        disadvantage_b = float(truncate(float(b_score) / float(a_score), 2))
         disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
 
         # Tweet if multiplier is active for losing team (other team has 10% more flags)
         try:
             if (disadvantage_a > 1.10): # Team A is losing
                 tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars #CYL" % (b_name, disadvantage_abs, multiplier)
+                #print(tweet)
                 api.update_status(tweet)
             elif (disadvantage_b > 1.10): # team_b is losing
                 tweet = "#Team%s is losing by %s flags with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars #CYL " % (a_name, disadvantage_abs, multiplier)
+                #print(tweet)
                 api.update_status(tweet)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
         except:
@@ -147,6 +150,15 @@ def pairwise_compare(iterable):
     it = iter(iterable)
     for x in it:
         yield (x, next(it))
+
+# copy-pasted from https://stackoverflow.com/a/783927
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+    i, p, d = s.partition('.')
+    return '.'.join([i, (d+'0'*n)[:n]])
 
 # It's showtime
 if __name__ == "__main__":
