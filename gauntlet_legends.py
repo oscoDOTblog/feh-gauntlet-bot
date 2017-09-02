@@ -128,13 +128,13 @@ def round_1_vars():
     return round_vars
 
 def round_2_vars():
-    round_start = datetime.strptime('Sept 2 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Sep 2 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Ike': False, 'Hector': False, 'Lyn': False, 'Camilla': False, }
     round_vars = [round_start, unit_dict]
     return round_vars
 
 def final_round_vars():
-    round_start = datetime.strptime('Sept 4 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Sep 4 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Ike': False, 'Ike': False}
     round_vars = [round_start, unit_dict]
     return round_vars
