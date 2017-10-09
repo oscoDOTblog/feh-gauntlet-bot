@@ -156,14 +156,14 @@ def round_1_vars():
 
 def round_2_vars():
     round_start = datetime.strptime('Oct 11 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Fae': False, 'Fae': False, 'Fae': False, 'Fae': False, }
+    unit_dict = {'Fae': False, 'Fae': False, 'Fae': False, 'Fae': False}
     round_name = 'Round 2'
     round_vars = [round_start, unit_dict, round_name]
     return round_vars
 
 def final_round_vars():
     round_start = datetime.strptime('Oct 13 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Fae': False, 'Fae': False
+    unit_dict = {'Fae': False, 'Fae': False}
     round_name = 'Final Round'
     round_vars = [round_start, unit_dict, round_name]
     return round_vars
