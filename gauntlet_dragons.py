@@ -73,7 +73,7 @@ def check_gauntlet():
                 unit_dict['YoungTiki'] = y_text
                 count -= 1
             # Adult Tiki
-            elif (not unit_dict['AdultTiki']):
+        elif (not unit_dict['AdultTiki']):
                 unit_dict['AdultTiki'] = y_text
                 count -= 1
         # Else check for other unit names
@@ -119,18 +119,20 @@ def check_gauntlet():
         multiplier = (current_hour * 0.1) + 3.1
 
         # variables for checking if multiplier is up for either team
-        disadvantage_a = float(truncate(float(a_score) / float(b_score), 2))
-        disadvantage_b = float(truncate(float(b_score) / float(a_score), 2))
-        disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
+        disadvantage_a = float(a_score) / float(b_score)
+        disadvantage_b = float(b_score) / float(a_score)
+        #disadvantage_a = float(truncate(float(a_score) / float(b_score), 2))
+        #disadvantage_b = float(truncate(float(b_score) / float(a_score), 2))
+        #disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
 
-        # Tweet if multiplier is active for losing team (other team has 10% more flags)
+        # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
-            if (disadvantage_a > 1.10): # Team A is losing
-                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars" % (round_name, current_hour, b_name, multiplier)
+            if (disadvantage_a > 1.03): # Team B is losing
+                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, b_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
-            elif (disadvantage_b > 1.10): # team_b is losing
-                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! Come show some support! #FEHeroes #VoteWars" % (round_name, current_hour, a_name, multiplier)
+            elif (disadvantage_b > 1.03): # Team A is losing
+                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, a_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
