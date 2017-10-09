@@ -55,31 +55,32 @@ def check_gauntlet():
         # 4) reduce value of count by 1
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         x_text = x.get_text()
+        y_text = y.get_text()
         # Check for Male Corrin, then Female Corrin
         if (x_text == 'Corrin'):
             # Male Corrin
             if (not unit_dict['MCorrin']):
-                unit_dict['MCorrin'] = y.get_text()
+                unit_dict['MCorrin'] = y_text
                 count -= 1
             # Female Corrin
             elif (not unit_dict['FCorrin']):
-                unit_dict['FCorrin'] = y.get_text()
+                unit_dict['FCorrin'] = y_text
                 count -= 1
         # Check for Young Tiki, then Adult Tiki
         elif (x_text == 'Tiki'):
             # Young Tiki
             if (not unit_dict['YoungTiki']):
-                unit_dict['YoungTiki'] = y.get_text()
+                unit_dict['YoungTiki'] = y_text
                 count -= 1
             # Adult Tiki
         elif (not unit_dict['AdultTiki']):
-                unit_dict['AdultTiki'] = y.get_text()
+                unit_dict['AdultTiki'] = y_text
                 count -= 1
         # Else check for other unit names
         else:
             for key in unit_dict:
                 if (x_text == key) and (not unit_dict[key]):
-                    unit_dict[key] = y.get_text()
+                    unit_dict[key] = y_text
                     count -= 1
 
         # stop searching for scores if all units are accounted for (when count is 0)
