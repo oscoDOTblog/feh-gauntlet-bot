@@ -40,7 +40,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_2_vars()
+    round_vars = round_1_vars()
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
