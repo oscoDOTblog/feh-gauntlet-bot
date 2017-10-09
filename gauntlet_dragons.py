@@ -73,7 +73,7 @@ def check_gauntlet():
                 unit_dict['YoungTiki'] = y_text
                 count -= 1
             # Adult Tiki
-        elif (not unit_dict['AdultTiki']):
+            elif (not unit_dict['AdultTiki']):
                 unit_dict['AdultTiki'] = y_text
                 count -= 1
         # Else check for other unit names
