@@ -4,9 +4,14 @@ include/
 lib/
 local/
 
+# Testing
+gauntlet_dragons_test.py
+
 # Twitter API Keys
 secrets.py
 secrets.pyc
+secrets_test.py
+secrets_test.pyc
 
 # nohup
 nohup.out
