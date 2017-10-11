@@ -127,11 +127,11 @@ def check_gauntlet():
 
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
-            if (disadvantage_a > 1.03): # Team B is losing
+            if (disadvantage_a > 1.01): # Team B is losing
                 tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, b_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
-            elif (disadvantage_b > 1.03): # Team A is losing
+            elif (disadvantage_b > 1.01): # Team A is losing
                 tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, a_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
