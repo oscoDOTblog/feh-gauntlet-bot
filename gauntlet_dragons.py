@@ -40,7 +40,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_1_vars()
+    round_vars = round_2_vars()
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
@@ -66,16 +66,10 @@ def check_gauntlet():
             elif (not unit_dict['FCorrin']):
                 unit_dict['FCorrin'] = y_text
                 count -= 1
-        # Check for Young Tiki, then Adult Tiki
-        elif (x_text == 'Tiki'):
-            # Young Tiki
-            if (not unit_dict['YoungTiki']):
-                unit_dict['YoungTiki'] = y_text
-                count -= 1
-            # Adult Tiki
-            elif (not unit_dict['AdultTiki']):
-                unit_dict['AdultTiki'] = y_text
-                count -= 1
+        # Check for Adult Tiki
+        elif ((x_text == 'Tiki') and (not unit_dict['AdultTiki'])):
+            unit_dict['AdultTiki'] = y_text
+            count -= 1
         # Else check for other unit names
         else:
             for key in unit_dict:
@@ -121,18 +115,15 @@ def check_gauntlet():
         # variables for checking if multiplier is up for either team
         disadvantage_a = float(a_score) / float(b_score)
         disadvantage_b = float(b_score) / float(a_score)
-        #disadvantage_a = float(truncate(float(a_score) / float(b_score), 2))
-        #disadvantage_b = float(truncate(float(b_score) / float(a_score), 2))
-        #disadvantage_abs = format (abs(b_score - a_score), ',d') # absolute difference formatted with commas (cuz 'MURICA)
 
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
             if (disadvantage_a > 1.01): # Team B is losing
-                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, b_name, multiplier)
+                tweet = "#FEHeroes #BoD %s Hour %d:\n\n#Team%s is losing with a %.1fx multiplier up!" % (round_name, current_hour, b_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
             elif (disadvantage_b > 1.01): # Team A is losing
-                tweet = "#BoD %s Hour %d: #Team%s is losing with a %.1fx multiplier up! \n #FEHeroes #VoteWars" % (round_name, current_hour, a_name, multiplier)
+                tweet = "#FEHeroes #BoD %s Hour %d:\n\n#Team%s is losing with a %.1fx multiplier up!" % (round_name, current_hour, a_name, multiplier)
                 #print(tweet)
                 api.update_status(tweet)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
@@ -158,7 +149,7 @@ def round_1_vars():
 
 def round_2_vars():
     round_start = datetime.strptime('Oct 11 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Fae': False, 'Fae': False, 'Fae': False, 'Fae': False}
+    unit_dict = {'MCorrin': False, 'Ninian': False, 'AdultTiki': False, 'FCorrin': False}
     round_name = 'Round 2'
     round_vars = [round_start, unit_dict, round_name]
     return round_vars
