@@ -40,7 +40,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_2_vars()
+    round_vars = final_round_vars()
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
@@ -58,18 +58,10 @@ def check_gauntlet():
         y_text = y.get_text()
         # Check for Male Corrin, then Female Corrin
         if (x_text == 'Corrin'):
-            # Male Corrin
-            if (not unit_dict['MCorrin']):
-                unit_dict['MCorrin'] = y_text
-                count -= 1
             # Female Corrin
-            elif (not unit_dict['FCorrin']):
+            if (not unit_dict['FCorrin']):
                 unit_dict['FCorrin'] = y_text
                 count -= 1
-        # Check for Adult Tiki
-        elif ((x_text == 'Tiki') and (not unit_dict['AdultTiki'])):
-            unit_dict['AdultTiki'] = y_text
-            count -= 1
         # Else check for other unit names
         else:
             for key in unit_dict:
@@ -156,7 +148,7 @@ def round_2_vars():
 
 def final_round_vars():
     round_start = datetime.strptime('Oct 13 2017 3:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Fae': False, 'Fae': False}
+    unit_dict = {'Ninian': False, 'FCorrin': False}
     round_name = 'Final Round'
     round_vars = [round_start, unit_dict, round_name]
     return round_vars
