@@ -1,10 +1,12 @@
 """ By Oscar K. Sandoval (https://github.com/mtfalls/) """
 #!/usr/bin/env python
 import sys
-import time
+import math
 import random
-from datetime import datetime
 import decimal
+import time
+from timeit import default_timer as timer
+from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
@@ -12,6 +14,9 @@ from secrets_test import *
 
 # main method (called every 30 minutes)
 def check_gauntlet():
+    # start timer
+    start_time = timer()
+
     # set encoding to utf-8
     reload(sys)
     sys.setdefaultencoding('utf8')
@@ -118,10 +123,16 @@ def check_gauntlet():
     # End of Log
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("End of successful check: %s" % timestamp)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     # close mechanize browser
     br.close()
+
+    # return time elapsed
+    end_time = timer()
+    time_elapsed = int(math.floor(end_time - start_time))
+    print(time_elapsed)
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    return (time_elapsed)
 
 def unit_details(name):
     # Get unit quote
@@ -136,9 +147,8 @@ def unit_details(name):
                 "Ryoma" : "Assets/Ryoma/ryoma_quotes.txt"
                 }
     quote_url = quotes_urls[name]
-    ## Parse text file line by line into list
+    ## Parse text file line by line into list, then select random quote
     quotes = [line.rstrip('\n') for line in open(quote_url)]
-    ## Pick random quote from list
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
@@ -225,5 +235,5 @@ def truncate(f, n):
 if __name__ == "__main__":
     #Check scores every hour
     while True:
-        check_gauntlet()
-        time.sleep(60*60)
+        time_elapsed = check_gauntlet()
+        time.sleep(60*60 - time_elapsed)

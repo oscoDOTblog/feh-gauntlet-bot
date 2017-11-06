@@ -1,10 +1,11 @@
 """ By Oscar K. Sandoval (https://github.com/mtfalls/) """
 #!/usr/bin/env python
 import sys
-import time
+import math
 import random
-from datetime import datetime
 import decimal
+import time
+from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
