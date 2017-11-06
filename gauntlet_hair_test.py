@@ -7,7 +7,8 @@ import decimal
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
-from secrets import *
+from secrets_test import *
+import random
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -56,7 +57,7 @@ def check_gauntlet():
         # 4) reduce value of count by 1
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         x_text = x.get_text()
-        y_text = y.get_text()
+        y_text = format (random.randint(0, 10000), ',d')
         # Check for Male Corrin, then Female Corrin
         for key in unit_dict:
             if (x_text == key) and (not unit_dict[key]):
