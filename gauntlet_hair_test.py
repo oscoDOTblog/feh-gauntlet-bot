@@ -2,13 +2,13 @@
 #!/usr/bin/env python
 import sys
 import time
+import random
 from datetime import datetime
 import decimal
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from secrets_test import *
-import random
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -125,7 +125,8 @@ def check_gauntlet():
 
 def unit_details(name):
     # Get unit quote
-    img_urls = {"Amelia" : "Assets/Amelia/amelia_quotes.txt",
+    ## Get unit quote url
+    quotes_urls = {"Amelia" : "Assets/Amelia/amelia_quotes.txt",
                 "Katarina" : "Assets/Katarina/katarina_quotes.txt",
                 "Shanna" : "Assets/Shanna/shanna_quotes.txt",
                 "Hinoka" : "Assets/Hinoka/hinoka_quotes.txt",
@@ -134,6 +135,13 @@ def unit_details(name):
                 "Soren" : "Assets/Soren/soren_quotes.txt",
                 "Ryoma" : "Assets/Ryoma/ryoma_quotes.txt"
                 }
+    quote_url = quotes_urls[name]
+    ## Parse text file line by line into list
+    quotes = [line.rstrip('\n') for line in open(quote_url)]
+    ## Pick random quote from list
+    secure_random = random.SystemRandom()
+    quote = secure_random.choice(quotes)
+
     # Get unit img_url
     img_urls = {"Amelia" : "Assets/Amelia/amelia_feh.png",
                 "Katarina" : "Assets/Katarina/katarina_feh.png",
@@ -149,12 +157,24 @@ def unit_details(name):
     return unit_details
 
 def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api):
-    #try:
+    # Tweet with image
+    try:
+        # Get unit details
+        current_details = unit_details(name)
+        quote = current_details[0]
+        img_url = current_details[1]
+        message = '#Team%s is losing with a %.1fx multiplier up!\n"%s"\n(%s %s Hour %d)' % (name, multiplier, quote, vg_hashtag, round_name, current_hour)
 
-    #except:
-    #    tweet = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
-    #    #print(tweet)
-    #    api.update_status(tweet)
+        # Attach image to tweet
+        media_list = list()
+        response = api.media_upload(img_url)
+        media_list.append(response.media_id_string)
+        api.update_status(status=message, media_ids=media_list)
+
+    # Plaintext tweet
+    except:
+        message = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
+        api.update_status(message)
 
 def round_1_vars():
     round_start = datetime.strptime('Nov 1 2017 3:00AM', '%b %d %Y %I:%M%p')

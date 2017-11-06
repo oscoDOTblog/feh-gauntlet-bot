@@ -2,6 +2,7 @@
 #!/usr/bin/env python
 import sys
 import time
+import random
 from datetime import datetime
 import decimal
 import mechanize
