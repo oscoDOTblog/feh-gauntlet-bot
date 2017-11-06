@@ -41,7 +41,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = final_round_vars() # TODO: change every round
+    round_vars = round_1_vars() # TODO: change every round
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
@@ -106,9 +106,9 @@ def check_gauntlet():
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
             if (disadvantage_a > 1.01): # Team B is losing
-                tweet_multiplier(b_name, multiplier, vg_hashtag, round_name, current_hour)
+                tweet_multiplier(b_name, multiplier, vg_hashtag, round_name, current_hour, api)
             elif (disadvantage_b > 1.01): # Team A is losing
-                tweet_multiplier(a_name, multiplier, vg_hashtag, round_name, current_hour)
+                tweet_multiplier(a_name, multiplier, vg_hashtag, round_name, current_hour, api)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
         except:
             # TODO: Implement logging on the event of failture
@@ -123,13 +123,20 @@ def check_gauntlet():
     # close mechanize browser
     br.close()
 
-def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour):
-    tweet = "#Team%s is losing with a %.1fx multiplier up! (#FEHeroes %s %s Hour %d)" % (name, multiplier, vg_hashtag, round_name, current_hour)
+def unit_details(name):
+    unit_details = [quote, img_url]
+    return unit_details
+
+def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api):
+    #try:
+
+    #except:
+    tweet = "#Team%s is losing with a %.1fx multiplier up!\n(#FEHeroes %s %s Hour %d)" % (name, multiplier, vg_hashtag, round_name, current_hour)
     #print(tweet)
     api.update_status(tweet)
 
 def round_1_vars():
-    round_start = datetime.strptime('Oct 9 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 1 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Katarina': False, 'Shanna': False, 'Hinoka': False, 'Takumi': False, 'Karel': False, 'Soren': False, 'Ryoma': False}
     round_name = 'Round 1'
     vg_hashtag = '#SHLvLHG'
@@ -137,7 +144,7 @@ def round_1_vars():
     return round_vars
 
 def round_2_vars():
-    round_start = datetime.strptime('Oct 11 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 2 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Amelia': False, 'Amelia': False, 'Amelia': False}
     round_name = 'Round 2'
     vg_hashtag = '#SHLvLHG'
@@ -145,10 +152,10 @@ def round_2_vars():
     return round_vars
 
 def final_round_vars():
-    round_start = datetime.strptime('Oct 13 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 3 2017 3:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Amelia': False}
     round_name = 'Final Round'
-    vg_hashtag = '#SHLvLHG'
+    vg_hashtag = '#SHLvsLHG'
     round_vars = [round_start, unit_dict, round_name, vg_hashtag]
     return round_vars
 
