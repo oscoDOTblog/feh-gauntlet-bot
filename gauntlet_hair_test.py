@@ -124,6 +124,27 @@ def check_gauntlet():
     br.close()
 
 def unit_details(name):
+    # Get unit quote
+    img_urls = {"Amelia" : "Assets/Amelia/amelia_quotes.txt",
+                "Katarina" : "Assets/Katarina/katarina_quotes.txt",
+                "Shanna" : "Assets/Shanna/shanna_quotes.txt",
+                "Hinoka" : "Assets/Hinoka/hinoka_quotes.txt",
+                "Takumi" : "Assets/Takumi/takumi_quotes.txt",
+                "Karel" : "Assets/Karel/karel_quotes.txt",
+                "Soren" : "Assets/Soren/soren_quotes.txt",
+                "Ryoma" : "Assets/Ryoma/ryoma_quotes.txt"
+                }
+    # Get unit img_url
+    img_urls = {"Amelia" : "Assets/Amelia/amelia_feh.png",
+                "Katarina" : "Assets/Katarina/katarina_feh.png",
+                "Shanna" : "Assets/Shanna/shanna_feh.png",
+                "Hinoka" : "Assets/Hinoka/hinoka_feh.png",
+                "Takumi" : "Assets/Takumi/takumi_feh.png",
+                "Karel" : "Assets/Karel/karel_feh.png",
+                "Soren" : "Assets/Soren/soren_feh.png",
+                "Ryoma" : "Assets/Ryoma/ryoma_feh.png"
+                }
+    img_url = img_urls[name]
     unit_details = [quote, img_url]
     return unit_details
 
@@ -131,9 +152,9 @@ def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api
     #try:
 
     #except:
-    tweet = "#Team%s is losing with a %.1fx multiplier up!\n(#FEHeroes %s %s Hour %d)" % (name, multiplier, vg_hashtag, round_name, current_hour)
-    #print(tweet)
-    api.update_status(tweet)
+    #    tweet = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
+    #    #print(tweet)
+    #    api.update_status(tweet)
 
 def round_1_vars():
     round_start = datetime.strptime('Nov 1 2017 3:00AM', '%b %d %Y %I:%M%p')

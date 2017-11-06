@@ -123,7 +123,7 @@ def check_gauntlet():
     br.close()
 
 def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api):
-    tweet = "#Team%s is losing with a %.1fx multiplier up!\n(#FEHeroes %s %s Hour %d)" % (name, multiplier, vg_hashtag, round_name, current_hour)
+    tweet = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
     #print(tweet)
     api.update_status(tweet)
 
