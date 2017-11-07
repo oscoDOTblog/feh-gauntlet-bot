@@ -187,7 +187,7 @@ def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api
         api.update_status(message)
 
 def round_1_vars():
-    round_start = datetime.strptime('Nov 1 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 1 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Katarina': False, 'Shanna': False, 'Hinoka': False, 'Takumi': False, 'Karel': False, 'Soren': False, 'Ryoma': False}
     round_name = 'Round 1'
     vg_hashtag = '#SHLvLHG'
@@ -195,7 +195,7 @@ def round_1_vars():
     return round_vars
 
 def round_2_vars():
-    round_start = datetime.strptime('Nov 2 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 2 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Amelia': False, 'Amelia': False, 'Amelia': False}
     round_name = 'Round 2'
     vg_hashtag = '#SHLvLHG'
@@ -203,7 +203,7 @@ def round_2_vars():
     return round_vars
 
 def final_round_vars():
-    round_start = datetime.strptime('Nov 3 2017 3:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 3 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Amelia': False}
     round_name = 'Final Round'
     vg_hashtag = '#SHLvsLHG'
