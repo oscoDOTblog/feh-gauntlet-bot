@@ -5,6 +5,7 @@ import math
 import random
 import decimal
 import time
+from timeit import default_timer as timer
 from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
@@ -13,6 +14,9 @@ from secrets import *
 
 # main method (called every 30 minutes)
 def check_gauntlet():
+    # start timer
+    start_time = timer()
+
     # set encoding to utf-8
     reload(sys)
     sys.setdefaultencoding('utf8')
@@ -42,7 +46,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_1_vars() # TODO: change every round
+    round_vars = round_2_vars() # TODO: change every round
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
@@ -119,18 +123,71 @@ def check_gauntlet():
     # End of Log
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print("End of successful check: %s" % timestamp)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
     # close mechanize browser
     br.close()
 
+    # return time elapsed
+    end_time = timer()
+    time_elapsed = int(math.floor(end_time - start_time))
+    print(time_elapsed)
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    return (time_elapsed)
+
+def unit_details(name):
+    # Get unit quote
+    ## Get unit quote url
+    quotes_urls = {"Amelia" : "Assets/Amelia/amelia_quotes.txt",
+                "Katarina" : "Assets/Katarina/katarina_quotes.txt",
+                "Shanna" : "Assets/Shanna/shanna_quotes.txt",
+                "Hinoka" : "Assets/Hinoka/hinoka_quotes.txt",
+                "Takumi" : "Assets/Takumi/takumi_quotes.txt",
+                "Karel" : "Assets/Karel/karel_quotes.txt",
+                "Soren" : "Assets/Soren/soren_quotes.txt",
+                "Ryoma" : "Assets/Ryoma/ryoma_quotes.txt"
+                }
+    quote_url = quotes_urls[name]
+    ## Parse text file line by line into list, then select random quote
+    quotes = [line.rstrip('\n') for line in open(quote_url)]
+    secure_random = random.SystemRandom()
+    quote = secure_random.choice(quotes)
+
+    # Get unit img_url
+    img_urls = {"Amelia" : "Assets/Amelia/amelia_feh.png",
+                "Katarina" : "Assets/Katarina/katarina_feh.png",
+                "Shanna" : "Assets/Shanna/shanna_feh.png",
+                "Hinoka" : "Assets/Hinoka/hinoka_feh.png",
+                "Takumi" : "Assets/Takumi/takumi_feh.png",
+                "Karel" : "Assets/Karel/karel_feh.png",
+                "Soren" : "Assets/Soren/soren_feh.png",
+                "Ryoma" : "Assets/Ryoma/ryoma_feh.png"
+                }
+    img_url = img_urls[name]
+    unit_details = [quote, img_url]
+    return unit_details
+
 def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api):
-    tweet = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
-    #print(tweet)
-    api.update_status(tweet)
+    # Tweet with image
+    try:
+        # Get unit details
+        current_details = unit_details(name)
+        quote = current_details[0]
+        img_url = current_details[1]
+        message = '#Team%s is losing with a %.1fx multiplier up!\n"%s"\n(%s %s Hour %d)' % (name, multiplier, quote, vg_hashtag, round_name, current_hour)
+
+        # Attach image to tweet
+        media_list = list()
+        response = api.media_upload(img_url)
+        media_list.append(response.media_id_string)
+        api.update_status(status=message, media_ids=media_list)
+
+    # Plaintext tweet
+    except:
+        message = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
+        api.update_status(message)
 
 def round_1_vars():
-    round_start = datetime.strptime('Nov 6 2017 2:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 1 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Katarina': False, 'Shanna': False, 'Hinoka': False, 'Takumi': False, 'Karel': False, 'Soren': False, 'Ryoma': False}
     round_name = 'Round 1'
     vg_hashtag = '#SHLvLHG'
@@ -138,15 +195,15 @@ def round_1_vars():
     return round_vars
 
 def round_2_vars():
-    round_start = datetime.strptime('Nov 8 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Amelia': False, 'Amelia': False, 'Amelia': False, 'Amelia': False}
+    round_start = datetime.strptime('Nov 2 2017 2:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Amelia': False, 'Shanna': False, 'Takumi': False, 'Soren': False}
     round_name = 'Round 2'
     vg_hashtag = '#SHLvLHG'
     round_vars = [round_start, unit_dict, round_name, vg_hashtag]
     return round_vars
 
 def final_round_vars():
-    round_start = datetime.strptime('Nov 10 2017 2:00AM', '%b %d %Y %I:%M%p')
+    round_start = datetime.strptime('Nov 3 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Amelia': False, 'Amelia': False}
     round_name = 'Final Round'
     vg_hashtag = '#SHLvsLHG'
@@ -178,5 +235,5 @@ def truncate(f, n):
 if __name__ == "__main__":
     #Check scores every hour
     while True:
-        check_gauntlet()
-        time.sleep(60*60)
+        time_elapsed = check_gauntlet()
+        time.sleep(60*60 - time_elapsed)
