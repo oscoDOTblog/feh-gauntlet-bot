@@ -46,7 +46,7 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # TODO: check the date for the current round of the voting gauntlet
-    round_vars = round_2_vars() # TODO: change every round
+    round_vars = final_round_vars() # TODO: change every round
     round_start = round_vars[0]
     unit_dict = round_vars[1]
     round_name = round_vars[2]
@@ -204,7 +204,7 @@ def round_2_vars():
 
 def final_round_vars():
     round_start = datetime.strptime('Nov 10 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Amelia': False, 'Amelia': False}
+    unit_dict = {'Shanna': False, 'Takumi': False}
     round_name = 'Final Round'
     vg_hashtag = '#SHLvsLHG'
     round_vars = [round_start, unit_dict, round_name, vg_hashtag]
