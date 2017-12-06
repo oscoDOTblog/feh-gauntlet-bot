@@ -10,7 +10,7 @@ from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
-from secrets import *
+from secrets_test import * #Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -45,36 +45,56 @@ def check_gauntlet():
     # find all p elements (which contain the current scores)
     p = soup.find_all("p")
 
-    # TODO: check the date for the current round of the voting gauntlet
-    round_vars = final_round_vars() # TODO: change every round
-    round_start = round_vars[0]
-    unit_dict = round_vars[1]
-    round_name = round_vars[2]
-    vg_hashtag = round_vars[3]
+    # TODO: change every round
+    # round 1 variables
+    round_start = datetime.strptime('Dec 6 2017 2:00AM', '%b %d %Y %I:%M%p') #TODO: Change before VG to 6
+    unit_dict = {'Rhajat': False, 'Faye': False, 'Priscilla': False, 'Tharja': False, 'Dorcas': False, 'Catria': False, 'Katarina': False, 'Sigurd': False}
+    round_name = 'Round 1'
+
+    # round 2 variables
+    #round_start = datetime.strptime('Dec 8 2017 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'Tharja': False, 'Tharja': False, 'Tharja': False, 'Tharja': False}
+    #round_name = 'Round 2'
+
+    # final round variables
+    #round_start = datetime.strptime('Dec 10 2017 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'Tharja': False, 'Tharja': False}
+    #round_name = 'Final Round'
+
+    # all round variables
+    vg_hashtag = '#ELVG'
     count = len(unit_dict)
 
     # get units' current score by interating through all p elements
-    for (x, y) in pairwise_list(p):
-        # 1) iterate through keys (unit names)
-        # 2) if x contains the unit name and the dict's value is False,
-        #    then y contains the unit's current round score
-        # 3) save value in dictionary
-        # 4) reduce value of count by 1
-        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        x_text = x.get_text()
-        y_text = y.get_text()
-        # Check for Male Corrin, then Female Corrin
-        for key in unit_dict:
-            if (x_text == key) and (not unit_dict[key]):
-                unit_dict[key] = y_text
-                count -= 1
+    # TODO: Change before VG
+    vg_now = False
+    # Live VG!
+    if (vg_now):
+        for (x, y) in pairwise_list(p):
+            # 1) iterate through keys (unit names)
+            # 2) if x contains the unit name and the dict's value is False,
+            #    then y contains the unit's current round score
+            # 3) save value in dictionary
+            # 4) reduce value of count by 1
+            x_text = x.get_text()
+            y_text = y.get_text()
+            # Check for Male Corrin, then Female Corrin
+            for key in unit_dict:
+                if (x_text == key) and (not unit_dict[key]):
+                    unit_dict[key] = y_text
+                    count -= 1
 
-        # stop searching for scores if all units are accounted for (when count is 0)
-        if not count:
-            break
+            # stop searching for scores if all units are accounted for (when count is 0)
+            if not count:
+                break
+    # Testing before VG
+    else:
+        for key in unit_dict:
+            unit_dict[key] = format (random.randint(0, 10000), ',d')
 
     # custom sort dictionary values into a list
-    keyorder = ['Amelia', 'Katarina', 'Shanna' ,'Hinoka', 'Takumi', 'Karel', 'Soren', 'Ryoma']
+    # TODO: change every VG
+    keyorder = ['Rhajat', 'Faye', 'Priscilla' ,'Tharja', 'Dorcas', 'Catria', 'Katarina', 'Sigurd']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(unit_scores)
@@ -137,33 +157,16 @@ def check_gauntlet():
 def unit_details(name):
     # Get unit quote
     ## Get unit quote url
-    quotes_urls = {"Amelia" : "Assets/Amelia/amelia_quotes.txt",
-                "Katarina" : "Assets/Katarina/katarina_quotes.txt",
-                "Shanna" : "Assets/Shanna/shanna_quotes.txt",
-                "Hinoka" : "Assets/Hinoka/hinoka_quotes.txt",
-                "Takumi" : "Assets/Takumi/takumi_quotes.txt",
-                "Karel" : "Assets/Karel/karel_quotes.txt",
-                "Soren" : "Assets/Soren/soren_quotes.txt",
-                "Ryoma" : "Assets/Ryoma/ryoma_quotes.txt"
-                }
-    quote_url = quotes_urls[name]
+    quote_url = "Assets/%s/%s_Quotes.txt" % (name)
     ## Parse text file line by line into list, then select random quote
     quotes = [line.rstrip('\n') for line in open(quote_url)]
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
     # Get unit img_url
-    img_urls = {"Amelia" : "Assets/Amelia/amelia_feh.png",
-                "Katarina" : "Assets/Katarina/katarina_feh.png",
-                "Shanna" : "Assets/Shanna/shanna_feh.png",
-                "Hinoka" : "Assets/Hinoka/hinoka_feh.png",
-                "Takumi" : "Assets/Takumi/takumi_feh.png",
-                "Karel" : "Assets/Karel/karel_feh.png",
-                "Soren" : "Assets/Soren/soren_feh.png",
-                "Ryoma" : "Assets/Ryoma/ryoma_feh.png"
-                }
-    img_url = img_urls[name]
+    img_url = "Assets/%s/%s_Preview.png" % (name)
     unit_details = [quote, img_url]
+    print("QuoteURL: " + quote_url + "| ImageURL: " + img_url)
     return unit_details
 
 def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api):
@@ -185,30 +188,6 @@ def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api
     except:
         message = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
         api.update_status(message)
-
-def round_1_vars():
-    round_start = datetime.strptime('Nov 6 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Amelia': False, 'Katarina': False, 'Shanna': False, 'Hinoka': False, 'Takumi': False, 'Karel': False, 'Soren': False, 'Ryoma': False}
-    round_name = 'Round 1'
-    vg_hashtag = '#SHLvLHG'
-    round_vars = [round_start, unit_dict, round_name, vg_hashtag]
-    return round_vars
-
-def round_2_vars():
-    round_start = datetime.strptime('Nov 8 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Amelia': False, 'Shanna': False, 'Takumi': False, 'Soren': False}
-    round_name = 'Round 2'
-    vg_hashtag = '#SHLvLHG'
-    round_vars = [round_start, unit_dict, round_name, vg_hashtag]
-    return round_vars
-
-def final_round_vars():
-    round_start = datetime.strptime('Nov 10 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Shanna': False, 'Takumi': False}
-    round_name = 'Final Round'
-    vg_hashtag = '#SHLvsLHG'
-    round_vars = [round_start, unit_dict, round_name, vg_hashtag]
-    return round_vars
 
 def pairwise_list(iterable):
     it = iter(iterable)
