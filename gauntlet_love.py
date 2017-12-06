@@ -10,7 +10,7 @@ from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
-from secrets_test import * #Change before VG to secrets
+from secrets import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -47,7 +47,7 @@ def check_gauntlet():
 
     # TODO: change every round
     # round 1 variables
-    round_start = datetime.strptime('Dec 6 2017 2:00AM', '%b %d %Y %I:%M%p') #TODO: Change before VG to 6
+    round_start = datetime.strptime('Dec 6 2017 2:00AM', '%b %d %Y %I:%M%p')
     unit_dict = {'Rhajat': False, 'Faye': False, 'Priscilla': False, 'Tharja': False, 'Dorcas': False, 'Catria': False, 'Katarina': False, 'Sigurd': False}
     round_name = 'Round 1'
 
@@ -67,7 +67,7 @@ def check_gauntlet():
 
     # get units' current score by interating through all p elements
     # TODO: Change before VG
-    vg_now = False
+    vg_now = True
     # Live VG!
     if (vg_now):
         for (x, y) in pairwise_list(p):
@@ -136,7 +136,7 @@ def check_gauntlet():
                 tweet_multiplier(a_name, multiplier, vg_hashtag, round_name, current_hour, api)
             print("Check complete! #Team%s #Team%s" % (a_name, b_name))
         except:
-            # TODO: Implement logging on the event of failture
+            # Print out timestamp in the event of failure
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             print("Tweet failed at %s for #Team%s #Team%s" % (timestamp, a_name, b_name))
 
