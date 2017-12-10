@@ -134,9 +134,8 @@ def check_gauntlet():
                 tweet_multiplier(b_name, multiplier, vg_hashtag, round_name, current_hour, api)
             elif (disadvantage_b > 1.01): # Team A is losing
                 tweet_multiplier(a_name, multiplier, vg_hashtag, round_name, current_hour, api)
-            else
-                print("Check complete! #Team%s #Team%s are tied" % (a_name, b_name))
-
+            else:
+                print("#Team%s #Team%s are tied" % (a_name, b_name))
         except:
             # Print out timestamp in the event of failure
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
