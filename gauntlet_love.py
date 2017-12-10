@@ -52,14 +52,14 @@ def check_gauntlet():
     #round_name = 'Round 1'
 
     # round 2 variables
-    round_start = datetime.strptime('Dec 8 2017 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Faye': False, 'Tharja': False, 'Dorcas': False, 'Sigurd': False}
-    round_name = 'Round 2'
+    #round_start = datetime.strptime('Dec 8 2017 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'Faye': False, 'Tharja': False, 'Dorcas': False, 'Sigurd': False}
+    #round_name = 'Round 2'
 
     # final round variables
-    #round_start = datetime.strptime('Dec 10 2017 2:00AM', '%b %d %Y %I:%M%p')
-    #unit_dict = {'Tharja': False, 'Tharja': False}
-    #round_name = 'Final Round'
+    round_start = datetime.strptime('Dec 10 2017 2:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Tharja': False, 'Sigurd': False}
+    round_name = 'Final Round'
 
     # all round variables
     vg_hashtag = '#ELVG'
@@ -177,7 +177,7 @@ def tweet_multiplier(name, multiplier, vg_hashtag, round_name, current_hour, api
         quote = current_details[0]
         img_url = current_details[1]
         message = '#Team%s is losing with a %.1fx multiplier up!\n"%s"\n(%s %s Hour %d)' % (name, multiplier, quote, vg_hashtag, round_name, current_hour)
-
+        print(message)
         # Attach image to tweet
         media_list = list()
         response = api.media_upload(img_url)
