@@ -9,6 +9,10 @@ secrets.py
 secrets.pyc
 secrets_test.py
 secrets_test.pyc
+secrets_feh.py
+secrets_feh.pyc
+secrets_poets.py
+secrets_poets.pyc
 
 # nohup
 nohup.out
