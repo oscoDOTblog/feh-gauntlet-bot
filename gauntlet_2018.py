@@ -158,14 +158,14 @@ def check_gauntlet():
 def unit_details(name):
     # Get unit quote
     ## Get unit quote url
-    quote_url = "Assets/%s/Quotes.txt" % (name)
+    quote_url = "Assets/%s/%s_Quotes.txt" % (name)
     ## Parse text file line by line into list, then select random quote
     quotes = [line.rstrip('\n') for line in open(quote_url)]
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
     # Get unit img_url
-    img_url = "Assets/%s/Preview.png" % (name)
+    img_url = "Assets/%s/%s_Preview.png" % (name)
     unit_details = [quote, img_url]
     print("QuoteURL: " + quote_url + "| ImageURL: " + img_url)
     return unit_details
