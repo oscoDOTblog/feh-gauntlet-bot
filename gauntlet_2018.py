@@ -47,14 +47,14 @@ def check_gauntlet():
 
     # TODO: change every round
     # round 1 variables
-    round_start = datetime.strptime('Jan 1 2018 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Robin': False, 'Lissa': False, 'Chrom': False, 'Tharja': False, 'Azura': False, 'Camilla': False, 'Takumi': False, 'Ryoma': False}
-    round_name = 'Round 1'
+    #round_start = datetime.strptime('Jan 1 2018 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'Robin': False, 'Lissa': False, 'Chrom': False, 'Tharja': False, 'Azura': False, 'Camilla': False, 'Takumi': False, 'Ryoma': False}
+    #round_name = 'Round 1'
 
     # round 2 variables
-    #round_start = datetime.strptime('Jan 3 2018 2:00AM', '%b %d %Y %I:%M%p')
-    #unit_dict = {'Chrom': False, 'Chrom': False, 'Chrom': False, 'Chrom': False}
-    #round_name = 'Round 2'
+    round_start = datetime.strptime('Jan 3 2018 2:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Lissa': False, 'Tharja': False, 'Azura': False, 'Ryoma': False}
+    round_name = 'Round 2'
 
     # final round variables
     #round_start = datetime.strptime('Jan 5 2018 2:00AM', '%b %d %Y %I:%M%p')
