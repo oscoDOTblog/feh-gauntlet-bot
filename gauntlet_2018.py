@@ -52,14 +52,14 @@ def check_gauntlet():
     #round_name = 'Round 1'
 
     # round 2 variables
-    round_start = datetime.strptime('Jan 3 2018 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'Lissa': False, 'Tharja': False, 'Azura': False, 'Ryoma': False}
-    round_name = 'Round 2'
+    #round_start = datetime.strptime('Jan 3 2018 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'Lissa': False, 'Tharja': False, 'Azura': False, 'Ryoma': False}
+    #round_name = 'Round 2'
 
     # final round variables
-    #round_start = datetime.strptime('Jan 5 2018 2:00AM', '%b %d %Y %I:%M%p')
-    #unit_dict = {'Chrom': False, 'Tharja': False}
-    #round_name = 'Final Round'
+    round_start = datetime.strptime('Jan 5 2018 2:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'Lissa': False, 'Azura': False}
+    round_name = 'Final Round'
 
     # all round variables
     vg_hashtag = '#WFvNY'
