@@ -10,7 +10,7 @@ from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
 import tweepy
-from secrets_poets import * #TODO: Change before VG to secrets
+from secrets_feh import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -67,34 +67,51 @@ def check_gauntlet():
 
     # get units' current score by interating through all p elements
     # TODO: Change before VG
-    vg_now = False
-    # Live VG!
-    if (vg_now):
-        for (x, y) in pairwise_list(p):
-            # 1) iterate through keys (unit names)
-            # 2) if x contains the unit name and the dict's value is False,
-            #    then y contains the unit's current round score
-            # 3) save value in dictionary
-            # 4) reduce value of count by 1
-            x_text = x.get_text()
+    vg_now = True
+    for (x, y) in pairwise_list(p):
+        # 1) iterate through keys (unit names)
+        # 2) if x contains the unit name and the dict's value is False,
+        #    then y contains the unit's current round score
+        # 3) save value in dictionary
+        # 4) reduce value of count by 1
+        x_text = x.get_text()
+        #Test before VG if False
+        if (vg_now):
             y_text = y.get_text()
-            # Check for Male Corrin, then Female Corrin
-            for key in unit_dict:
-                if (x_text == key) and (not unit_dict[key]):
-                    unit_dict[key] = y_text
-                    count -= 1
-
-            # stop searching for scores if all units are accounted for (when count is 0)
-            if not count:
-                break
-    # Testing before VG
-    else:
-        for key in unit_dict:
-            unit_dict[key] = format (random.randint(0, 10000), ',d')
+        else:
+            y_text = format (random.randint(0, 10000), ',d')
+        # Check for Male Corrin, then Female Corrin
+        if (x_text == 'Celica') and (not unit_dict['Celica']):
+            unit_dict['Celica'] = y_text
+            count -= 1
+        elif (x_text == 'Celica') and (not unit_dict['FallenCelica']):
+            unit_dict['FallenCelica'] = y_text
+            count -= 1
+        elif (x_text == 'Takumi') and (not unit_dict['Takumi']):
+            unit_dict['Takumi'] = y_text
+            count -= 1
+        elif (x_text == 'Takumi') and (not unit_dict['FallenTakumi']):
+            unit_dict['FallenTakumi'] = y_text
+            count -= 1
+        elif (x_text == 'Robin') and (not unit_dict['Robin']):
+            unit_dict['Robin'] = y_text
+            count -= 1
+        elif (x_text == 'Robin') and (not unit_dict['FallenRobin']):
+            unit_dict['FallenRobin'] = y_text
+            count -= 1
+        elif (x_text == 'Zelgius') and (not unit_dict['Zelgius']):
+            unit_dict['Zelgius'] = y_text
+            count -= 1
+        elif (x_text == 'Black Knight') and (not unit_dict['BlackKnight']):
+            unit_dict['BlackKnight'] = y_text
+            count -= 1
+        # stop searching for scores if all units are accounted for (when count is 0)
+        if not count:
+            break
 
     # custom sort dictionary values into a list
     # TODO: change every VG
-    keyorder = ['Robin', 'Lissa', 'Chrom' ,'Tharja', 'Azura', 'Camilla', 'Takumi', 'Ryoma']
+    keyorder = ['Celica', 'FallenCelica', 'Takumi' ,'FallenTakumi', 'Robin', 'FallenRobin', 'Zelgius', 'BlackKnight']
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(unit_scores)
@@ -159,10 +176,10 @@ def check_gauntlet():
     return (time_elapsed)
 
 def one_hour_string(hours_remain):
-    if (hours_remain != 1):
-        return "%d hours remain" % hours_remain
-    else:
-        return "1 hour remains"
+    if (hours_remain > 0):
+        return "%d+ hours remain" % hours_remain
+    elif (hours_remain == 0):
+        return "Less than one hour remains"
 
 def unit_details(name):
     # Get unit quote
