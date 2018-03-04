@@ -81,30 +81,30 @@ def check_gauntlet():
         else:
             y_text = format (random.randint(0, 10000), ',d')
         # Check for Male Corrin, then Female Corrin
-        if (x_text == 'Celica') and (not unit_dict['Celica']):
-            unit_dict['Celica'] = y_text
-            count -= 1
-        elif (x_text == 'Celica') and (not unit_dict['FallenCelica']):
+        #if (x_text == 'Celica') and (not unit_dict['Celica']):
+        #    unit_dict['Celica'] = y_text
+        #    count -= 1
+        if (x_text == 'Celica') and (not unit_dict['FallenCelica']):
             unit_dict['FallenCelica'] = y_text
             count -= 1
         elif (x_text == 'Takumi') and (not unit_dict['Takumi']):
             unit_dict['Takumi'] = y_text
             count -= 1
-        elif (x_text == 'Takumi') and (not unit_dict['FallenTakumi']):
-            unit_dict['FallenTakumi'] = y_text
-            count -= 1
-        elif (x_text == 'Robin') and (not unit_dict['Robin']):
-            unit_dict['Robin'] = y_text
-            count -= 1
+        #elif (x_text == 'Takumi') and (not unit_dict['FallenTakumi']):
+        #    unit_dict['FallenTakumi'] = y_text
+        #    count -= 1
+        #elif (x_text == 'Robin') and (not unit_dict['Robin']):
+        #    unit_dict['Robin'] = y_text
+        #    count -= 1
         elif (x_text == 'Robin') and (not unit_dict['FallenRobin']):
             unit_dict['FallenRobin'] = y_text
             count -= 1
         elif (x_text == 'Zelgius') and (not unit_dict['Zelgius']):
             unit_dict['Zelgius'] = y_text
             count -= 1
-        elif (x_text == 'Black Knight') and (not unit_dict['BlackKnight']):
-            unit_dict['BlackKnight'] = y_text
-            count -= 1
+        #elif (x_text == 'Black Knight') and (not unit_dict['BlackKnight']):
+        #    unit_dict['BlackKnight'] = y_text
+        #    count -= 1
         # stop searching for scores if all units are accounted for (when count is 0)
         if not count:
             break
