@@ -52,14 +52,14 @@ def check_gauntlet():
     #round_name = 'Round 1'
 
     # round 2 variables
-    round_start = datetime.strptime('Mar 4 2018 2:00AM', '%b %d %Y %I:%M%p')
-    unit_dict = {'FallenCelica': False, 'Takumi': False, 'FallenRobin': False, 'Zelgius': False}
-    round_name = 'Round 2'
+    #round_start = datetime.strptime('Mar 4 2018 2:00AM', '%b %d %Y %I:%M%p')
+    #unit_dict = {'FallenCelica': False, 'Takumi': False, 'FallenRobin': False, 'Zelgius': False}
+    #round_name = 'Round 2'
 
     # final round variables
-    #round_start = datetime.strptime('Mar 6 2018 2:00AM', '%b %d %Y %I:%M%p')
-    #unit_dict = {'Lissa': False, 'Azura': False}
-    #round_name = 'Final Round'
+    round_start = datetime.strptime('Mar 6 2018 2:00AM', '%b %d %Y %I:%M%p')
+    unit_dict = {'FallenCelica': False, 'FallenRobin': False}
+    round_name = 'Final Round'
 
     # all round variables
     vg_hashtag = '#SitM'
@@ -87,9 +87,9 @@ def check_gauntlet():
         if (x_text == 'Celica') and (not unit_dict['FallenCelica']):
             unit_dict['FallenCelica'] = y_text
             count -= 1
-        elif (x_text == 'Takumi') and (not unit_dict['Takumi']):
-            unit_dict['Takumi'] = y_text
-            count -= 1
+        #elif (x_text == 'Takumi') and (not unit_dict['Takumi']):
+        #    unit_dict['Takumi'] = y_text
+        #    count -= 1
         #elif (x_text == 'Takumi') and (not unit_dict['FallenTakumi']):
         #    unit_dict['FallenTakumi'] = y_text
         #    count -= 1
@@ -99,9 +99,9 @@ def check_gauntlet():
         elif (x_text == 'Robin') and (not unit_dict['FallenRobin']):
             unit_dict['FallenRobin'] = y_text
             count -= 1
-        elif (x_text == 'Zelgius') and (not unit_dict['Zelgius']):
-            unit_dict['Zelgius'] = y_text
-            count -= 1
+        #elif (x_text == 'Zelgius') and (not unit_dict['Zelgius']):
+        #    unit_dict['Zelgius'] = y_text
+        #    count -= 1
         #elif (x_text == 'Black Knight') and (not unit_dict['BlackKnight']):
         #    unit_dict['BlackKnight'] = y_text
         #    count -= 1
