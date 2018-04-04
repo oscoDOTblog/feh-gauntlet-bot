@@ -163,7 +163,7 @@ def unit_details(name):
     ## Get unit quote url
     quote_url = "Assets/%s/%s_Quotes.txt" % (name, name)
     ## Parse text file line by line into list, then select random quote
-    quotes = [line.rstrip('\n') for line in open(quote_url)]
+    quotes = open(quote_url).read().splitlines()
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
