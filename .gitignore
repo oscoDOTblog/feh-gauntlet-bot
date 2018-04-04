@@ -13,6 +13,8 @@ secrets_feh.py
 secrets_feh.pyc
 secrets_poets.py
 secrets_poets.pyc
+current_vg.pyc
+
 
 # nohup
 nohup.out

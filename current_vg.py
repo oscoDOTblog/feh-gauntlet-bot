@@ -1,0 +1,13 @@
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/12'
+vg_hashtag='#BBB'
+round_1_date = 'Apr 4 2018 3:00AM'
+round_2_date = 'Apr 6 2018 3:00AM'
+round_3_date = 'Apr 8 2018 3:00AM'
+unit_1 = "Alfonse"
+unit_2 = "Xander"
+unit_3 = "Kagero"
+unit_4 = "Camilla"
+unit_5 = "Sharena"
+unit_6 = "Lucina"
+unit_7 = "Catria"
+unit_8 = "Chrom"
