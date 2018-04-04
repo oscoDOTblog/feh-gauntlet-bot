@@ -121,7 +121,7 @@ def check_gauntlet():
 
         # variables for checking if multiplier is up for either team
         disadvantage_a = float(a_score) / float(b_score)
-        disadvantage_b = float(b_score) / float(a_score)
+        disadvantage_b = truncate(float(b_score) / float(a_score), 2)
 
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
