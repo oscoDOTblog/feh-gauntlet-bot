@@ -120,9 +120,9 @@ def check_gauntlet():
         b_score = int(b[1].replace(',', ''))
 
         # variables for checking if multiplier is up for either team
-        disadvantage_a = truncate(float(a_score) / float(b_score),2)
-        disadvantage_b = truncate(float(b_score) / float(a_score),2)
-
+        disadvantage_a = float(truncate(float(a_score) / float(b_score),3))
+        disadvantage_b = float(truncate(float(b_score) / float(a_score),3))
+        print("disadvantage_a: %f | disadvantage_b: %f") % (disadvantage_a, disadvantage_b)
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
             if (disadvantage_a > 1.01): # Team B is losing
@@ -132,6 +132,7 @@ def check_gauntlet():
             else:
                 hour_or_hours = one_hour_string(hours_remain)
                 tweet_tie = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
+                api.update_status(tweet_tie)
                 print("#Team%s #Team%s are tied" % (a_name, b_name))
         except:
             # Print out timestamp in the event of failure
