@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_poets import * #TODO: Change before VG to secrets
+from secrets_feh import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -120,8 +120,8 @@ def check_gauntlet():
         b_score = int(b[1].replace(',', ''))
 
         # variables for checking if multiplier is up for either team
-        disadvantage_a = float(a_score) / float(b_score)
-        disadvantage_b = truncate(float(b_score) / float(a_score), 2)
+        disadvantage_a = truncate(float(a_score) / float(b_score),2)
+        disadvantage_b = truncate(float(b_score) / float(a_score),2)
 
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
