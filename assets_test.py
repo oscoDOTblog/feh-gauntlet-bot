@@ -7,7 +7,5 @@ for unit in units:
     quote_url = "Assets/%s/%s_Quotes.txt" % (unit, unit)
     quotes = open(quote_url).read().splitlines()
     img_url = "Assets/%s/%s_Preview.png" % (unit, unit)
+    # TODO: check if image exists
     print('Assets of %s successfully opened' % unit)
-
-Gunnthrа_Quotes.txt
-Gunnthra_Quotes.txt
