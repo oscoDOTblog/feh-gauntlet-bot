@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_feh import * #TODO: Change before VG to secrets
+from secrets_poets import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -47,9 +47,9 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # round 1 variables
-    #round_start = datetime.strptime(round_1_date, '%b %d %Y %I:%M%p')
-    #unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
-    #round_name = 'Round 1'
+    round_start = datetime.strptime(round_1_date, '%b %d %Y %I:%M%p')
+    unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+    round_name = 'Round 1'
 
     # round 2 variables
     #round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
@@ -57,12 +57,13 @@ def check_gauntlet():
     #round_name = 'Round 2'
 
     # final round variables
-    round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
-    unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-    round_name = 'Final Round'
+    #round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
+    #unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+    #round_name = 'Final Round'
 
     # all round variables
     count = len(unit_dict)
+    #vg_now = False
 
     # get units' current score by interating through all p elements
     for (x, y) in pairwise_list(p):
