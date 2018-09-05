@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_poets import * #TODO: Change before VG to secrets
+from secrets_feh import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -63,7 +63,7 @@ def check_gauntlet():
 
     # all round variables
     count = len(unit_dict)
-    #vg_now = False
+    vg_now=True
 
     # get units' current score by interating through all p elements
     for (x, y) in pairwise_list(p):
@@ -75,12 +75,15 @@ def check_gauntlet():
         x_text = x.get_text()
         #Test before VG if False
         if (vg_now):
+            print("VG is NOW!!!")
             y_text = y.get_text()
         else:
+            print("VG is NOT now!!!")
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_dict:
             if (x_text == key) and (not unit_dict[key]):
+                print("Key: " + key + "| Value:" + y_text )
                 unit_dict[key] = y_text
                 count -= 1
         # stop searching for scores if all units are accounted for (when count is 0)
