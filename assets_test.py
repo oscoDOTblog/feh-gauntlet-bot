@@ -7,5 +7,7 @@ for unit in units:
     quote_url = "Assets/%s/%s_Quotes.txt" % (unit, unit)
     quotes = open(quote_url).read().splitlines()
     img_url = "Assets/%s/%s_Preview.png" % (unit, unit)
-    # TODO: check if image exists
+    f = open(img_url, 'r+')
+    jpgdata = f.read()
+    f.close()
     print('Assets of %s successfully opened' % unit)

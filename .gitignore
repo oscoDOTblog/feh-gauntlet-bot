@@ -1,8 +1,9 @@
-# virtualenv 
+# virtualenv
 bin/
 include/
 lib/
 local/
+.DS_Store
 
 # Twitter API Keys
 secrets.py
