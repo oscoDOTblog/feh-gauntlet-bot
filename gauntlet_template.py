@@ -47,14 +47,14 @@ def check_gauntlet():
     p = soup.find_all("p")
 
     # round 1 variables
-    round_start = datetime.strptime(round_1_date, '%b %d %Y %I:%M%p')
-    unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
-    round_name = 'Round 1'
+    #round_start = datetime.strptime(round_1_date, '%b %d %Y %I:%M%p')
+    #unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+    #round_name = 'Round 1'
 
     # round 2 variables
-    #round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
-    #unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
-    #round_name = 'Round 2'
+    round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
+    unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
+    round_name = 'Round 2'
 
     # final round variables
     #round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
