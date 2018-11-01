@@ -1,4 +1,4 @@
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/16'
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/17'
 vg_hashtag='#CT'
 round_1_date = 'Nov 1 2018 3:00AM'
 round_2_date = 'Nov 3 2018 3:00AM'
