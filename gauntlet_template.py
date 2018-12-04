@@ -73,6 +73,12 @@ def check_gauntlet():
         # 3) save value in dictionary
         # 4) reduce value of count by 1
         x_text = x.get_text()
+        if "Gunnthr" in x_text:
+            print("Changing text to Gunnthra")
+            x_text = "Gunnthra"
+        if "Hr" in x_text and "d" in x_text:
+            print("Changing text to Hrid")
+            x_text = "Hrid"
         #Test before VG if False
         if (vg_now):
             print("VG is NOW!!!")
