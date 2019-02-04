@@ -52,14 +52,14 @@ def check_gauntlet():
     #round_name = 'Round 1'
 
     # round 2 variables
-    round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
-    unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
-    round_name = 'Round 2'
+    #round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
+    #unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
+    #round_name = 'Round 2'
 
     # final round variables
-    #round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
-    #unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-    #round_name = 'Final Round'
+    round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
+    unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+    round_name = 'Final Round'
 
     # all round variables
     count = len(unit_dict)
