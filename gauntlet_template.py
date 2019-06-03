@@ -196,14 +196,13 @@ def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api
     print(message)
     # Attach image to tweet
     print("here1")
-    #media_list = list()
-    #print("here2")
-    #response = api.media_upload(img_url)
-    #print("here3")
-    #media_list.append(response.media_id_string)
+    media_list = list()
+    print("here2")
+    response = api.media_upload(img_url)
+    print("here3")
+    media_list.append(response.media_id_string)
     print("here4")
-    #api.update_status(status=message, media_ids=media_list)
-    api.update_status(status=message)
+    api.update_status(status=message, media_ids=media_list)
 
     # Plaintext tweet
     #except:
