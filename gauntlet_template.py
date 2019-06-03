@@ -195,9 +195,13 @@ def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api
     message = '#Team%s is losing with a %.1fx multiplier up!\n"%s"\n(%s in %s\'s %s)' % (name, multiplier, quote, hour_or_hours, vg_hashtag, round_name)
     print(message)
     # Attach image to tweet
+    print("here1")
     media_list = list()
+    print("here2")
     response = api.media_upload(img_url)
+    print("here3")
     media_list.append(response.media_id_string)
+    print("here4")
     api.update_status(status=message, media_ids=media_list)
 
     # Plaintext tweet
