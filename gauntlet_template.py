@@ -181,7 +181,7 @@ def unit_details(name):
     # Get unit img_url
     img_url = "Assets/%s/%s_Preview.png" % (name, name)
     unit_details = [quote, img_url]
-    print("QuoteURL: " + quote_url + "| ImageURL: " + img_url + "| pizza")
+    print("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
     return unit_details
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api):
@@ -196,13 +196,14 @@ def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api
     print(message)
     # Attach image to tweet
     print("here1")
-    media_list = list()
-    print("here2")
-    response = api.media_upload(img_url)
-    print("here3")
-    media_list.append(response.media_id_string)
+    #media_list = list()
+    #print("here2")
+    #response = api.media_upload(img_url)
+    #print("here3")
+    #media_list.append(response.media_id_string)
     print("here4")
-    api.update_status(status=message, media_ids=media_list)
+    #api.update_status(status=message, media_ids=media_list)
+    api.update_status(status=message)
 
     # Plaintext tweet
     #except:
