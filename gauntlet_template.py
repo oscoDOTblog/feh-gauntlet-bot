@@ -181,7 +181,7 @@ def unit_details(name):
     # Get unit img_url
     img_url = "Assets/%s/%s_Preview.png" % (name, name)
     unit_details = [quote, img_url]
-    print("QuoteURL: " + quote_url + "| ImageURL: " + img_url)
+    print("QuoteURL: " + quote_url + "| ImageURL: " + img_url + "| pizza")
     return unit_details
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api):
