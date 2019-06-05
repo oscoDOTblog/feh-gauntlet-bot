@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_feh import * #TODO: Change before VG to secrets
+from secrets_poets import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -46,20 +46,35 @@ def check_gauntlet():
     # find all p elements (which contain the current scores)
     p = soup.find_all("p")
 
+    # Get Variables for Current Round
+    time_now = datetime.now()
+    round_1_start = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
+    round_1_end = datetime.strptime(round_1_end_raw, '%b %d %Y %I:%M%p')
+    round_2_start = datetime.strptime(round_2_start_raw, '%b %d %Y %I:%M%p')
+    round_2_end = datetime.strptime(round_2_end_raw, '%b %d %Y %I:%M%p')
+    round_3_start = datetime.strptime(round_3_start_raw, '%b %d %Y %I:%M%p')
+    round_3_end = datetime.strptime(round_3_end_raw, '%b %d %Y %I:%M%p')
     # round 1 variables
-    round_start = datetime.strptime(round_1_date, '%b %d %Y %I:%M%p')
-    unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
-    round_name = 'Round 1'
-
+    if (round_1_start < time_now < round_1_end):
+        print("Currently Round 1")
+        round_start = round_1_start
+        unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+        round_name = 'Round 1'
     # round 2 variables
-    #round_start = datetime.strptime(round_2_date, '%b %d %Y %I:%M%p')
-    #unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
-    #round_name = 'Round 2'
-
-    # final round variables
-    #round_start = datetime.strptime(round_3_date, '%b %d %Y %I:%M%p')
-    #unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-    #round_name = 'Final Round'
+    elif (round_2_start < time_now < round_2_end):
+        print("Currently Round 2")
+        round_start = round_2_start
+        unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
+        round_name = 'Round 2'
+    # round 3 variables
+    elif (round_3_start < time_now < round_3_end):
+        print("Currently Round 3")
+        round_start = round_3_start
+        unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+        round_name = 'Final Round'
+    else:
+        print("Current time in between rounds. Ending execution.")
+        return (-1)
 
     # all round variables
     count = len(unit_dict)
@@ -112,10 +127,9 @@ def check_gauntlet():
     # divmod is a little complex so,
     # 1) divide the total seconds from time_elapsed into hours (60*60)
     # 2) divmod return a list with the quotient as [0] and remainder as [1]
-    time_now = datetime.now()
     time_elapsed =  time_now - round_start
     current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
-    hours_remain = 44 - current_hour
+    hours_remain = 45 - current_hour
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
@@ -233,6 +247,10 @@ def truncate(f, n):
 # It's showtime
 if __name__ == "__main__":
     #Check scores every hour
-    while True:
+    voting = True;
+    while voting:
         time_elapsed = check_gauntlet()
-        time.sleep(60*60 - time_elapsed)
+        if (time_elapsed == -1):
+            voting = False
+        else:
+            time.sleep(60*60 - time_elapsed)

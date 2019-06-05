@@ -1,4 +1,5 @@
 # virtualenv
+vg_venv/
 bin/
 include/
 lib/
