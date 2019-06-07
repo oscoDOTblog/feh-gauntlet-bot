@@ -130,6 +130,7 @@ def check_gauntlet():
     time_elapsed =  time_now - round_start
     current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
     hours_remain = 45 - current_hour
+    print("hours_remain: " + hours_remain)
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
@@ -178,9 +179,9 @@ def check_gauntlet():
     return (time_elapsed)
 
 def one_hour_string(hours_remain):
-    if (hours_remain > 0):
+    if (hours_remain > 1):
         return "%d+ hours remain" % hours_remain
-    elif (hours_remain == 0):
+    elif (hours_remain == 1):
         return "Less than one hour remains"
 
 def unit_details(name):
