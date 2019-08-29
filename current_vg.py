@@ -1,5 +1,5 @@
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/26'
-vg_hashtag='#BB'
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/27'
+vg_hashtag='#BR'
 round_1_start_raw = 'Aug 29 2019 3:00AM'
 round_1_end_raw = 'Aug 31 2019 12:00AM'
 round_2_start_raw = 'Aug 31 2019 3:00AM'
