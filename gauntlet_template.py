@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_poets import * #TODO: Change before VG to secrets
+from secrets_feh import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
