@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_feh import * #TODO: Change before VG to secrets
+from secrets_poets import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -96,6 +96,9 @@ def check_gauntlet():
         if "Hr" in x_text and "d" in x_text:
             print("Changing text to Hrid")
             x_text = "Hrid"
+        if "L" in x_text and "Arachel" in x_text:
+            print("Changing text to LArachel")
+            x_text = "LArachel"
         #Test before VG if False
         if (vg_now):
             print("VG is NOW!!!")
