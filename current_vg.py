@@ -1,11 +1,11 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/29'
 vg_hashtag='#HH'
 round_1_start_raw = 'Oct 31 2019 2:00AM'
-round_1_end_raw = 'Nov 02 2019 11:00PM'
+round_1_end_raw = 'Nov 01 2019 11:00PM'
 round_2_start_raw = 'Nov 02 2019 2:00AM'
-round_2_end_raw = 'Nov 04 2019 11:00PM'
+round_2_end_raw = 'Nov 03 2019 11:00PM'
 round_3_start_raw = 'Nov 04 2019 2:00AM'
-round_3_end_raw = 'Nov 06 2019 11:00PM'
+round_3_end_raw = 'Nov 05 2019 11:00PM'
 round_1_unit_1 = "LArachel"
 round_1_unit_2 = "Dozla"
 round_1_unit_3 = "Mia"
