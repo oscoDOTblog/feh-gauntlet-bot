@@ -1,7 +1,7 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/30'
 vg_hashtag='#HH'
 round_1_start_raw = 'Nov 29 2019 2:00AM'
-round_1_end_raw = 'Dec 30 2019 11:00PM'
+round_1_end_raw = 'Nov 30 2019 11:00PM'
 round_2_start_raw = 'Dec 01 2019 2:00AM'
 round_2_end_raw = 'Dec 02 2019 11:00PM'
 round_3_start_raw = 'Dec 03 2019 2:00AM'
