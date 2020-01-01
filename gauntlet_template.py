@@ -11,7 +11,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_feh import * #TODO: Change before VG to secrets
+from secrets_poets import * #TODO: Change before VG to secrets
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -50,6 +50,7 @@ def check_gauntlet():
 
     # Get Variables for Current Round
     time_now = datetime.now()
+    print("time_now: " + str(time_now))
     round_1_start = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
     round_1_end = datetime.strptime(round_1_end_raw, '%b %d %Y %I:%M%p')
     round_2_start = datetime.strptime(round_2_start_raw, '%b %d %Y %I:%M%p')
