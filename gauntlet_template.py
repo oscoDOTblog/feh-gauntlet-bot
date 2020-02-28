@@ -109,7 +109,16 @@ def check_gauntlet():
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_dict:
-            if (x_text == key) and (not unit_dict[key]):
+            # Check for Male Corrin, then Female Corrin
+            if (x_text == 'Sothis') and (not unit_dict['WinterSothis']):
+                print("Key: " + key + "| Value:" + y_text )
+                unit_dict['WinterSothis'] = y_text
+                count -= 1
+            elif (x_text == 'Sothis') and (not unit_dict['Sothis']):
+                print("Key: " + key + "| Value:" + y_text )
+                unit_dict['Sothis'] = y_text
+                count -= 1
+            elif (x_text == key) and (not unit_dict[key]):
                 print("Key: " + key + "| Value:" + y_text )
                 unit_dict[key] = y_text
                 count -= 1
