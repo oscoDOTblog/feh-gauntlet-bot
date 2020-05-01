@@ -1,5 +1,5 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/35'
-vg_hashtag='#SS'
+vg_hashtag='#GG'
 round_1_start_raw = 'Mar 01 2020 3:00AM'
 round_1_end_raw = 'Mar 03 2020 12:00AM'
 round_2_start_raw = 'Mar 03 2020 3:00AM'
