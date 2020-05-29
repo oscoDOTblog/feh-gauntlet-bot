@@ -91,11 +91,11 @@ def check_gauntlet():
         # 3) save value in dictionary
         # 4) reduce value of count by 1
         x_text = x.get_text()
-        if "Líf" in x_text:
-            print("Changing text to Gunnthra")
+        if "L" in x_text and "f" in x_text:
+            print("Changing text to Lif")
             x_text = "Lif"
         if "Black" in x_text and "Knight" in x_text:
-            print("Changing text to Hrid")
+            print("Changing text to BlackKnight")
             x_text = "BlackKnight"
         if "Death" in x_text and "Knight" in x_text:
             print("Changing text to DeathKnight")
