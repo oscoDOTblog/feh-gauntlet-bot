@@ -1,4 +1,4 @@
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/31'
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/37'
 vg_hashtag='#FCF'
 round_1_start_raw = 'Jul 01 2020 3:00AM'
 round_1_end_raw = 'Jul 03 2020 12:00AM'
