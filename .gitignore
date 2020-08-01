@@ -20,3 +20,6 @@ current_vg.pyc
 
 # nohup
 nohup.out
+
+# python
+__pycache__

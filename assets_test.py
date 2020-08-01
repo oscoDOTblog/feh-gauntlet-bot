@@ -13,7 +13,7 @@ for unit in units:
     print(quotes[3])
     print("~~~")
     img_url = "Assets/%s/%s_Preview.png" % (unit, unit)
-    f = open(img_url, 'r+')
+    f = open(img_url, 'r+', encoding='cp850')
     jpgdata = f.read()
     f.close()
     print('Assets of %s successfully opened' % unit)
