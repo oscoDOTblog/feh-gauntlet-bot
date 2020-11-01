@@ -114,10 +114,10 @@ def check_gauntlet():
                print("Key: " + key + "| Value:" + y_text )
                unit_dict['MRobin'] = y_text
                count -= 1
-            elif (x_text == 'Robin') and (not unit_dict['FRobin']):
-               print("Key: " + key + "| Value:" + y_text )
-               unit_dict['FRobin'] = y_text
-               count -= 1
+            # elif (x_text == 'Robin') and (not unit_dict['FRobin']):
+            #    print("Key: " + key + "| Value:" + y_text )
+            #    unit_dict['FRobin'] = y_text
+            #    count -= 1
             if (x_text == key) and (not unit_dict[key]):
                 print("Key: " + key + "| Value:" + y_text )
                 unit_dict[key] = y_text
