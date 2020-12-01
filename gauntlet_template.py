@@ -110,10 +110,10 @@ def check_gauntlet():
         # Iterate through keys to update their values
         for key in unit_dict:
             # Check for Male Robin, then Female Robin
-            if (x_text == 'Robin') and (not unit_dict['MRobin']):
-               print("Key: " + key + "| Value:" + y_text )
-               unit_dict['MRobin'] = y_text
-               count -= 1
+            # if (x_text == 'Robin') and (not unit_dict['MRobin']):
+            #    print("Key: " + key + "| Value:" + y_text )
+            #    unit_dict['MRobin'] = y_text
+            #    count -= 1
             # elif (x_text == 'Robin') and (not unit_dict['FRobin']):
             #    print("Key: " + key + "| Value:" + y_text )
             #    unit_dict['FRobin'] = y_text
