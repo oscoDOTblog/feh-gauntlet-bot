@@ -1,5 +1,5 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/42'
-vg_hashtag='#HUT'
+vg_hashtag='#SSS'
 round_1_start_raw = 'Dec 01 2020 2:00AM'
 round_1_end_raw = 'Dec 02 2020 11:00PM'
 round_2_start_raw = 'Dec 03 2020 2:00AM'
@@ -18,5 +18,5 @@ round_2_unit_1 = "Hana"
 round_2_unit_2 = "Lyn"
 round_2_unit_3 = "Leila"
 round_2_unit_4 = "Kaze"
-round_3_unit_1 = "Velouria"
-round_3_unit_2 = "Rolf"
+round_3_unit_1 = "Lyn"
+round_3_unit_2 = "Leila"
