@@ -11,7 +11,9 @@ import mechanize
 from bs4 import BeautifulSoup
 import tweepy
 from current_vg import * # current VG particpants and round dates
-from secrets_feh import * #TODO: Change before VG to secrets
+# from secrets_feh import * #TODO: Change before VG to secrets
+from secrets_poets import * #TODO: Change before VG to secrets
+
 
 # main method (called every 30 minutes)
 def check_gauntlet():
@@ -57,31 +59,40 @@ def check_gauntlet():
     round_2_end = datetime.strptime(round_2_end_raw, '%b %d %Y %I:%M%p')
     round_3_start = datetime.strptime(round_3_start_raw, '%b %d %Y %I:%M%p')
     round_3_end = datetime.strptime(round_3_end_raw, '%b %d %Y %I:%M%p')
-    # round 1 variables
-    if (round_1_start < time_now < round_1_end):
-        print("Currently Round 1")
-        round_start = round_1_start
-        unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
-        round_name = 'Round 1'
-    # round 2 variables
-    elif (round_2_start < time_now < round_2_end):
-        print("Currently Round 2")
-        round_start = round_2_start
-        unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
-        round_name = 'Round 2'
-    # round 3 variables
-    elif (round_3_start < time_now < round_3_end):
+
+    # Check if test VG or real VG
+
+    if not (vg_test):
+        # round 1 variables
+        if (round_1_start < time_now < round_1_end):
+            print("Currently Round 1")
+            round_start = round_1_start
+            unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+            round_name = 'Round 1'
+        # round 2 variables
+        elif (round_2_start < time_now < round_2_end):
+            print("Currently Round 2")
+            round_start = round_2_start
+            unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
+            round_name = 'Round 2'
+        # round 3 variables
+        elif (round_3_start < time_now < round_3_end):
+            print("Currently Round 3")
+            round_start = round_3_start
+            unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+            round_name = 'Final Round'
+        else:
+            print("Current time in between rounds. Ending execution.")
+            return (-1)
+    else: 
+        print("Testing VG")
         print("Currently Round 3")
         round_start = round_3_start
         unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
         round_name = 'Final Round'
-    else:
-        print("Current time in between rounds. Ending execution.")
-        return (-1)
 
     # all round variables
     count = len(unit_dict)
-    vg_now=True
 
     # get units' current score by interating through all p elements
     for (x, y) in pairwise_list(p):
