@@ -1,6 +1,5 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/42'
 vg_hashtag='#SSS'
-vg_test = False
 round_1_start_raw = 'Dec 01 2020 2:00AM'
 round_1_end_raw = 'Dec 02 2020 11:00PM'
 round_2_start_raw = 'Dec 03 2020 2:00AM'
