@@ -4,6 +4,7 @@ import sys
 import math
 import random
 import decimal
+import importlib
 import time
 from timeit import default_timer as timer
 from datetime import datetime
@@ -20,13 +21,13 @@ def check_gauntlet():
     # start timer
     start_time = timer()
 
-    # set encoding to utf-8
-    reload(sys)
-    sys.setdefaultencoding('utf8')
+    # DELETE ME: set encoding to utf-8
+    # importlib.reload(sys)
+    # sys.setdefaultencoding('utf8')
 
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
-    #br.set_handle_robots(False)
+    br.set_handle_robots(False)
     #br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
     br.open(vg_url)
 
@@ -112,7 +113,7 @@ def check_gauntlet():
         #     print("Changing text to DeathKnight")
         #     x_text = "DeathKnight"
         #Test before VG if False
-        if (vg_now):
+        if not (vg_test):
             print("VG is NOW!!!")
             y_text = y.get_text()
         else:
@@ -173,7 +174,9 @@ def check_gauntlet():
         # variables for checking if multiplier is up for either team
         disadvantage_a = float(truncate(float(a_score) / float(b_score),4))
         disadvantage_b = float(truncate(float(b_score) / float(a_score),4))
-        print("disadvantage_a: %f | disadvantage_b: %f") % (disadvantage_a, disadvantage_b)
+        print(disadvantage_a)
+        print(disadvantage_b)
+        print(f"disadvantage_a: {disadvantage_a} | disadvantage_b: {disadvantage_b}")
         # Tweet if multiplier is active for losing team (other team has 3% more flags)
         try:
             if (disadvantage_a > 1.01): # Team B is losing
@@ -181,6 +184,7 @@ def check_gauntlet():
             elif (disadvantage_b > 1.01): # Team A is losing
                 tweet_multiplier(a_name, multiplier, hours_remain, vg_hashtag, round_name, api)
             else:
+                print("Starting Tie Hour Tweet")
                 hour_or_hours = one_hour_string(hours_remain)
                 tweet_tie = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
                 api.update_status(tweet_tie)
@@ -211,16 +215,17 @@ def one_hour_string(hours_remain):
         return "Less than one hour remains"
 
 def unit_details(name):
+    print("Starting unit_details()")
     # Get unit quote
     ## Get unit quote url
-    quote_url = "Assets/%s/%s_Quotes.txt" % (name, name)
+    quote_url = "../../Assets/%s/%s_Quotes.txt" % (name, name)
     ## Parse text file line by line into list, then select random quote
     quotes = open(quote_url).read().splitlines()
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
     # Get unit img_url
-    img_url = "Assets/%s/%s_Preview.png" % (name, name)
+    img_url = "../../Assets/%s/%s_Preview.png" % (name, name)
     unit_details = [quote, img_url]
     print("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
     return unit_details
@@ -229,6 +234,7 @@ def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api
     # Tweet with image
     #try:
     # Get unit details
+    print("Starting tweet_multiplier()")
     current_details = unit_details(name)
     quote = current_details[0]
     img_url = current_details[1]
