@@ -1,12 +1,12 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/42'
 vg_hashtag='#SSS'
 vg_test=True
-round_1_start_raw = 'Dec 01 2020 2:00AM'
-round_1_end_raw = 'Dec 02 2020 11:00PM'
-round_2_start_raw = 'Dec 03 2020 2:00AM'
-round_2_end_raw = 'Dec 04 2020 11:00PM'
+round_1_start_raw = 'Dec 01 2020 7:00AM'
+round_1_end_raw = 'Dec 03 2020 4:00AM'
+round_2_start_raw = 'Dec 03 2020 7:00AM'
+round_2_end_raw = 'Dec 05 2020 4:00AM'
 round_3_start_raw = 'Dec 05 2020 2:00AM'
-round_3_end_raw = 'Dec 06 2020 11:00PM'
+round_3_end_raw = 'Dec 07 2020 4:00AM'
 round_1_unit_1 = "Laevatein"
 round_1_unit_2 = "Hana"
 round_1_unit_3 = "Lyn"
