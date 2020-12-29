@@ -8,5 +8,6 @@ local/
 .DS_Store
 secrets*
 *.pyc
+*.log
 nohup.out
 __pycache__
