@@ -6,21 +6,7 @@ include/
 lib/
 local/
 .DS_Store
-
-# Twitter API Keys
-secrets.py
-secrets.pyc
-secrets_test.py
-secrets_test.pyc
-secrets_feh.py
-secrets_feh.pyc
-secrets_poets.py
-secrets_poets.pyc
-current_vg.pyc
-
-
-# nohup
+secrets*
+*.pyc
 nohup.out
-
-# python
 __pycache__
