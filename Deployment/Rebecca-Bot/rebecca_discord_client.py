@@ -33,9 +33,39 @@ async def on_ready():
 # Set Up Background Task
 @tasks.loop(seconds=5)
 async def send_vg_ugdate(guild, channel_name):
+
+    #Check scores
     logging.info('starting change_status()')
     channel = discord.utils.get(guild.channels, name=channel_name)
-    await channel.send("Heya!")
+    vg_scores = check_vg()
+    if (vg_scores == -1):
+        print("In Beween Rounds")
+    else:
+        print("During Voting Gauntlet")
+
+    # Ping if multiplier is active for losing team (other team has 3% more flags)
+    for score in vg_scores:
+        try:
+            message = score["Message"]
+            # Send only text tweet
+            if "Tie" in score["Losing"]:
+                await channel.send(message)
+                logging.info("Ping Sent Successfully")
+            # Send image and text
+            else:
+                losing_unit = score["Losing"]
+                # updated_message = "@Team" + losing_unit + message
+                losing_unit_role_id = discord_role_ids[losing_unit]
+                current_details = unit_assets(losing_unit)
+                img_url = current_details[1]
+                updated_message =losing_unit_role_id + message
+                # api.update_status(status=updated_message, media_ids=media_list)
+                await channel.send(content=updated_message,file=discord.File(img_url))
+                logging.info("Ping Sent Successfully")
+        except:
+            # Print out timestamp in the event of failure
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print("Ping failed at %s for %s" % (timestamp, score["Losing"]))
 
 client.run(DISCORD_TOKEN)
 # @bot.command(name='create-channel')
@@ -46,3 +76,27 @@ client.run(DISCORD_TOKEN)
 #     if not existing_channel:
 #         print(f'Creating a new channel: {channel_name}')
 #         await guild.create_text_channel(channel_name)
+
+# import discord
+# import asyncio
+# import datetime
+
+# time_for_thing_to_happen = datetime.time(hour=12)  # 12 o'clock in the afternoon, UTC
+
+# async def sometask():
+#     while True:
+#         now = datetime.datetime.utcnow()
+#         date = now.date()
+#         if now.time() > time_for_thing_to_happen:
+#             date = now.date() + datetime.timedelta(days=1)
+#         then = datetime.datetime.combine(date, time_for_thing_to_happen)
+#         await discord.utils.sleep_until(then)
+#         print("it's 12 o'clock")
+
+# #errors in tasks raise silently normally so lets make them speak up
+# def exception_catching_callback(task):
+#     if task.exception():
+#         task.print_stack()
+
+# task = asyncio.create_task(sometask())
+# task.add_done_callback(exception_catching_callback)

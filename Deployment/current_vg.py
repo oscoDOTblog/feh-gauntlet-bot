@@ -21,3 +21,7 @@ round_2_unit_3 = "Leila"
 round_2_unit_4 = "Kaze"
 round_3_unit_1 = "Lyn"
 round_3_unit_2 = "Leila"
+discord_role_ids = {
+    round_1_unit_3 : "<@&793545954455584830>",
+    round_1_unit_6 : "<@&793546031521988618>"
+}

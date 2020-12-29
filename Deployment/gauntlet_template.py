@@ -197,9 +197,9 @@ def check_vg():
 
 def one_hour_string(hours_remain):
     if (hours_remain > 1):
-        return "%d+ hours remain" % hours_remain
+        return "**%d+** hours remain" % hours_remain
     elif (hours_remain <= 1):
-        return "Less than one hour remains"
+        return "Less than **one** hour remains"
 
 def unit_assets(name):
     print("Starting unit_assets()")
@@ -226,7 +226,7 @@ def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
     quote = current_details[0]
     # img_url = current_details[1]
     hour_or_hours = one_hour_string(hours_remain)
-    message = ' is losing with a %.1fx multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, quote, hour_or_hours, vg_hashtag, round_name)
+    message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, quote, hour_or_hours, vg_hashtag, round_name)
     print(message)
     return message
 
