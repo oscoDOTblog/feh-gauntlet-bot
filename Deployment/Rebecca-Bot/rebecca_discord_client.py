@@ -30,7 +30,7 @@ async def on_ready():
     send_vg_ugdate.start(guild,discord_channel_name)
 
 # Set Up Background Task
-@tasks.loop(seconds=5)
+@tasks.loop(seconds=60*60)
 async def send_vg_ugdate(guild, channel_name):
 
     #Check scores
