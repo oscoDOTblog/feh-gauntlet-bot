@@ -10,20 +10,12 @@ from timeit import default_timer as timer
 from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
-import tweepy
 from current_vg import * # current VG particpants and round dates
-# from secrets_feh import * #TODO: Change before VG to secrets
-from secrets_poets import * #TODO: Change before VG to secrets
-
 
 # main method (called every 30 minutes)
-def check_gauntlet():
+def check_vg():
     # start timer
     start_time = timer()
-
-    # DELETE ME: set encoding to utf-8
-    # importlib.reload(sys)
-    # sys.setdefaultencoding('utf8')
 
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
@@ -82,6 +74,7 @@ def check_gauntlet():
             round_start = round_3_start
             unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
             round_name = 'Final Round'
+        # else in between rounds
         else:
             print("Current time in between rounds. Ending execution.")
             return (-1)
@@ -109,10 +102,6 @@ def check_gauntlet():
         # if "Black" in x_text and "Knight" in x_text:
         #     print("Changing text to BlackKnight")
         #     x_text = "BlackKnight"
-        # if "Death" in x_text and "Knight" in x_text:
-        #     print("Changing text to DeathKnight")
-        #     x_text = "DeathKnight"
-        #Test before VG if False
         if not (vg_test):
             print("VG is NOW!!!")
             y_text = y.get_text()
@@ -139,21 +128,15 @@ def check_gauntlet():
             break
 
     # custom sort dictionary values into a list
-    # TODO: change every VG
     keyorder = [round_1_unit_1, round_1_unit_2, round_1_unit_3, round_1_unit_4, round_1_unit_5, round_1_unit_6, round_1_unit_7, round_1_unit_8]
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(unit_scores)
 
-    # Twitter authentication
-    auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
-    auth.set_access_token(A_TOKEN, A_TOKEN_SECRET)
-    api = tweepy.API(auth)
-
     # calculate disadvantage multiplier based on hour of round
     # divmod is a little complex so,
     # 1) divide the total seconds from time_elapsed into hours (60*60)
-    # 2) divmod return a list with the quotient as [0] and remainder as [1]
+    # 2) divmod return'' a list with the quotient as [0] and remainder as [1]
     time_elapsed =  time_now - round_start
     current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
     hours_remain = 45 - current_hour
@@ -161,6 +144,7 @@ def check_gauntlet():
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
+    vg_scores = []
     for (a, b) in pairwise_compare(unit_scores):
 
         # obtain name of units battling
@@ -177,22 +161,26 @@ def check_gauntlet():
         print(disadvantage_a)
         print(disadvantage_b)
         print(f"disadvantage_a: {disadvantage_a} | disadvantage_b: {disadvantage_b}")
-        # Tweet if multiplier is active for losing team (other team has 3% more flags)
-        try:
-            if (disadvantage_a > 1.01): # Team B is losing
-                tweet_multiplier(b_name, multiplier, hours_remain, vg_hashtag, round_name, api)
-            elif (disadvantage_b > 1.01): # Team A is losing
-                tweet_multiplier(a_name, multiplier, hours_remain, vg_hashtag, round_name, api)
-            else:
-                print("Starting Tie Hour Tweet")
-                hour_or_hours = one_hour_string(hours_remain)
-                tweet_tie = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
-                api.update_status(tweet_tie)
-                print("#Team%s #Team%s are tied" % (a_name, b_name))
-        except:
-            # Print out timestamp in the event of failure
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print("Tweet failed at %s for #Team%s #Team%s" % (timestamp, a_name, b_name))
+        
+        # Create Dictionary Per Pairwise Comparison, then add to list
+        losing_unit = ''
+        if (disadvantage_a > 1.01): # Team B is losing
+            losing_unit = b_name
+            message = tweet_multiplier(b_name, multiplier, hours_remain, vg_hashtag, round_name)
+        elif (disadvantage_b > 1.01): # Team A is losing
+            losing_unit = a_name
+            message = tweet_multiplier(a_name, multiplier, hours_remain, vg_hashtag, round_name)
+        else:
+            losing_unit = "Tie-"+a_name+"-"+b_name
+            hour_or_hours = one_hour_string(hours_remain)
+            message = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
+
+        dic = {}
+        dic['Round'] = round_name
+        dic['Hour'] = hours_remain
+        dic['Losing'] = losing_unit
+        dic['Message'] = message
+        vg_scores.append(dic)
 
     # End of Log
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -205,17 +193,16 @@ def check_gauntlet():
     end_time = timer()
     time_elapsed = int(math.floor(end_time - start_time))
     print(time_elapsed)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    return (time_elapsed)
+    return (vg_scores)
 
 def one_hour_string(hours_remain):
     if (hours_remain > 1):
-        return "%d+ hours remain" % hours_remain
-    elif (hours_remain == 1):
-        return "Less than one hour remains"
+        return "**%d+** hours remain" % hours_remain
+    elif (hours_remain <= 1):
+        return "Less than **one** hour remains"
 
-def unit_details(name):
-    print("Starting unit_details()")
+def unit_assets(name):
+    print("Starting unit_assets()")
     # Get unit quote
     ## Get unit quote url
     quote_url = "../../Assets/%s/%s_Quotes.txt" % (name, name)
@@ -226,35 +213,22 @@ def unit_details(name):
 
     # Get unit img_url
     img_url = "../../Assets/%s/%s_Preview.png" % (name, name)
-    unit_details = [quote, img_url]
+    unit_assets = [quote, img_url]
     print("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
-    return unit_details
+    return unit_assets
 
-def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name, api):
+def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
     # Tweet with image
     #try:
     # Get unit details
     print("Starting tweet_multiplier()")
-    current_details = unit_details(name)
+    current_details = unit_assets(name)
     quote = current_details[0]
-    img_url = current_details[1]
+    # img_url = current_details[1]
     hour_or_hours = one_hour_string(hours_remain)
-    message = '#Team%s is losing with a %.1fx multiplier up!\n"%s"\n(%s in %s\'s %s)' % (name, multiplier, quote, hour_or_hours, vg_hashtag, round_name)
+    message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, quote, hour_or_hours, vg_hashtag, round_name)
     print(message)
-    # Attach image to tweet
-    print("here1")
-    media_list = list()
-    print("here2")
-    response = api.media_upload(img_url)
-    print("here3")
-    media_list.append(response.media_id_string)
-    print("here4")
-    api.update_status(status=message, media_ids=media_list)
-
-    # Plaintext tweet
-    #except:
-    #    message = '#Team%s is losing with a %.1fx multiplier up!\n(%s %s Hour %d)' % (name, multiplier, vg_hashtag, round_name, current_hour)
-    #    api.update_status(message)
+    return message
 
 def pairwise_list(iterable):
     it = iter(iterable)
@@ -276,14 +250,3 @@ def truncate(f, n):
         return '{0:.{1}f}'.format(f, n)
     i, p, d = s.partition('.')
     return '.'.join([i, (d+'0'*n)[:n]])
-
-# It's showtime
-if __name__ == "__main__":
-    #Check scores every hour
-    voting = True;
-    while voting:
-        time_elapsed = check_gauntlet()
-        if (time_elapsed == -1):
-            voting = False
-        else:
-            time.sleep(60*60 - time_elapsed)
