@@ -26,9 +26,8 @@ status = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.
 async def on_ready():
     logging.info('Bot is on_ready()')
     guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-    channel_name = "bot-test"
     await client.change_presence(activity=discord.Game(status[0]))
-    send_vg_ugdate.start(guild,channel_name)
+    send_vg_ugdate.start(guild,discord_channel_name)
 
 # Set Up Background Task
 @tasks.loop(seconds=5)
