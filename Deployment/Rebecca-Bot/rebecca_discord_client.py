@@ -27,14 +27,15 @@ async def on_ready():
     logging.info('Bot is on_ready()')
     guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
     await client.change_presence(activity=discord.Game(status[0]))
-    send_vg_ugdate.start(guild)
+    send_vg_ugdate.start(guild,discord_channel_name)
 
 # Set Up Background Task
 @tasks.loop(seconds=60*60)
-async def send_vg_ugdate(guild):
+async def send_vg_ugdate(guild, channel_name):
 
     #Check scores
     logging.info('starting change_status()')
+    channel = discord.utils.get(guild.channels, name=channel_name)
     vg_scores = check_vg()
     if (vg_scores == -1):
         print("In Beween Rounds")
@@ -43,19 +44,15 @@ async def send_vg_ugdate(guild):
 
     # Ping if multiplier is active for losing team (other team has 3% more flags)
     for score in vg_scores:
-        
         try:
             message = score["Message"]
             # Send only text tweet
             if "Tie" in score["Losing"]:
-                # channel_name = "team-tie"
-                # await channel.send(message)
-                logging.info("No ping sent, teams are tied")
+                await channel.send(message)
+                logging.info("Ping Sent Successfully")
             # Send image and text
             else:
                 losing_unit = score["Losing"]
-                channel_name = "team-" + losing_unit  
-                channel = discord.utils.get(guild.channels, name=channel_name)
                 # updated_message = "@Team" + losing_unit + message
                 losing_unit_role_id = discord_role_ids[losing_unit]
                 current_details = unit_assets(losing_unit)
