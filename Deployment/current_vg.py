@@ -19,8 +19,8 @@ round_2_unit_1 = "Hilda"
 round_2_unit_2 = "Fae"
 round_2_unit_3 = "Felix"
 round_2_unit_4 = "Altina"
-round_3_unit_1 = "Lyn"
-round_3_unit_2 = "Leila"
+round_3_unit_1 = "Hilda"
+round_3_unit_2 = "Felix"
 discord_role_ids = {
     round_1_unit_1 : "<@&783160598774808628>",
     round_1_unit_2 : "<@&783160690918817854>",
