@@ -1,6 +1,6 @@
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/43'
 vg_hashtag='#WF'
-vg_test=False
+vg_test=True
 round_1_start_raw = 'Dec 30 2020 7:00AM'
 round_1_end_raw = 'Jan 01 2021 4:00AM'
 round_2_start_raw = 'Jan 01 2021 7:00AM'
