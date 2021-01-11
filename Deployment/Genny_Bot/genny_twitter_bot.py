@@ -1,8 +1,8 @@
+## python3 -m Genny_Bot.genny_twitter_bot
 import sys
-sys.path.append("..") 
 from gauntlet_template import * 
+from Genny_Bot.secrets_tweepy import *
 import tweepy
-from secrets_tweepy import *
 
 def send_tweet(vg_scores):
     # Twitter authentication

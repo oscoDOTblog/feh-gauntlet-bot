@@ -1,3 +1,4 @@
+# python3 -m Genny_Bot.genny_twitter_bot
 # Import FEH-Gauntlet Bot Libraries
 import sys
 sys.path.append("..") 
@@ -7,7 +8,7 @@ from current_vg import *
 # Import Discord.py Bot Libraries
 import discord
 from discord.ext import commands,tasks
-from secrets_discord import *
+from Rebecca_Bot.secrets_discord import *
 from itertools import cycle
 import logging
 
