@@ -6,6 +6,7 @@ import random
 import decimal
 import importlib
 import time
+import logging
 from timeit import default_timer as timer
 from datetime import datetime
 import mechanize
@@ -250,3 +251,22 @@ def truncate(f, n):
         return '{0:.{1}f}'.format(f, n)
     i, p, d = s.partition('.')
     return '.'.join([i, (d+'0'*n)[:n]])
+
+# Set up logger
+def set_up_logger(module_name):
+    # Gets or creates a logger
+    logger = logging.getLogger(module_name)  
+
+    # set log level
+    logger.setLevel(logging.DEBUG)
+
+    # define file handler and set formatter
+    file_name = 'logs/' + module_name + '.log'
+    file_handler = logging.FileHandler(filename=file_name, encoding='utf-8', mode='w')
+    formatter    = logging.Formatter('%(asctime)s : %(levelname)s : %(name)s : %(message)s')
+    file_handler.setFormatter(formatter)
+
+    # add file handler to logger
+    logger.addHandler(file_handler)
+
+    return logger

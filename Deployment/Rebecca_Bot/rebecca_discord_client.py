@@ -1,7 +1,7 @@
-# python3 -m Genny_Bot.genny_twitter_bot
+# python3 -m Rebecca_Bot.rebecca_discord_client
 # Import FEH-Gauntlet Bot Libraries
 import sys
-sys.path.append("..") 
+# sys.path.append("..") 
 from gauntlet_template import * 
 from current_vg import * 
 
