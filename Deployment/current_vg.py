@@ -33,5 +33,5 @@ discord_role_ids = {
 }
 discord_channel_name = "feh-gauntlet-bot-alerts"
 crontab_bots = [
-    "Rebecca_Bot.rebecca_discord_client"
+    "rebecca_discord_client.py"
 ]

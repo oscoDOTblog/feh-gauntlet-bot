@@ -1,22 +1,18 @@
-# python3 -m Rebecca_Bot.rebecca_discord_client
-# Import FEH-Gauntlet Bot Libraries
-import sys
-# sys.path.append("..") 
-from gauntlet_template import * 
+# python3 rebecca_discord_client.py
+from credentials.secrets_discord import *
 from current_vg import * 
-
-# Import Discord.py Bot Libraries
 import discord
-from discord.ext import commands,tasks
-from Rebecca_Bot.secrets_discord import *
+from discord.ext import commands,tasks 
+from gauntlet_template import * 
 from itertools import cycle
 import logging
+import sys
 
 # Set up Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
@@ -31,10 +27,8 @@ async def on_ready():
     send_vg_ugdate.start(guild)
 
 # Set Up Background Task
-# @tasks.loop(seconds=60*60)
-@tasks.loop(seconds=6)
+@tasks.loop(seconds=999999999)
 async def send_vg_ugdate(guild):
-
     #Check scores
     logging.info('starting change_status()')
     vg_scores = check_vg()
