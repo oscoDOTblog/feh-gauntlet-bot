@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y ${UBUNTU_PACKAGES}
 # Install Python Dependencies
 ARG PIP3_PACKAGES="\
     aiohttp==3.6.3
+    APScheduler==3.6.3
     asn1crypto==0.24.0
     async-timeout==3.0.1
     attrs==20.3.0
@@ -61,6 +62,7 @@ ARG PIP3_PACKAGES="\
     python-crontab==2.5.1
     python-dateutil==2.8.1
     python-debian==0.1.32
+    pytz==2020.5
     pyxdg==0.25
     PyYAML==3.12
     requests==2.25.1
@@ -75,6 +77,7 @@ ARG PIP3_PACKAGES="\
     tweepy==3.10.0
     Twisted==17.9.0
     typing-extensions==3.7.4.3
+    tzlocal==2.1
     ufw==0.36
     unattended-upgrades==0.1
     urllib3==1.26.2
