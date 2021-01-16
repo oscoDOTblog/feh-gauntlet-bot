@@ -1,7 +1,7 @@
 ## python3 genny_twitter_bot.py
 import sys
 from gauntlet_template import * 
-from credentials.secrets_tweepy import *
+from config.secrets_tweepy import *
 import tweepy
 
 def send_tweet(vg_scores):

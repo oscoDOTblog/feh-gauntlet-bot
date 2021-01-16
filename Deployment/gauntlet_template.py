@@ -11,7 +11,7 @@ from timeit import default_timer as timer
 from datetime import datetime
 import mechanize
 from bs4 import BeautifulSoup
-from current_vg import * # current VG particpants and round dates
+from config.current_vg import * # current VG particpants and round dates
 
 # main method (called every 30 minutes)
 def check_vg():
@@ -259,6 +259,7 @@ def set_up_logger(module_name):
 
     # set log level
     logger.setLevel(logging.DEBUG)
+    # logger.setLevel(logging.INFO)
 
     # define file handler and set formatter
     file_name = 'logs/' + module_name + '.log'

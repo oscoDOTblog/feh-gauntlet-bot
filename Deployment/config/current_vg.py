@@ -31,7 +31,3 @@ discord_role_ids = {
     round_1_unit_7 : "<@&783161170815090698>",
     round_1_unit_8 : "<@&783161225826926653>"
 }
-discord_channel_name = "feh-gauntlet-bot-alerts"
-crontab_bots = [
-    "rebecca_discord_client.py"
-]

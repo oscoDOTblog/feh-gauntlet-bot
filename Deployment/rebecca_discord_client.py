@@ -1,98 +1,57 @@
-# python3 rebecca_discord_client.py
-from credentials.secrets_discord import *
-from current_vg import * 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+from config.secrets_discord import *
+from datetime import datetime
 import discord
-from discord.ext import commands,tasks 
-from gauntlet_template import * 
-from itertools import cycle
-import logging
-import sys
+from gauntlet_template import *
 
-# Set up Logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+PREFIX = "++"
+STATUS = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
 
-# Set up Client
-client = commands.Bot(command_prefix = "!")
-status = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
-@client.event
-async def on_ready():
-    logging.info('Bot is on_ready()')
-    guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-    await client.change_presence(activity=discord.Game(status[0]))
-    send_vg_ugdate.start(guild)
+class MyClient(discord.Client):
+    def __init__(self, *args, **kwargs):
+        self.PREFIX = PREFIX
+        self.ready = False
+        self.guild = None 
+        self.logger = set_up_logger(__file__)
+        self.scheduler = AsyncIOScheduler()
+        super().__init__(command_prefix=PREFIX,*args, **kwargs)
 
-# Set Up Background Task
-@tasks.loop(seconds=999999999)
-async def send_vg_ugdate(guild):
-    #Check scores
-    logging.info('starting change_status()')
-    vg_scores = check_vg()
-    if (vg_scores == -1):
-        print("In Beween Rounds")
-    else:
-        print("During Voting Gauntlet")
+    #Check scores and send update to discord if required
+    async def send_vg_ugdate(self):
+        await self.wait_until_ready()
+        self.logger.debug(f'~~~~~starting {__file__}.send_vg_ugdate()~~~~~')
+        vg_scores = check_vg()
+        if (vg_scores == -1):
+            self.logger.debug("In Beween Rounds")
+        else:
+            self.logger.debug("During Voting Gauntlet")
 
-    # Ping if multiplier is active for losing team (other team has 3% more flags)
-    for score in vg_scores:
-        try:
-            message = score["Message"]
-            # Send only text tweet
-            if "Tie" in score["Losing"]:
-                # await channel.send(message)
-                logging.info("Do nothing, Twitter Bot sends tie tweet.")
-            # Send image and text
-            else:
+        # Ping if multiplier is active for losing team (other team has 3% more flags)
+        for score in vg_scores:
+            try:
                 losing_unit = score["Losing"]
-                # updated_message = "@Team" + losing_unit + message
-                losing_unit_role_id = discord_role_ids[losing_unit]
-                current_details = unit_assets(losing_unit)
-                img_url = current_details[1]
-                updated_message =losing_unit_role_id + message
-                # api.update_status(status=updated_message, media_ids=media_list)
-                channel_name = "team-" + losing_unit.lower()
-                channel = discord.utils.get(guild.channels, name=channel_name)
-                await channel.send(content=updated_message,file=discord.File(img_url))
-                logging.info("Ping Sent Successfully")
-        except:
-            # Print out timestamp in the event of failure
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            print("Ping failed at %s for %s" % (timestamp, score["Losing"]))
+                self.logger.debug(f"losing unit : {losing_unit}")
+                if "Tie" in losing_unit:
+                    self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
+                else:
+                    current_details = unit_assets(losing_unit)
+                    img_url = current_details[1]
+                    updated_message = discord_role_ids[losing_unit] + score["Message"]
+                    channel_name = "team-" + losing_unit.lower()
+                    channel = discord.utils.get(self.guild.channels, name=channel_name)
+                    await channel.send(content=updated_message,file=discord.File(img_url))
+                    self.logger.debug("Ping sent successfully for #Team" + losing_unit)
+            except:
+                # Print out timestamp in the event of failure
+                self.logger.debug(f"Ping failed for #Team{losing_unit}") 
 
+    async def on_ready(self):
+        await client.change_presence(activity=discord.Game(STATUS[0]))
+        self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        self.scheduler.start()
+
+client = MyClient()
 client.run(DISCORD_TOKEN)
-# @bot.command(name='create-channel')
-# @commands.has_role('admin')
-# async def create_channel(ctx, channel_name='real-python'):
-#     guild = ctx.guild
-#     existing_channel = discord.utils.get(guild.channels, name=channel_name)
-#     if not existing_channel:
-#         print(f'Creating a new channel: {channel_name}')
-#         await guild.create_text_channel(channel_name)
-
-# import discord
-# import asyncio
-# import datetime
-
-# time_for_thing_to_happen = datetime.time(hour=12)  # 12 o'clock in the afternoon, UTC
-
-# async def sometask():
-#     while True:
-#         now = datetime.datetime.utcnow()
-#         date = now.date()
-#         if now.time() > time_for_thing_to_happen:
-#             date = now.date() + datetime.timedelta(days=1)
-#         then = datetime.datetime.combine(date, time_for_thing_to_happen)
-#         await discord.utils.sleep_until(then)
-#         print("it's 12 o'clock")
-
-# #errors in tasks raise silently normally so lets make them speak up
-# def exception_catching_callback(task):
-#     if task.exception():
-#         task.print_stack()
-
-# task = asyncio.create_task(sometask())
-# task.add_done_callback(exception_catching_callback)
