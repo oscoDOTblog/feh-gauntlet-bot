@@ -21,7 +21,7 @@ class MyClient(discord.Client):
     async def send_vg_ugdate(self):
         await self.wait_until_ready()
         self.logger.debug(f'~~~~~starting {__file__}.send_vg_ugdate()~~~~~')
-        vg_scores = check_vg()
+        vg_scores = check_vg(self.logger)
         if (vg_scores == -1):
             self.logger.debug("In Beween Rounds")
         else:
@@ -30,12 +30,12 @@ class MyClient(discord.Client):
         # Ping if multiplier is active for losing team (other team has 3% more flags)
         for score in vg_scores:
             try:
+                self.logger.debug(score)
                 losing_unit = score["Losing"]
-                self.logger.debug(f"losing unit : {losing_unit}")
                 if "Tie" in losing_unit:
                     self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
                 else:
-                    current_details = unit_assets(losing_unit)
+                    current_details = unit_assets(self.logger, losing_unit)
                     img_url = current_details[1]
                     updated_message = discord_role_ids[losing_unit] + score["Message"]
                     channel_name = "team-" + losing_unit.lower()
