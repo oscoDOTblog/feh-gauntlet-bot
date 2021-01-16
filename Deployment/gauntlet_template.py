@@ -257,8 +257,8 @@ def set_up_logger(module_name):
     logger = logging.getLogger(module_name)  
 
     # set log level
-    logger.setLevel(logging.DEBUG)
-    # logger.setLevel(logging.INFO)
+    # logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
 
     # define file handler and set formatter
     file_name = 'logs/' + module_name + '.log'
