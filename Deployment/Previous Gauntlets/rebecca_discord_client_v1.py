@@ -1,21 +1,18 @@
-# Import FEH-Gauntlet Bot Libraries
-import sys
-sys.path.append("..") 
-from gauntlet_template import * 
+# python3 rebecca_discord_client.py
+from credentials.secrets_discord import *
 from current_vg import * 
-
-# Import Discord.py Bot Libraries
 import discord
-from discord.ext import commands,tasks
-from secrets_discord import *
+from discord.ext import commands,tasks 
+from gauntlet_template import * 
 from itertools import cycle
 import logging
+import sys
 
 # Set up Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='logs/discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
@@ -27,15 +24,13 @@ async def on_ready():
     logging.info('Bot is on_ready()')
     guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
     await client.change_presence(activity=discord.Game(status[0]))
-    send_vg_ugdate.start(guild,discord_channel_name)
+    send_vg_ugdate.start(guild)
 
 # Set Up Background Task
-@tasks.loop(seconds=60*60)
-async def send_vg_ugdate(guild, channel_name):
-
-    #Check scores
+@tasks.loop(seconds=999999999)
+async def send_vg_ugdate(guild):
+    #Check scores   
     logging.info('starting change_status()')
-    channel = discord.utils.get(guild.channels, name=channel_name)
     vg_scores = check_vg()
     if (vg_scores == -1):
         print("In Beween Rounds")
@@ -48,8 +43,8 @@ async def send_vg_ugdate(guild, channel_name):
             message = score["Message"]
             # Send only text tweet
             if "Tie" in score["Losing"]:
-                await channel.send(message)
-                logging.info("Ping Sent Successfully")
+                # await channel.send(message)
+                logging.info("Do nothing, Twitter Bot sends tie tweet.")
             # Send image and text
             else:
                 losing_unit = score["Losing"]
@@ -59,6 +54,8 @@ async def send_vg_ugdate(guild, channel_name):
                 img_url = current_details[1]
                 updated_message =losing_unit_role_id + message
                 # api.update_status(status=updated_message, media_ids=media_list)
+                channel_name = "team-" + losing_unit.lower()
+                channel = discord.utils.get(guild.channels, name=channel_name)
                 await channel.send(content=updated_message,file=discord.File(img_url))
                 logging.info("Ping Sent Successfully")
         except:
