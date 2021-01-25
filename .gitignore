@@ -11,3 +11,4 @@ secrets*
 *.log
 nohup.out
 __pycache__
+.pytest_cache
