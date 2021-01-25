@@ -12,8 +12,8 @@ docker rm $(docker ps -a -q)
 
 # Upload
 docker login atemosta
-docker tag atemosta/feh-gauntlet-bot atemosta/feh-gauntlet-bot:v1.0
-docker push atemosta/feh-gauntlet-bot:v1.0
+docker tag atemosta/feh-gauntlet-bot atemosta/feh-gauntlet-bot:1.1
+docker push atemosta/feh-gauntlet-bot:1.1
 
 # Debugging
 docker inspect <container-id>
