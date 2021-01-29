@@ -1,12 +1,14 @@
 ## python3 genny_twitter_bot.py
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+# from apscheduler.schedulers.asyncio import AsyncIOScheduler
+# from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 from config.secrets_tweepy import *
 from gauntlet_template import * 
 import sys
 import tweepy
 
-def send_twitter_update(logger):
+def send_twitter_update():
     # Check scores
     logger.debug(f'~~~~~starting {__file__}.send_twitter_update()~~~~~')
     vg_scores = check_vg(logger)
@@ -43,7 +45,9 @@ def send_twitter_update(logger):
 
 if __name__ == "__main__":
     logger = set_up_logger(__file__)
-    scheduler = AsyncIOScheduler()
-    # scheduler.add_job(send_twitter_update(logger), CronTrigger(second="*/5"))
-    scheduler.add_job(send_twitter_update(logger), CronTrigger(minute="5")) # cron expression: (5 * * * *)
+    # scheduler = AsyncIOScheduler()
+    # scheduler = BackgroundScheduler()
+    scheduler = BlockingScheduler()
+    # scheduler.add_job(send_twitter_update, CronTrigger(second="*/5"))
+    scheduler.add_job(send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
     scheduler.start()
