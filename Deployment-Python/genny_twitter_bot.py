@@ -45,5 +45,5 @@ if __name__ == "__main__":
     logger = set_up_logger(__file__)
     scheduler = AsyncIOScheduler()
     # scheduler.add_job(send_twitter_update(logger), CronTrigger(second="*/5"))
-    scheduler.add_job(send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+    scheduler.add_job(send_twitter_update(logger), CronTrigger(minute="5")) # cron expression: (5 * * * *)
     scheduler.start()
