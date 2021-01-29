@@ -205,14 +205,14 @@ def unit_assets(logger, name):
     logger.debug("Starting unit_assets()")
     # Get unit quote
     ## Get unit quote url
-    quote_url = "../Assets/%s/%s_Quotes.txt" % (name, name)
+    quote_url = "assets/%s/%s_Quotes.txt" % (name, name)
     ## Parse text file line by line into list, then select random quote
     quotes = open(quote_url).read().splitlines()
     secure_random = random.SystemRandom()
     quote = secure_random.choice(quotes)
 
     # Get unit img_url
-    img_url = "../Assets/%s/%s_Preview.png" % (name, name)
+    img_url = "assets/%s/%s_Preview.png" % (name, name)
     unit_assets = [quote, img_url]
     logger.info("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
     return unit_assets
