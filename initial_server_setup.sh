@@ -82,8 +82,9 @@ apt update
 apt-cache policy docker-ce
 apt install docker-ce
 sudo usermod -aG docker ${USERNAME}
-docker pull atemosta/feh-gauntlet-bot:v1.0
-# docker run -it atemosta/feh-gauntlet-bot:v1.0 /bin/bash
+docker pull atemosta/feh-gauntlet-bot:1.11
+# docker run -it atemosta/feh-gauntlet-bot:1.11 /bin/bash
+# docker exec -it eab04a556e8a /bin/bash
 
 
 

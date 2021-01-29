@@ -1,7 +1,7 @@
 # PST is 8 hours behind UTC
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/44'
 vg_hashtag='#MM'
-vg_test=True
+vg_test=False
 round_1_start_raw = 'Jan 29 2021 7:00AM'
 round_1_end_raw = 'Jan 31 2021 4:00AM'
 round_2_start_raw = 'Jan 31 2021 7:00AM'
@@ -23,12 +23,12 @@ round_2_unit_4 = "Altina"
 round_3_unit_1 = "Hilda"
 round_3_unit_2 = "Felix"
 discord_role_ids = {
-    round_1_unit_1 : "<@&783160598774808628>",
-    round_1_unit_2 : "<@&783160690918817854>",
-    round_1_unit_3 : "<@&783160768459046914>",
-    round_1_unit_4 : "<@&783160864404406274>",
-    round_1_unit_5 : "<@&783160947278741565>",
-    round_1_unit_6 : "<@&783161078816440332>",
-    round_1_unit_7 : "<@&783161170815090698>",
-    round_1_unit_8 : "<@&783161225826926653>"
+    round_1_unit_1 : "<@&804779564009521162>",
+    round_1_unit_2 : "<@&804779682058731570>",
+    round_1_unit_3 : "<@&804786612911341568>",
+    round_1_unit_4 : "<@&804786685161898004>",
+    round_1_unit_5 : "<@&804786742439706645>",
+    round_1_unit_6 : "<@&804786790593462323>",
+    round_1_unit_7 : "<@&804786903102259211>",
+    round_1_unit_8 : "<@&804786975269322842>"
 }
