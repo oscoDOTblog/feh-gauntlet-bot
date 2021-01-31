@@ -16,12 +16,12 @@ round_1_unit_5 = "Gerik"
 round_1_unit_6 = "Marisa"
 round_1_unit_7 = "Titania"
 round_1_unit_8 = "Ike"
-round_2_unit_1 = "Hilda"
-round_2_unit_2 = "Fae"
-round_2_unit_3 = "Felix"
-round_2_unit_4 = "Altina"
+round_2_unit_1 = "Raven"
+round_2_unit_2 = "Saber"
+round_2_unit_3 = "Gerik"
+round_2_unit_4 = "Ike"
 round_3_unit_1 = "Hilda"
-round_3_unit_2 = "Felix"
+round_3_unit_2 = "Ike"
 discord_role_ids = {
     round_1_unit_1 : "<@&804779564009521162>",
     round_1_unit_2 : "<@&804779682058731570>",
