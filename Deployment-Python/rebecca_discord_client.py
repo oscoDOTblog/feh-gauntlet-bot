@@ -13,7 +13,7 @@ class MyClient(discord.Client):
         self.PREFIX = PREFIX
         self.ready = False
         self.guild = None 
-        self.logger = set_up_logger(__file__)
+        self.logger = set_up_logger('discord')
         self.scheduler = AsyncIOScheduler()
         super().__init__(command_prefix=PREFIX,*args, **kwargs)
 
@@ -28,22 +28,22 @@ class MyClient(discord.Client):
             self.logger.debug("During Voting Gauntlet")
             # Ping if multiplier is active for losing team (other team has 3% more flags)
             for score in vg_scores:
-                try:
-                    self.logger.debug(score)
-                    losing_unit = score["Losing"]
-                    if "Tie" in losing_unit:
-                        self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
-                    else:
-                        current_details = unit_assets(self.logger, losing_unit)
-                        img_url = current_details[1]
-                        updated_message = discord_role_ids[losing_unit] + score["Message"]
-                        channel_name = "team-" + losing_unit.lower()
-                        channel = discord.utils.get(self.guild.channels, name=channel_name)
-                        await channel.send(content=updated_message,file=discord.File(img_url))
-                        self.logger.debug("Ping sent successfully for #Team" + losing_unit)
-                except:
-                    # Print out timestamp in the event of failure
-                    self.logger.debug(f"Ping failed for #Team{losing_unit}") 
+            # try:
+                self.logger.debug(score)
+                losing_unit = score["Losing"]
+                if "Tie" in losing_unit:
+                    self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
+                else:
+                    current_details = unit_assets(self.logger, losing_unit)
+                    img_url = current_details[1]
+                    updated_message = discord_role_ids[losing_unit] + score["Message"]
+                    channel_name = "team-" + losing_unit.lower()
+                    channel = discord.utils.get(self.guild.channels, name=channel_name)
+                    await channel.send(content=updated_message,file=discord.File(img_url))
+                    self.logger.debug("Ping sent successfully for #Team" + losing_unit)
+            # except:
+                # Print out timestamp in the event of failure
+                # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
 
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
