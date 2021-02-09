@@ -1,7 +1,8 @@
 # PST is 8 hours behind UTC
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/44'
+vg_assets_root_path="assets/"
 vg_hashtag='#MM'
-vg_test=False
+vg_test=True
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/44'
 round_1_start_raw = 'Jan 29 2021 7:00AM'
 round_1_end_raw = 'Jan 31 2021 4:00AM'
 round_2_start_raw = 'Jan 31 2021 7:00AM'

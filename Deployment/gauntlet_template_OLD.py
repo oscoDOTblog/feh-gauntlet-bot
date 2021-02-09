@@ -14,10 +14,7 @@ from bs4 import BeautifulSoup
 from config.current_vg import * # current VG particpants and round dates
 
 # main method (called every 30 minutes)
-def get_unit_scores():
-    # Set Up Logger
-    logger = set_up_logger("gauntlet_template")
-
+def check_vg(logger):
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
     br.set_handle_robots(False)
@@ -132,14 +129,6 @@ def get_unit_scores():
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     logger.info(unit_scores)
-    return unit_scores
-
-def check_vg():
-    # Set Up Logger
-    logger = set_up_logger("gauntlet_template")
-
-    # Get Unit Scores
-    unit_scores = get_unit_scores()
 
     # calculate disadvantage multiplier based on hour of round
     # divmod is a little complex so,
@@ -174,10 +163,10 @@ def check_vg():
         losing_unit = ''
         if (disadvantage_a > 1.01): # Team B is losing
             losing_unit = b_name
-            message = tweet_multiplier(b_name, multiplier, hours_remain, vg_hashtag, round_name)
+            message = tweet_multiplier(logger, b_name, multiplier, hours_remain, vg_hashtag, round_name)
         elif (disadvantage_b > 1.01): # Team A is losing
             losing_unit = a_name
-            message = tweet_multiplier(a_name, multiplier, hours_remain, vg_hashtag, round_name)
+            message = tweet_multiplier(logger, a_name, multiplier, hours_remain, vg_hashtag, round_name)
         else:
             losing_unit = "Tie-"+a_name+"-"+b_name
             hour_or_hours = one_hour_string(hours_remain)
@@ -205,7 +194,7 @@ def one_hour_string(hours_remain):
     elif (hours_remain <= 1):
         return "Less than **one** hour remains"
 
-def unit_assets(name):
+def unit_assets(logger, name):
     logger.debug("Starting unit_assets()")
     # Get unit quote
     ## Get unit quote url
@@ -221,12 +210,12 @@ def unit_assets(name):
     logger.info("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
     return unit_assets
 
-def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
+def tweet_multiplier(logger, name, multiplier, hours_remain, vg_hashtag, round_name):
     # Tweet with image
     #try:
     # Get unit details
     logger.debug("Starting tweet_multiplier()")
-    current_details = unit_assets(name)
+    current_details = unit_assets(logger, name)
     quote = current_details[0]
     # img_url = current_details[1]
     hour_or_hours = one_hour_string(hours_remain)
@@ -272,4 +261,5 @@ def set_up_logger(module_name):
 
     # add file handler to logger
     logger.addHandler(file_handler)
+
     return logger

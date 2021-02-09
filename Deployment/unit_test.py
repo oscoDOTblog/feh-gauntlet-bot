@@ -19,4 +19,15 @@ def test_validate_assets(supply_unit_names):
 		fd = open(img_url, 'r')
 		assert fd, "assert image exists"
 		fd.close()
-		print("pizza")
+
+def test_validate_unit_scores(supply_unit_names):
+	unit_scores = get_unit_scores()
+	for (a, b) in pairwise_compare(unit_scores):
+		a_name 	= 	a[0]
+		a_score = 	int(a[1].replace(',', ''))
+		b_name 	= 	b[0]
+		b_score = 	int(b[1].replace(',', ''))
+		assert a_name in supply_unit_names, "assert unit exists"
+		assert (isinstance(a_score, int)), "assert score in an integer"
+		assert b_name in supply_unit_names, "assert unit exists"
+		assert (isinstance(b_score, int)), "assert score in an integer"
