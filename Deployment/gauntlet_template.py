@@ -205,30 +205,9 @@ def one_hour_string(hours_remain):
     elif (hours_remain <= 1):
         return "Less than **one** hour remains"
 
-def unit_assets(name):
-    logger.debug("Starting unit_assets()")
-    # Get unit quote
-    ## Get unit quote url
-    quote_url = "assets/%s/%s_Quotes.txt" % (name, name)
-    ## Parse text file line by line into list, then select random quote
-    quotes = open(quote_url).read().splitlines()
-    secure_random = random.SystemRandom()
-    quote = secure_random.choice(quotes)
-
-    # Get unit img_url
-    img_url = "assets/%s/%s_Preview.png" % (name, name)
-    unit_assets = [quote, img_url]
-    logger.info("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
-    return unit_assets
-
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
-    # Tweet with image
-    #try:
-    # Get unit details
     logger.debug("Starting tweet_multiplier()")
-    current_details = unit_assets(name)
-    quote = current_details[0]
-    # img_url = current_details[1]
+    unit_random_quote = get_unit_quote_random(name)
     hour_or_hours = one_hour_string(hours_remain)
     message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, quote, hour_or_hours, vg_hashtag, round_name)
     logger.info(message)
@@ -254,6 +233,30 @@ def truncate(f, n):
         return '{0:.{1}f}'.format(f, n)
     i, p, d = s.partition('.')
     return '.'.join([i, (d+'0'*n)[:n]])
+
+def get_list_of_unit_names():
+    return [round_1_unit_1,
+            round_1_unit_2,
+            round_1_unit_3,
+            round_1_unit_4,
+            round_1_unit_5,
+            round_1_unit_6,
+            round_1_unit_7,
+            round_1_unit_8]
+
+
+def get_unit_quotes_url(unit_name):
+    return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Quotes.txt" 
+
+## Parse text file line by line into list, then select random quote
+def get_unit_quote_random(unit_name):
+    quotes_url = get_unit_quotes_url(unit_name)
+    quotes = open(quotes_url).read().splitlines()
+    secure_random = random.SystemRandom()
+    return secure_random.choice(quotes)
+
+def get_unit_image_url(unit_name):
+    return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Preview.png"
 
 # Set up logger
 def set_up_logger(module_name):
