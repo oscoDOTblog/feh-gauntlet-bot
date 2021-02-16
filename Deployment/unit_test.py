@@ -38,12 +38,24 @@ def test_unit_scores(supply_unit_names):
 		assert (isinstance(unit_score, int)), "assert score in an integer"
 
 ## check_vg returns a LIST of DICTIONARYS; 
-## this tests validates the list content 
+## this tests validates the list content if 
 def test_check_vg_distinct_scores(supply_unit_names):
-	current_unit_scores = get_unit_scores()
+	current_unit_scores = [(round_3_unit_1, '6,599'), (round_3_unit_1, '8,726')] 
 	vg_scores = check_vg(current_unit_scores)
 	for score in vg_scores:
 		assert (isinstance(score['Round'],     str)), "assert round_name is a string"
 		assert (isinstance(int(score['Hour']), int)), "assert hours_remain is an integer"
 		assert (isinstance(score['Losing'],    str)), "assert losing_unit is a string"
 		assert (isinstance(score['Message'],   str)), "assert message is a string"
+
+## check_vg returns a LIST of DICTIONARYS; 
+## this tests validates the list content if 
+def test_check_vg_same_scores(supply_unit_names):
+	current_unit_scores = [(round_3_unit_1, '4,545'), (round_3_unit_1, '4,545')] 
+	vg_scores = check_vg(current_unit_scores)
+	for score in vg_scores:
+		assert (isinstance(score['Round'],     str)), "assert round_name is a string"
+		assert (isinstance(int(score['Hour']), int)), "assert hours_remain is an integer"
+		assert (isinstance(score['Losing'],    str)), "assert losing_unit is a string"
+		assert ("Tie" in score["Losing"]), 			  "assert Tie is in score['Losing']"
+		assert (isinstance(score['Message'],   str)), "assert message is a string"		

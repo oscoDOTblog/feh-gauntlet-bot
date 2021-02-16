@@ -102,7 +102,7 @@ def get_unit_scores():
 
 def check_vg(unit_scores):
     # Set Up Logger
-    logger = set_up_logger("check_vg()")
+    logger = set_up_logger("gauntlet_template")
 
     # Get Current Round Time Variables
     time_var_current_round = get_time_var_current_round()
@@ -173,7 +173,7 @@ def one_hour_string(hours_remain):
         return "Less than **one** hour remains"
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
-    logger = set_up_logger("gauntlet_template.tweet_multiplier()")
+    logger = set_up_logger("gauntlet_template")
     logger.debug("Starting tweet_multiplier()")
     unit_random_quote = get_unit_quote_random(name)
     hour_or_hours = one_hour_string(hours_remain)
@@ -227,7 +227,7 @@ def get_unit_image_url(unit_name):
 
 ## Get Time Variables from config
 def get_time_var():
-    logger = set_up_logger("get_time_var()")
+    logger = set_up_logger("gauntlet_template")
     dic = {}
     dic['time_now'] = datetime.now()
     dic['round_1_start'] = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
@@ -240,7 +240,7 @@ def get_time_var():
 
 ## Get Time Variables for Current Round
 def get_time_var_current_round():
-    logger = set_up_logger("get_time_var_current_round()")
+    logger = set_up_logger("gauntlet_template")
     time_var = get_time_var()
     time_now = time_var['time_now']
     round_1_start = time_var['round_1_start']
