@@ -37,3 +37,13 @@ def test_unit_scores(supply_unit_names):
 		assert unit_name in supply_unit_names, "assert unit exists"
 		assert (isinstance(unit_score, int)), "assert score in an integer"
 
+## check_vg returns a LIST of DICTIONARYS; 
+## this tests validates the list content 
+def test_check_vg_distinct_scores(supply_unit_names):
+	current_unit_scores = get_unit_scores()
+	vg_scores = check_vg(current_unit_scores)
+	for score in vg_scores:
+		assert (isinstance(score['Round'],     str)), "assert round_name is a string"
+		assert (isinstance(int(score['Hour']), int)), "assert hours_remain is an integer"
+		assert (isinstance(score['Losing'],    str)), "assert losing_unit is a string"
+		assert (isinstance(score['Message'],   str)), "assert message is a string"
