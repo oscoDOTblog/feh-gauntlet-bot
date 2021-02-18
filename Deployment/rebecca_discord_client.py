@@ -70,37 +70,45 @@ class MyClient(discord.Client):
             await message.channel.send('`Here is a list of Rebecca bot\'s commands!`')
 
         # Join (Attach Role) Command
-        if message.content.startswith(f'{PREFIX}join'):
-            params = msg.split()
+        # Checks if role exists and adds/removes role as appropriate
+        if message.content.startswith((f'{PREFIX}join', f'{PREFIX}leave')):
+            params = msg.split(" ", 1) # split on first white space only
+            command = params[0].split(PREFIX,1)[1] ## get command name after prefix
             # Check if unit exits with supplied params
             if len(params) > 1:
                 unit_name = params[1]
                 # Check if unit exists
                 if check_unit_validity(unit_name):
-                    # Check if role exists, and add if approriate
+                    # Check if role exists, and add/remove if approriate
                     unit_name_index = unit_name.capitalize()
                     role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                     if (role):
-                        # Add role if member does not already have
-                        if not (role in member.roles):
-                            await discord.Member.add_roles(member, role)
-                            await message.channel.send(f'`Successfully joined Team {unit_name_index}!`')
-                        else:
-                            await message.channel.send(f'`You are already on Team {unit_name_index}!`')
+                        ## Add role to user if they did not have role
+                        if (command == "join" ):
+                            if not (role in member.roles):
+                                await discord.Member.add_roles(member, role)
+                                await message.channel.send(f'`Successfully joined Team {unit_name_index}!`')
+                            else:
+                                await message.channel.send(f'`You are already on Team {unit_name_index}!`')
+                        # Remove role from user if they have role
+                        elif (command == "leave" ):
+                            if (role in member.roles):
+                                await discord.Member.remove_roles(member, role)
+                                await message.channel.send(f'`Successfully left Team {unit_name_index}!`')
+                            else:                                
+                                await message.channel.send(f'`You cannot leave a team you never joined!`')
                     else:
-                        await message.channel.send(f'There is no role for **{unit_name_index}**! Ping {discord_role_id_admin} to create this role!')
+                        await message.channel.send(f'There is no role for **Team {unit_name_index}**! Ping {discord_role_id_admin} to create this role!')
                 else: 
                     await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
             # Reject command if no params supplied
             else: 
-                await message.channel.send("`Add a unit name after ++join to join their team!`")
-
-
+                await message.channel.send(f"`Add a unit name after ++{command} to {command} their team!`")
 
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
         self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
