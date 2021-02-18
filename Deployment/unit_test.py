@@ -13,6 +13,12 @@ def test_list_of_unit_names(supply_unit_names):
 	for unit_name in unit_list:
 		assert unit_name in supply_unit_names, "assert unit exists"
 
+def test_check_unit_validity(supply_unit_names):
+	unit_list = get_list_of_unit_names()
+	for unit_name in unit_list:
+		assert check_unit_validity(unit_name), "assert unit can be validated from config file"
+	assert check_unit_validity("Pizza Guy") is not True, "assert invalid units cannot be validated from config file"
+
 def test_get_unit_quote_random(supply_unit_names):
 	for unit_name in supply_unit_names:
 		unit_quote_random = get_unit_quote_random(unit_name)

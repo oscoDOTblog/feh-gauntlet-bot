@@ -3,7 +3,6 @@ from apscheduler.triggers.cron import CronTrigger
 from config.secrets_discord import *
 from datetime import datetime
 import discord
-from discord.ext.commands import command
 from gauntlet_template import *
 
 PREFIX = "++"
@@ -16,7 +15,7 @@ class MyClient(discord.Client):
         self.guild = None 
         self.logger = set_up_logger('discord')
         self.scheduler = AsyncIOScheduler()
-        super().__init__(command_prefix=PREFIX)
+        super().__init__(command_prefix=PREFIX,*args, **kwargs)
 
     #Check scores and send update to discord if required
     async def send_vg_ugdate(self):
@@ -47,54 +46,11 @@ class MyClient(discord.Client):
                 # Print out timestamp in the event of failure
                 # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
 
-    ## Ohaiyo!!!
-    @command(name="hello", aliases=["hi"])
-    async def say_hello(self, ctx):
-        await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya'))} {ctx.author.mention}!")
-
-    # Bot Commands
-    async def on_message(self, message):
-        # Ignore all messages from bot
-        if message.author == client.user:
-            return
-
-        # Parse string from message
-        msg = message.content
-
-        if message.content.startswith('$hello'):
-            await message.channel.send('Hello!')
-
-        ## Help Command
-        if message.content.startswith((f'{PREFIX}help')):
-            await message.channel.send('`Here is a list of Rebecca bot\'s commands!`')
-
-        # Join (Attach Role) Command
-        if message.content.startswith(f'{PREFIX}join'):
-            params = msg.split()
-            # Check if unit exits with supplied params
-            if len(params) > 1:
-                unit_name = params[1]
-                # Check if unit exists
-                if check_unit_validity(unit_name):
-                    # Check if role exists
-                    print("here")
-                    if (True):
-                        (f'`There is no role for {unit_name}! Ping a \@Star Lord to create this role!`')
-                    else:
-                        (f'`There is no role for {unit_name}! Ping a \@Star Lord to create this role!`')
-                else: 
-                    await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
-            # Reject command if no params supplied
-            else: 
-                await message.channel.send("`Add a unit name after ++join to join their team!`")
-
-
-
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
-        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
 client = MyClient()

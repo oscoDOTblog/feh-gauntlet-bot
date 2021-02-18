@@ -212,6 +212,14 @@ def get_list_of_unit_names():
             round_1_unit_7,
             round_1_unit_8]
 
+def check_unit_validity(unit_name):
+    if unit_name.lower() in map(str.lower, get_list_of_unit_names()):
+        return True
+    else:
+        return False
+
+
+
 def get_unit_quotes_url(unit_name):
     return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Quotes.txt" 
 

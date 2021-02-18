@@ -3,8 +3,8 @@
 # from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config.secrets_poets import *
-# from config.secrets_tweepy import *
+# from config.secrets_poets import *
+from config.secrets_tweepy import *
 from gauntlet_template import * 
 import sys
 import tweepy
