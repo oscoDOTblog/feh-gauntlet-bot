@@ -60,6 +60,7 @@ class MyClient(discord.Client):
 
         # Parse string from message
         msg = message.content
+        member = message.author 
 
         if message.content.startswith('$hello'):
             await message.channel.send('Hello!')
@@ -76,12 +77,18 @@ class MyClient(discord.Client):
                 unit_name = params[1]
                 # Check if unit exists
                 if check_unit_validity(unit_name):
-                    # Check if role exists
-                    print("here")
-                    if (True):
-                        (f'`There is no role for {unit_name}! Ping a \@Star Lord to create this role!`')
+                    # Check if role exists, and add if approriate
+                    unit_name_index = unit_name.capitalize()
+                    role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
+                    if (role):
+                        # Add role if member does not already have
+                        if not (role in member.roles):
+                            await discord.Member.add_roles(member, role)
+                            await message.channel.send(f'`Successfully joined Team {unit_name_index}!`')
+                        else:
+                            await message.channel.send(f'`You are already on Team {unit_name_index}!`')
                     else:
-                        (f'`There is no role for {unit_name}! Ping a \@Star Lord to create this role!`')
+                        await message.channel.send(f'There is no role for **{unit_name_index}**! Ping {discord_role_id_admin} to create this role!')
                 else: 
                     await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
             # Reject command if no params supplied

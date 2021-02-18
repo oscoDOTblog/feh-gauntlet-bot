@@ -23,6 +23,7 @@ round_2_unit_3 = "Gerik"
 round_2_unit_4 = "Ike"
 round_3_unit_1 = "Raven"
 round_3_unit_2 = "Ike"
+discord_role_id_admin = "<@&781644284616900608>"
 discord_role_ids = {
     round_1_unit_1 : "<@&804779564009521162>",
     round_1_unit_2 : "<@&804779682058731570>",
