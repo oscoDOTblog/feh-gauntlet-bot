@@ -98,7 +98,7 @@ class MyClient(discord.Client):
                             else:                                
                                 await message.channel.send(f'`You cannot leave a team you never joined!`')
                     else:
-                        await message.channel.send(f'There is no role for **Team {unit_name_index}**! Ping {discord_role_id_admin} to create this role!')
+                        await message.channel.send(f'There is no role for **Team {unit_name_index}**! Ping **{discord_role_id_admin}** to create this role!')
                 else: 
                     await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
             # Reject command if no params supplied
@@ -108,26 +108,31 @@ class MyClient(discord.Client):
         # Setup/Teardown Command
         if message.content.startswith((f'{PREFIX}vg-setup', f'{PREFIX}vg-teardown')):
             # TODO
-            # check if user is "Star-King"
-            params = msg.split(" ", 1) # split on first white space only
-            command = params[0].split(PREFIX,1)[1] ## get command name after prefix
-            unit_list = get_list_of_unit_names()
-            for unit_name in unit_list:
-                role_name = f"Team {unit_name}"
-                role = discord.utils.get(member.guild.roles, name=role_name)
-                ## If command is teardown and role exists, delete it
-                if command == "vg-teardown" and role:
-                    await discord.Role.delete(role)
-                    await message.channel.send(f'`{role_name} has been successfully deleted!`')
-                elif command == "vg-teardown" and not role: 
-                    await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
-                ## If command is setup and role does not exist, create it
-                if command == "vg-setup" and not role:
-                    unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
-                    role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
-                    await message.channel.send(f'`{role_name} has been successfully created!`')
-                elif command == "vg-setup" and role: 
-                    await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
+            # check if user has admin credentials
+            admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
+            if admin_role in member.roles:
+                params = msg.split(" ", 1) # split on first white space only
+                command = params[0].split(PREFIX,1)[1] ## get command name after prefix
+                unit_list = get_list_of_unit_names()
+                for unit_name in unit_list:
+                    role_name = f"Team {unit_name}"
+                    role = discord.utils.get(member.guild.roles, name=role_name)
+                    ## If command is teardown and role exists, delete it
+                    if command == "vg-teardown" and role:
+                        await discord.Role.delete(role)
+                        await message.channel.send(f'`{role_name} has been successfully deleted!`')
+                    elif command == "vg-teardown" and not role: 
+                        await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
+                    ## If command is setup and role does not exist, create it
+                    if command == "vg-setup" and not role:
+                        unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
+                        role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
+                        await message.channel.send(f'`{role_name} has been successfully created!`')
+                    elif command == "vg-setup" and role: 
+                        await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
+            else:
+                await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
+
 
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
