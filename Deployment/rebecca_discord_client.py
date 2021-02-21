@@ -123,7 +123,8 @@ class MyClient(discord.Client):
                     await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
                 ## If command is setup and role does not exist, create it
                 if command == "vg-setup" and not role:
-                    role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True)
+                    unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
+                    role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
                     await message.channel.send(f'`{role_name} has been successfully created!`')
                 elif command == "vg-setup" and role: 
                     await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
