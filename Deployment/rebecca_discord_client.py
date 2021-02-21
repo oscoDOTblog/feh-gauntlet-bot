@@ -61,6 +61,8 @@ class MyClient(discord.Client):
         # Parse string from message
         msg = message.content
         member = message.author 
+        message_channel = message.channel
+
 
         if message.content.startswith('$hello'):
             await message.channel.send('Hello!')
@@ -137,6 +139,27 @@ class MyClient(discord.Client):
                         await client.get_channel(id=unit_channel_id).edit(name=f"team-{unit_name_lowercase}")
                         await message.channel.send(f'Succesfully updated channel id **{unit_channel_id}** to <#{unit_channel_id}>')
 
+            else:
+                await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
+
+
+        # Announce Command
+        if message.content.startswith((f'{PREFIX}vg-declare')):
+            admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
+            if admin_role in member.roles:
+                unit_list = get_list_of_unit_names()
+                await message.channel.send(f'***A new Voting Gauntlet is coming!***\
+                \n*Join your team in <#{discord_channel_id_member_commands}> by typing `++join [unit name]`!*\
+                \n\n**Available Commands:**\
+                \n`++join {unit_list[0]}`\
+                \n`++join {unit_list[1]}`\
+                \n`++join {unit_list[2]}`\
+                \n`++join {unit_list[3]}`\
+                \n`++join {unit_list[4]}`\
+                \n`++join {unit_list[5]}`\
+                \n`++join {unit_list[6]}`\
+                \n`++join {unit_list[7]}`\
+                ')
             else:
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
 

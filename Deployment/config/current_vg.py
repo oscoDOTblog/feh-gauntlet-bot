@@ -34,6 +34,8 @@ discord_channel_ids = {
     round_1_unit_7 : 783177540532568095,
     round_1_unit_8 : 783177505778958348
 }
+discord_channel_id_member_commands = 812878892880625726
+discord_channel_id_test_commands =   793542106928644116
 discord_hex_colours = {
     round_1_unit_1 : 0x007300,
     round_1_unit_2 : 0x003900,
