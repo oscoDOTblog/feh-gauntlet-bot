@@ -67,7 +67,7 @@ class MyClient(discord.Client):
 
         ## Help Command
         if message.content.startswith((f'{PREFIX}help')):
-            await message.channel.send('`Here is a list of Rebecca bot\'s commands!`')
+            await message.channel.send('`Here is a list of Rebecca bot\'s commands!\nTODO`')
 
         # Join (Attach Role) Command
         # Checks if role exists and adds/removes role as appropriate
@@ -105,11 +105,26 @@ class MyClient(discord.Client):
             else: 
                 await message.channel.send(f"`Add a unit name after ++{command} to {command} their team!`")
 
+        # Setup/Teardown Command
+        if message.content.startswith((f'{PREFIX}vg-setup', f'{PREFIX}vg-teardown')):
+            params = msg.split(" ", 1) # split on first white space only
+            command = params[0].split(PREFIX,1)[1] ## get command name after prefix
+            unit_list = get_list_of_unit_names()
+            for unit_name in unit_list:
+                role_name = f"Team {unit_name}"
+                role = discord.utils.get(member.guild.roles, name=role_name)
+                ## If command is teardown and role exists, delete it
+                if command == "vg-teardown" and role:
+                    await discord.delete_role(role_name)
+                    await message.channel.send(f'`{role_name} has been successfully deleted!`')
+                else: 
+                    await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
+
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
-        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
 client = MyClient()
