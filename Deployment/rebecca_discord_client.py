@@ -115,7 +115,7 @@ class MyClient(discord.Client):
                 role = discord.utils.get(member.guild.roles, name=role_name)
                 ## If command is teardown and role exists, delete it
                 if command == "vg-teardown" and role:
-                    await discord.delete_role(role_name)
+                    await discord.Role.delete(role)
                     await message.channel.send(f'`{role_name} has been successfully deleted!`')
                 else: 
                     await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
