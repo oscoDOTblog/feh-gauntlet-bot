@@ -107,6 +107,9 @@ class MyClient(discord.Client):
 
         # Setup/Teardown Command
         if message.content.startswith((f'{PREFIX}vg-setup', f'{PREFIX}vg-teardown')):
+
+            # check if user is admin
+
             params = msg.split(" ", 1) # split on first white space only
             command = params[0].split(PREFIX,1)[1] ## get command name after prefix
             unit_list = get_list_of_unit_names()
@@ -119,6 +122,13 @@ class MyClient(discord.Client):
                     await message.channel.send(f'`{role_name} has been successfully deleted!`')
                 else: 
                     await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
+                ## If command is setup and role does not exist, create it
+                if command == "vg-setup" and not role:
+                    await discord.Guild.create_role(name=role_name,mentionable=True, colour="Pizza")
+                    role.hoist = True # Display role members seperately from online users
+                    await message.channel.send(f'`{role_name} has been successfully created!`')
+                else: 
+                    await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
 
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
