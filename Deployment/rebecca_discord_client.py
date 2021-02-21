@@ -123,13 +123,20 @@ class MyClient(discord.Client):
                         await message.channel.send(f'`{role_name} has been successfully deleted!`')
                     elif command == "vg-teardown" and not role: 
                         await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
-                    ## If command is setup and role does not exist, create it
+                    # If command is setup and role does not exist, create it
                     if command == "vg-setup" and not role:
                         unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
                         role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
                         await message.channel.send(f'`{role_name} has been successfully created!`')
                     elif command == "vg-setup" and role: 
                         await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
+                    ## Setup channels
+                    if command == "vg-setup":
+                        unit_name_lowercase = unit_name.lower()
+                        unit_channel_id = discord_channel_ids[unit_name]
+                        await client.get_channel(id=unit_channel_id).edit(name=f"team-{unit_name_lowercase}")
+                        await message.channel.send(f'Succesfully updated channel id **{unit_channel_id}** to <#{unit_channel_id}>')
+
             else:
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
 

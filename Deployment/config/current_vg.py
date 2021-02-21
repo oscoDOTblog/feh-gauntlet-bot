@@ -25,14 +25,14 @@ round_3_unit_1 = "Raven"
 round_3_unit_2 = "Ike"
 discord_role_id_admin = "Galaxy Contructor"
 discord_channel_ids = {
-    round_1_unit_1 : "<@&804779564009521162>",
-    round_1_unit_2 : "<@&804779682058731570>",
-    round_1_unit_3 : "<@&804786612911341568>",
-    round_1_unit_4 : "<@&804786685161898004>",
-    round_1_unit_5 : "<@&804786742439706645>",
-    round_1_unit_6 : "<@&804786790593462323>",
-    round_1_unit_7 : "<@&804786903102259211>",
-    round_1_unit_8 : "<@&804786975269322842>"
+    round_1_unit_1 : 783177258713874443,
+    round_1_unit_2 : 783177296646897665,
+    round_1_unit_3 : 783177368126226482,
+    round_1_unit_4 : 783177409864138802,
+    round_1_unit_5 : 783177224139702274,
+    round_1_unit_6 : 783177467258994728,
+    round_1_unit_7 : 783177540532568095,
+    round_1_unit_8 : 783177505778958348
 }
 discord_hex_colours = {
     round_1_unit_1 : 0x007300,
