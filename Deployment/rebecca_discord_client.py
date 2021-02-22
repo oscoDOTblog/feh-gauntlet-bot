@@ -38,7 +38,9 @@ class MyClient(discord.Client):
                     self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
                 else:
                     img_url = get_unit_image_url(losing_unit)
-                    updated_message = discord_role_ids[losing_unit] + score["Message"]
+                    role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
+                    role_webhook = f'<@&{role_team.id}>'
+                    updated_message =  role_webhook + score["Message"]
                     channel_name = "team-" + losing_unit.lower()
                     channel = discord.utils.get(self.guild.channels, name=channel_name)
                     await channel.send(content=updated_message,file=discord.File(img_url))
@@ -173,7 +175,7 @@ class MyClient(discord.Client):
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
         # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 

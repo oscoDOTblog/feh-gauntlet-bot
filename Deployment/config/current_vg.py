@@ -23,7 +23,6 @@ round_2_unit_3 = "Gerik"
 round_2_unit_4 = "Ike"
 round_3_unit_1 = "Raven"
 round_3_unit_2 = "Ike"
-discord_role_id_admin = "Galaxy Contructor"
 discord_channel_ids = {
     round_1_unit_1 : 783177258713874443,
     round_1_unit_2 : 783177296646897665,
@@ -34,8 +33,8 @@ discord_channel_ids = {
     round_1_unit_7 : 783177540532568095,
     round_1_unit_8 : 783177505778958348
 }
-discord_channel_id_member_commands = 812878892880625726
-discord_channel_id_test_commands =   793542106928644116
+discord_channel_id_member_commands  = 812878892880625726
+discord_channel_id_test_commands    = 793542106928644116
 discord_hex_colours = {
     round_1_unit_1 : 0x007300,
     round_1_unit_2 : 0x003900,
@@ -46,14 +45,4 @@ discord_hex_colours = {
     round_1_unit_7 : 0xff3007,
     round_1_unit_8 : 0xffe607
 }
-discord_role_ids = {
-    round_1_unit_1 : "<@&804779564009521162>",
-    round_1_unit_2 : "<@&804779682058731570>",
-    round_1_unit_3 : "<@&804786612911341568>",
-    round_1_unit_4 : "<@&804786685161898004>",
-    round_1_unit_5 : "<@&804786742439706645>",
-    round_1_unit_6 : "<@&804786790593462323>",
-    round_1_unit_7 : "<@&804786903102259211>",
-    round_1_unit_8 : "<@&804786975269322842>"
-}
-
+discord_role_id_admin = "Galaxy Contructor"
