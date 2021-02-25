@@ -75,7 +75,7 @@ class MyClient(discord.Client):
 
         # Join (Attach Role) Command
         # Checks if role exists and adds/removes role as appropriate
-        if message.content.startswith((f'{PREFIX}join', f'{PREFIX}leave')):
+        if message.content.startswith((f'{PREFIX}vg-join', f'{PREFIX}vg-leave')):
             # Check if command is being performed in test channel or members command channel 
             test_channel        = client.get_channel(id=discord_channel_id_test_commands)
             commands_channel_id = client.get_channel(id=discord_channel_id_member_commands)
@@ -92,14 +92,14 @@ class MyClient(discord.Client):
                         role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                         if (role):
                             ## Add role to user if they did not have role
-                            if (command == "join" ):
+                            if (command == "vg-join" ):
                                 if not (role in member.roles):
                                     await discord.Member.add_roles(member, role)
                                     await message.channel.send(f'`Successfully joined Team {unit_name_index}!`')
                                 else:
                                     await message.channel.send(f'`You are already on Team {unit_name_index}!`')
                             # Remove role from user if they have role
-                            elif (command == "leave" ):
+                            elif (command == "vg-leave" ):
                                 if (role in member.roles):
                                     await discord.Member.remove_roles(member, role)
                                     await message.channel.send(f'`Successfully left Team {unit_name_index}!`')
@@ -111,7 +111,7 @@ class MyClient(discord.Client):
                         await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
                 # Reject command if no params supplied
                 else: 
-                    await message.channel.send(f"`Add a unit name after ++{command} to {command} their team!`")
+                    await message.channel.send(f"`Add a unit name after ++{command} to {command[3:]} their team!`")
             else:
                 await message.channel.send(f"*You cannot perform `{msg}` here! Perform this command in <#{discord_channel_id_member_commands}>*")
 
@@ -150,6 +150,24 @@ class MyClient(discord.Client):
             else:
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
 
+        # Returns Current Score
+        if message.content.startswith((f'{PREFIX}vg-scores')):
+            bot_msg = "***Current Scores:***\n"
+            unit_scores = get_unit_scores()
+            for (a, b) in pairwise_compare(unit_scores):
+
+                # obtain name of units battling
+                a_name = a[0]
+                b_name = b[0]
+
+                # obtain integer from string literal
+                a_score = a[1]
+                b_score = b[1]
+
+                # Create + Append String
+                bot_msg += f"*{a_name}* *(**{a_score}**)* *vs* *{b_name}* *(**{b_score}**)*"
+
+            await message.channel.send(bot_msg)
 
         # Announce Command
         if message.content.startswith((f'{PREFIX}vg-declare')):
@@ -157,16 +175,27 @@ class MyClient(discord.Client):
             if admin_role in member.roles:
                 unit_list = get_list_of_unit_names()
                 await message.channel.send(f'***A new Voting Gauntlet is coming!***\
-                \n*Join your team in <#{discord_channel_id_member_commands}> by typing `++join [unit name]`!*\
-                \n\n**Available Commands:**\
-                \n`++join {unit_list[0]}`\
-                \n`++join {unit_list[1]}`\
-                \n`++join {unit_list[2]}`\
-                \n`++join {unit_list[3]}`\
-                \n`++join {unit_list[4]}`\
-                \n`++join {unit_list[5]}`\
-                \n`++join {unit_list[6]}`\
-                \n`++join {unit_list[7]}`\
+                \n*Join your team in <#{discord_channel_id_member_commands}> by typing `{PREFIX}vg-join [unit name]`!*\
+                \n\n**Commands to Join Team (Subscribe to Alerts):**\
+                \n`{PREFIX}vg-join {unit_list[0]}`\
+                \n`{PREFIX}vg-join {unit_list[1]}`\
+                \n`{PREFIX}vg-join {unit_list[2]}`\
+                \n`{PREFIX}vg-join {unit_list[3]}`\
+                \n`{PREFIX}vg-join {unit_list[4]}`\
+                \n`{PREFIX}vg-join {unit_list[5]}`\
+                \n`{PREFIX}vg-join {unit_list[6]}`\
+                \n`{PREFIX}vg-join {unit_list[7]}`\
+                \n\n**Commands to Leave Team (Unsubscribe from Alerts):**\
+                \n`{PREFIX}vg-join {unit_list[0]}`\
+                \n`{PREFIX}vg-join {unit_list[1]}`\
+                \n`{PREFIX}vg-join {unit_list[2]}`\
+                \n`{PREFIX}vg-join {unit_list[3]}`\
+                \n`{PREFIX}vg-join {unit_list[4]}`\
+                \n`{PREFIX}vg-join {unit_list[5]}`\
+                \n`{PREFIX}vg-join {unit_list[6]}`\
+                \n`{PREFIX}vg-join {unit_list[7]}`\
+                \n\n**Other Commands:**\
+                \n`{PREFIX}vg-scores` Return scores of all teams in current round \
                 ')
             else:
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
@@ -175,8 +204,8 @@ class MyClient(discord.Client):
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
 client = MyClient()
