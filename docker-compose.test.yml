@@ -1,4 +1,4 @@
 sut:
   build: .
-  command: run_docker_tests.sh
+  command: ./run_docker_tests.sh
 
