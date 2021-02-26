@@ -20,12 +20,14 @@ class MyClient(discord.Client):
     #Check scores and send update to discord if required
     async def send_vg_ugdate(self):
         await self.wait_until_ready()
-        self.logger.debug(f'~~~~~starting {__file__}.send_vg_ugdate()~~~~~')
-        vg_scores = check_vg(self.logger)
-        if (vg_scores == -1):
-            self.logger.debug("In Beween Rounds, Do Nothing")
+        self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
+        current_unit_scores = get_unit_scores()
+        if (current_unit_scores == -1):
+            logger.debug("In Beween Rounds, Do Nothing")
         else:
             self.logger.debug("During Voting Gauntlet")
+            vg_scores = check_vg(current_unit_scores)
+
             # Ping if multiplier is active for losing team (other team has 3% more flags)
             for score in vg_scores:
             # try:
@@ -34,8 +36,7 @@ class MyClient(discord.Client):
                 if "Tie" in losing_unit:
                     self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
                 else:
-                    current_details = unit_assets(self.logger, losing_unit)
-                    img_url = current_details[1]
+                    img_url = get_unit_image_url(losing_unit)
                     updated_message = discord_role_ids[losing_unit] + score["Message"]
                     channel_name = "team-" + losing_unit.lower()
                     channel = discord.utils.get(self.guild.channels, name=channel_name)
@@ -48,8 +49,8 @@ class MyClient(discord.Client):
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(STATUS[0]))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
-        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
+        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
 client = MyClient()

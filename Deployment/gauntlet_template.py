@@ -14,9 +14,9 @@ from bs4 import BeautifulSoup
 from config.current_vg import * # current VG particpants and round dates
 
 # main method (called every 30 minutes)
-def check_vg(logger):
-    # start timer
-    start_time = timer()
+def get_unit_scores():
+    # Set Up Logger
+    logger = set_up_logger("gauntlet_template")
 
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
@@ -44,49 +44,14 @@ def check_vg(logger):
     # find all p elements (which contain the current scores)
     p = soup.find_all("p")
 
-    # Get Variables for Current Round
-    time_now = datetime.now()
-    logger.debug("time_now: " + str(time_now))
-    round_1_start = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
-    round_1_end = datetime.strptime(round_1_end_raw, '%b %d %Y %I:%M%p')
-    round_2_start = datetime.strptime(round_2_start_raw, '%b %d %Y %I:%M%p')
-    round_2_end = datetime.strptime(round_2_end_raw, '%b %d %Y %I:%M%p')
-    round_3_start = datetime.strptime(round_3_start_raw, '%b %d %Y %I:%M%p')
-    round_3_end = datetime.strptime(round_3_end_raw, '%b %d %Y %I:%M%p')
-
-    # Check if test VG or real VG
-
-    if not (vg_test):
-        # round 1 variables
-        if (round_1_start < time_now < round_1_end):
-            logger.debug("Currently Round 1")
-            round_start = round_1_start
-            unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
-            round_name = 'Round 1'
-        # round 2 variables
-        elif (round_2_start < time_now < round_2_end):
-            logger.debug("Currently Round 2")
-            round_start = round_2_start
-            unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
-            round_name = 'Round 2'
-        # round 3 variables
-        elif (round_3_start < time_now < round_3_end):
-            logger.debug("Currently Round 3")
-            round_start = round_3_start
-            unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-            round_name = 'Final Round'
-        # else in between rounds
-        else:
-            logger.debug("Current time in between rounds. Ending execution.")
-            return (-1)
-    else: 
-        logger.debug("~~~~~Testing VG~~~~~")
-        logger.debug("Currently Round 3")
-        round_start = round_3_start
-        unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-        round_name = 'Final Round'
+    # close mechanize browser
+    br.close()
 
     # all round variables
+    time_var_current_round = get_time_var_current_round()
+    if (time_var_current_round == -1):
+        return -1
+    unit_dict = time_var_current_round['unit_dict']
     count = len(unit_dict)
 
     # get units' current score by interating through all p elements
@@ -133,11 +98,23 @@ def check_vg(logger):
     unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
     logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     logger.info(unit_scores)
+    return unit_scores
+
+def check_vg(unit_scores):
+    # Set Up Logger
+    logger = set_up_logger("gauntlet_template")
+
+    # Get Current Round Time Variables
+    time_var_current_round = get_time_var_current_round()
+    round_name = time_var_current_round['round_name']  
+    round_start = time_var_current_round['round_start'] 
+    time_now = time_var_current_round['time_now']  
 
     # calculate disadvantage multiplier based on hour of round
     # divmod is a little complex so,
     # 1) divide the total seconds from time_elapsed into hours (60*60)
     # 2) divmod return'' a list with the quotient as [0] and remainder as [1]
+    time_now = datetime.now()
     time_elapsed =  time_now - round_start
     current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
     hours_remain = 45 - current_hour
@@ -167,10 +144,10 @@ def check_vg(logger):
         losing_unit = ''
         if (disadvantage_a > 1.01): # Team B is losing
             losing_unit = b_name
-            message = tweet_multiplier(logger, b_name, multiplier, hours_remain, vg_hashtag, round_name)
+            message = tweet_multiplier(b_name, multiplier, hours_remain, vg_hashtag, round_name)
         elif (disadvantage_b > 1.01): # Team A is losing
             losing_unit = a_name
-            message = tweet_multiplier(logger, a_name, multiplier, hours_remain, vg_hashtag, round_name)
+            message = tweet_multiplier(a_name, multiplier, hours_remain, vg_hashtag, round_name)
         else:
             losing_unit = "Tie-"+a_name+"-"+b_name
             hour_or_hours = one_hour_string(hours_remain)
@@ -186,13 +163,7 @@ def check_vg(logger):
     # End of Log
     logger.debug("End of successful check")
 
-    # close mechanize browser
-    br.close()
-
     # return time elapsed
-    end_time = timer()
-    time_elapsed = int(math.floor(end_time - start_time))
-    logger.debug(time_elapsed)
     return (vg_scores)
 
 def one_hour_string(hours_remain):
@@ -201,32 +172,12 @@ def one_hour_string(hours_remain):
     elif (hours_remain <= 1):
         return "Less than **one** hour remains"
 
-def unit_assets(logger, name):
-    logger.debug("Starting unit_assets()")
-    # Get unit quote
-    ## Get unit quote url
-    quote_url = "assets/%s/%s_Quotes.txt" % (name, name)
-    ## Parse text file line by line into list, then select random quote
-    quotes = open(quote_url).read().splitlines()
-    secure_random = random.SystemRandom()
-    quote = secure_random.choice(quotes)
-
-    # Get unit img_url
-    img_url = "assets/%s/%s_Preview.png" % (name, name)
-    unit_assets = [quote, img_url]
-    logger.info("QuoteURL: " + quote_url + "| ImageURL: " + img_url + " | pizza")
-    return unit_assets
-
-def tweet_multiplier(logger, name, multiplier, hours_remain, vg_hashtag, round_name):
-    # Tweet with image
-    #try:
-    # Get unit details
+def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
+    logger = set_up_logger("gauntlet_template")
     logger.debug("Starting tweet_multiplier()")
-    current_details = unit_assets(logger, name)
-    quote = current_details[0]
-    # img_url = current_details[1]
+    unit_random_quote = get_unit_quote_random(name)
     hour_or_hours = one_hour_string(hours_remain)
-    message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, quote, hour_or_hours, vg_hashtag, round_name)
+    message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, unit_random_quote, hour_or_hours, vg_hashtag, round_name)
     logger.info(message)
     return message
 
@@ -251,6 +202,100 @@ def truncate(f, n):
     i, p, d = s.partition('.')
     return '.'.join([i, (d+'0'*n)[:n]])
 
+def get_list_of_unit_names():
+    return [round_1_unit_1,
+            round_1_unit_2,
+            round_1_unit_3,
+            round_1_unit_4,
+            round_1_unit_5,
+            round_1_unit_6,
+            round_1_unit_7,
+            round_1_unit_8]
+
+def check_unit_validity(unit_name):
+    if unit_name.lower() in map(str.lower, get_list_of_unit_names()):
+        return True
+    else:
+        return False
+
+
+
+def get_unit_quotes_url(unit_name):
+    return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Quotes.txt" 
+
+## Parse text file line by line into list, then select random quote
+def get_unit_quote_random(unit_name):
+    quotes_url = get_unit_quotes_url(unit_name)
+    quotes = open(quotes_url).read().splitlines()
+    secure_random = random.SystemRandom()
+    return secure_random.choice(quotes)
+
+def get_unit_image_url(unit_name):
+    return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Preview.png"
+
+## Get Time Variables from config
+def get_time_var():
+    logger = set_up_logger("gauntlet_template")
+    dic = {}
+    dic['time_now'] = datetime.now()
+    dic['round_1_start'] = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
+    dic['round_1_end'] = datetime.strptime(round_1_end_raw, '%b %d %Y %I:%M%p')
+    dic['round_2_start'] = datetime.strptime(round_2_start_raw, '%b %d %Y %I:%M%p')
+    dic['round_2_end'] = datetime.strptime(round_2_end_raw, '%b %d %Y %I:%M%p')
+    dic['round_3_start'] = datetime.strptime(round_3_start_raw, '%b %d %Y %I:%M%p')
+    dic['round_3_end'] = datetime.strptime(round_3_end_raw, '%b %d %Y %I:%M%p')
+    return dic 
+
+## Get Time Variables for Current Round
+def get_time_var_current_round():
+    logger = set_up_logger("gauntlet_template")
+    time_var = get_time_var()
+    time_now = time_var['time_now']
+    round_1_start = time_var['round_1_start']
+    round_1_end = time_var['round_1_end']
+    round_2_start = time_var['round_2_start']
+    round_2_end = time_var['round_2_end']
+    round_3_start = time_var['round_3_start']
+    round_3_end = time_var['round_3_end']
+
+    # Check if test VG or real VG
+    if not (vg_test):
+        # round 1 variables
+        if (round_1_start < time_now < round_1_end):
+            logger.debug("Currently Round 1")
+            round_start = round_1_start
+            unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+            round_name = 'Round 1'
+        # round 2 variables
+        elif (round_2_start < time_now < round_2_end):
+            logger.debug("Currently Round 2")
+            round_start = round_2_start
+            unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
+            round_name = 'Round 2'
+        # round 3 variables
+        elif (round_3_start < time_now < round_3_end):
+            logger.debug("Currently Round 3")
+            round_start = round_3_start
+            unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+            round_name = 'Final Round'
+        # else in between rounds
+        else:
+            logger.debug("Current time in between rounds. Ending execution.")
+            return (-1)
+    else: 
+        logger.debug("~~~~~Testing VG~~~~~")
+        logger.debug("Currently Round 3")
+        round_start = round_3_start
+        unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
+        round_name = 'Final Round'
+        
+    dic = {}
+    dic['round_name'] = round_name
+    dic['round_start'] = round_start
+    dic['time_now'] = time_now
+    dic['unit_dict'] = unit_dict
+    return dic  
+
 # Set up logger
 def set_up_logger(module_name):
     # Gets or creates a logger
@@ -268,5 +313,4 @@ def set_up_logger(module_name):
 
     # add file handler to logger
     logger.addHandler(file_handler)
-
     return logger
