@@ -15,6 +15,7 @@ ARG PIP3_PACKAGES="\
     beautifulsoup4==4.9.3 \
     discord==1.0.1 \
     mechanize==0.4.5 \
+    pytest==6.2.2 \
     tweepy==3.10.0 \
 "
 RUN pip3 install ${PIP3_PACKAGES}
