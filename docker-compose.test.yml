@@ -1,3 +1,4 @@
 sut:
   build: .
-  command: cd FEH-Gauntlet-Bot/Deployment && pytest
+  command: docker exec -i atemosta/feh-gauntlet-bot bash -c "cd FEH-Gauntlet-Bot/Deployment && pytest"
+
