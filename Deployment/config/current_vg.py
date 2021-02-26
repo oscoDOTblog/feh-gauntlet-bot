@@ -1,28 +1,28 @@
 # UTC is 8 Hours Ahead PST
 vg_assets_root_path="assets/"
 vg_hashtag='#AHR2021'
-vg_test=True
+vg_test=False
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/45'
 round_1_start_raw = 'Feb 27 2021 7:00AM'
-round_1_end_raw = 'Feb 29 2021 4:00AM'
+round_1_end_raw = 'Mar 01 2021 4:00AM'
 round_2_start_raw = 'Mar 01 2021 7:00AM'
 round_2_end_raw = 'Mar 03 2021 4:00AM'
 round_3_start_raw = 'Mar 03 2021 7:00AM'
 round_3_end_raw = 'Mar 05 2021 4:00AM'
 round_1_unit_1 = "Seiros"
 round_1_unit_2 = "Micaiah"
-round_1_unit_3 = "Ogma"
-round_1_unit_4 = "Freyja"
-round_1_unit_5 = "Corrin"
-round_1_unit_6 = "Lyn"
-round_1_unit_7 = "Byleth"
-round_1_unit_8 = "Dimitri"
-round_2_unit_1 = "Edelgard"
-round_2_unit_2 = "Saber"
-round_2_unit_3 = "Gerik"
-round_2_unit_4 = "Ike"
-round_3_unit_1 = "Raven"
-round_3_unit_2 = "Ike"
+round_1_unit_3 = "Freyja"
+round_1_unit_4 = "Corrin"
+round_1_unit_5 = "Lyn"
+round_1_unit_6 = "Byleth"
+round_1_unit_7 = "Dimitri"
+round_1_unit_8 = "Edelgard"
+round_2_unit_1 = "Micaiah"
+round_2_unit_2 = "Freyja"
+round_2_unit_3 = "Lyn"
+round_2_unit_4 = "Edelgard"
+round_3_unit_1 = "Micaiah"
+round_3_unit_2 = "Edelgard"
 discord_channel_ids = {
     round_1_unit_1 : 783177258713874443,
     round_1_unit_2 : 783177296646897665,
