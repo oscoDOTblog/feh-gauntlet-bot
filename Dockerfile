@@ -22,6 +22,9 @@ RUN pip3 install ${PIP3_PACKAGES}
 # Clone GitHub Repo and Bot Units
 RUN git clone https://github.com/Atemosta/FEH-Gauntlet-Bot
 
+# Create Shell Script for Running PyTest
+RUN echo "cd FEH-Gauntlet-Bot/Deployment && pytest" > run_docker_tests.sh && chmod u+x run_docker_tests.sh
+
 # COPY . /app
 # RUN make /app
 # CMD python /app/app.py

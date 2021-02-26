@@ -5,6 +5,9 @@ export COMPOSE_DOCKER_CLI_BUILD=0
 # Test and Build
 docker build -t atemosta/feh-gauntlet-bot .
 docker run -it atemosta/feh-gauntlet-bot /bin/bash
+# docker exec -i atemosta/feh-gauntlet-bot bash -c "cd FEH-Gauntlet-Bot/Deployment && pytest"
+# docker start df8f7a8619bc
+# docker exec -it df8f7a8619bc bash
 
 # Clean Containers
 docker stop $(docker ps -a -q)
