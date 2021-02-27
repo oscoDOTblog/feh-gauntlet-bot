@@ -165,7 +165,7 @@ class MyClient(discord.Client):
                 b_score = b[1]
 
                 # Create + Append String
-                bot_msg += f"*{a_name}* *(**{a_score}**)* *vs* *{b_name}* *(**{b_score}**)*"
+                bot_msg += f"*{a_name}* *(**{a_score}**)* *vs* *{b_name}* *(**{b_score}**)*\n"
 
             await message.channel.send(bot_msg)
 
@@ -186,14 +186,14 @@ class MyClient(discord.Client):
                 \n`{PREFIX}vg-join {unit_list[6]}`\
                 \n`{PREFIX}vg-join {unit_list[7]}`\
                 \n\n**Commands to Leave Team (Unsubscribe from Alerts):**\
-                \n`{PREFIX}vg-join {unit_list[0]}`\
-                \n`{PREFIX}vg-join {unit_list[1]}`\
-                \n`{PREFIX}vg-join {unit_list[2]}`\
-                \n`{PREFIX}vg-join {unit_list[3]}`\
-                \n`{PREFIX}vg-join {unit_list[4]}`\
-                \n`{PREFIX}vg-join {unit_list[5]}`\
-                \n`{PREFIX}vg-join {unit_list[6]}`\
-                \n`{PREFIX}vg-join {unit_list[7]}`\
+                \n`{PREFIX}vg-leave {unit_list[0]}`\
+                \n`{PREFIX}vg-leave {unit_list[1]}`\
+                \n`{PREFIX}vg-leave {unit_list[2]}`\
+                \n`{PREFIX}vg-leave {unit_list[3]}`\
+                \n`{PREFIX}vg-leave {unit_list[4]}`\
+                \n`{PREFIX}vg-leave {unit_list[5]}`\
+                \n`{PREFIX}vg-leave {unit_list[6]}`\
+                \n`{PREFIX}vg-leave {unit_list[7]}`\
                 \n\n**Other Commands:**\
                 \n`{PREFIX}vg-scores` Return scores of all teams in current round \
                 ')
