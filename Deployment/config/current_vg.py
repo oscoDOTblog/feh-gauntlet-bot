@@ -1,28 +1,28 @@
-# PST is 8 hours behind UTC
+# UTC is 8 Hours Ahead PST
 vg_assets_root_path="assets/"
-vg_hashtag='#MM'
-vg_test=True
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/44'
-round_1_start_raw = 'Jan 29 2021 7:00AM'
-round_1_end_raw = 'Jan 31 2021 4:00AM'
-round_2_start_raw = 'Jan 31 2021 7:00AM'
-round_2_end_raw = 'Feb 02 2021 4:00AM'
-round_3_start_raw = 'Feb 02 2021 7:00AM'
-round_3_end_raw = 'Feb 04 2021 4:00AM'
-round_1_unit_1 = "Raven"
-round_1_unit_2 = "Heath"
-round_1_unit_3 = "Ogma"
-round_1_unit_4 = "Saber"
-round_1_unit_5 = "Gerik"
-round_1_unit_6 = "Marisa"
-round_1_unit_7 = "Titania"
-round_1_unit_8 = "Ike"
-round_2_unit_1 = "Raven"
-round_2_unit_2 = "Saber"
-round_2_unit_3 = "Gerik"
-round_2_unit_4 = "Ike"
-round_3_unit_1 = "Raven"
-round_3_unit_2 = "Ike"
+vg_hashtag='#AHR2021'
+vg_test=False
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/45'
+round_1_start_raw = 'Feb 27 2021 7:00AM'
+round_1_end_raw = 'Mar 01 2021 4:00AM'
+round_2_start_raw = 'Mar 01 2021 7:00AM'
+round_2_end_raw = 'Mar 03 2021 4:00AM'
+round_3_start_raw = 'Mar 03 2021 7:00AM'
+round_3_end_raw = 'Mar 05 2021 4:00AM'
+round_1_unit_1 = "Seiros"
+round_1_unit_2 = "Micaiah"
+round_1_unit_3 = "Freyja"
+round_1_unit_4 = "Corrin"
+round_1_unit_5 = "Lyn"
+round_1_unit_6 = "Byleth"
+round_1_unit_7 = "Dimitri"
+round_1_unit_8 = "Edelgard"
+round_2_unit_1 = "Micaiah"
+round_2_unit_2 = "Freyja"
+round_2_unit_3 = "Lyn"
+round_2_unit_4 = "Edelgard"
+round_3_unit_1 = "Micaiah"
+round_3_unit_2 = "Edelgard"
 discord_channel_ids = {
     round_1_unit_1 : 783177258713874443,
     round_1_unit_2 : 783177296646897665,
@@ -36,13 +36,13 @@ discord_channel_ids = {
 discord_channel_id_member_commands  = 812878892880625726
 discord_channel_id_test_commands    = 793542106928644116
 discord_hex_colours = {
-    round_1_unit_1 : 0x007300,
-    round_1_unit_2 : 0x003900,
-    round_1_unit_3 : 0xa5682a,
+    round_1_unit_1 : 0xffe666,
+    round_1_unit_2 : 0xcbc4cc,
+    round_1_unit_3 : 0x53239c,
     round_1_unit_4 : 0x993232,
-    round_1_unit_5 : 0x800080,
-    round_1_unit_6 : 0xff00ff,
-    round_1_unit_7 : 0xff3007,
-    round_1_unit_8 : 0xffe607
+    round_1_unit_5 : 0x5ac18e,
+    round_1_unit_6 : 0x364e4a,
+    round_1_unit_7 : 0x000099,
+    round_1_unit_8 : 0xb20000
 }
 discord_role_id_admin = "Galaxy Contructor"
