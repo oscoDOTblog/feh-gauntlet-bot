@@ -82,9 +82,17 @@ apt update
 apt-cache policy docker-ce
 apt install docker-ce
 sudo usermod -aG docker ${USERNAME}
-docker pull atemosta/feh-gauntlet-bot:1.11
-# docker run -it atemosta/feh-gauntlet-bot:1.11 /bin/bash
-# docker exec -it eab04a556e8a /bin/bash
+docker pull atemosta/feh-gauntlet-bot:latest
+# docker run -it atemosta/feh-gauntlet-bot:latest /bin/bash
+# docker exec -it be4e1479af92 /bin/bash
+
+## TODO
+## 1) Automatically update K8s Cluster with latest docker image from master
+## 2) Have Docker Image Automatically deploy web service + extract secrets
+## 3) Create K8s Node for ELK Monitoring
+## 4) Create K8s Config for Bootstrap 
+# nohup python3 genny_twitter_bot.py &
+# nohup python3 rebecca_discord_client.py &
 
 
 
