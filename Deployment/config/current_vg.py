@@ -22,7 +22,7 @@ round_2_unit_2 = "Corrin"
 round_2_unit_3 = "Lyn"
 round_2_unit_4 = "Dimitri"
 round_3_unit_1 = "Seiros"
-round_3_unit_2 = "Dimitri"
+round_3_unit_2 = "Lyn"
 discord_channel_ids = {
     round_1_unit_1 : 783177258713874443,
     round_1_unit_2 : 783177296646897665,
