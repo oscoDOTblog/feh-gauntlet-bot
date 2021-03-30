@@ -25,8 +25,8 @@ RUN apt-get update && apt-get install -y ${UBUNTU_PACKAGES}
 RUN git clone https://github.com/Atemosta/FEH-Gauntlet-Bot
 
 # Create Shell Script for Running PyTest
-RUN pip3 install -r FEH-Gauntlet-Bot/Deployment/requirements.txt
-RUN echo "cd FEH-Gauntlet-Bot/Deployment && pytest" > run_docker_tests.sh && chmod u+x run_docker_tests.sh
+# RUN pip3 install -r FEH-Gauntlet-Bot/Deployment/requirements.txt
+# RUN echo "cd FEH-Gauntlet-Bot/Deployment && pytest" > run_docker_tests.sh && chmod u+x run_docker_tests.sh
 
 # COPY . /app
 # RUN make /app

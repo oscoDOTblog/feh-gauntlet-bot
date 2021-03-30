@@ -1,3 +1,0 @@
-sut:
-  build: .
-  command: cd FEH-Gauntlet-Bot/Deployment && pytest
