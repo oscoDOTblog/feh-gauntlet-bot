@@ -75,7 +75,7 @@ class MyClient(discord.Client):
 
         # Join (Attach Role) Command
         # Checks if role exists and adds/removes role as appropriate
-        if message.content.startswith((f'{PREFIX}vg-join', f'{PREFIX}vg-leave')):
+        if message.content.startswith((f'{PREFIX}join', f'{PREFIX}leave')):
             # Check if command is being performed in test channel or members command channel 
             test_channel        = client.get_channel(id=discord_channel_id_test_commands)
             commands_channel_id = client.get_channel(id=discord_channel_id_member_commands)
@@ -92,14 +92,14 @@ class MyClient(discord.Client):
                         role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                         if (role):
                             ## Add role to user if they did not have role
-                            if (command == "vg-join" ):
+                            if (command == "join" ):
                                 if not (role in member.roles):
                                     await discord.Member.add_roles(member, role)
                                     await message.channel.send(f'`Successfully joined Team {unit_name_index}!`')
                                 else:
                                     await message.channel.send(f'`You are already on Team {unit_name_index}!`')
                             # Remove role from user if they have role
-                            elif (command == "vg-leave" ):
+                            elif (command == "leave" ):
                                 if (role in member.roles):
                                     await discord.Member.remove_roles(member, role)
                                     await message.channel.send(f'`Successfully left Team {unit_name_index}!`')
@@ -111,12 +111,12 @@ class MyClient(discord.Client):
                         await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
                 # Reject command if no params supplied
                 else: 
-                    await message.channel.send(f"`Add a unit name after ++{command} to {command[3:]} their team!`")
+                    await message.channel.send(f"`Add a unit name after ++{command} to {command} their team!`")
             else:
                 await message.channel.send(f"*You cannot perform `{msg}` here! Perform this command in <#{discord_channel_id_member_commands}>*")
 
         # Setup/Teardown Command
-        if message.content.startswith((f'{PREFIX}vg-setup', f'{PREFIX}vg-teardown')):
+        if message.content.startswith((f'{PREFIX}setup-vg', f'{PREFIX}teardown-vg')):
             # TODO
             # check if user has admin credentials
             admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
@@ -128,20 +128,20 @@ class MyClient(discord.Client):
                     role_name = f"Team {unit_name}"
                     role = discord.utils.get(member.guild.roles, name=role_name)
                     ## If command is teardown and role exists, delete it
-                    if command == "vg-teardown" and role:
+                    if command == "teardown-vg" and role:
                         await discord.Role.delete(role)
                         await message.channel.send(f'`{role_name} has been successfully deleted!`')
-                    elif command == "vg-teardown" and not role: 
+                    elif command == "teardown-vg" and not role: 
                         await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
                     # If command is setup and role does not exist, create it
-                    if command == "vg-setup" and not role:
+                    if command == "setup-vg" and not role:
                         unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
                         role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
                         await message.channel.send(f'`{role_name} has been successfully created!`')
-                    elif command == "vg-setup" and role: 
+                    elif command == "setup-vg" and role: 
                         await message.channel.send(f'`{role_name} already exists and thus cannot be created!`')
                     ## Setup channels
-                    if command == "vg-setup":
+                    if command == "setup-vg":
                         unit_name_lowercase = unit_name.lower()
                         unit_channel_id = discord_channel_ids[unit_name]
                         await client.get_channel(id=unit_channel_id).edit(name=f"team-{unit_name_lowercase}")
@@ -151,7 +151,7 @@ class MyClient(discord.Client):
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
 
         # Returns Current Score
-        if message.content.startswith((f'{PREFIX}vg-scores')):
+        if message.content.startswith((f'{PREFIX}scores')):
             bot_msg = "***Current Scores:***\n"
             unit_scores = get_unit_scores()
             for (a, b) in pairwise_compare(unit_scores):
@@ -170,32 +170,32 @@ class MyClient(discord.Client):
             await message.channel.send(bot_msg)
 
         # Announce Command
-        if message.content.startswith((f'{PREFIX}vg-declare')):
+        if message.content.startswith((f'{PREFIX}declare-vg')):
             admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
             if admin_role in member.roles:
                 unit_list = get_list_of_unit_names()
                 await message.channel.send(f'***A new Voting Gauntlet is coming!***\
-                \n*Join your team in <#{discord_channel_id_member_commands}> by typing `{PREFIX}vg-join [unit name]`!*\
+                \n*Join your team in <#{discord_channel_id_member_commands}> by typing `{PREFIX}join [unit name]`!*\
                 \n\n**Commands to Join Team (Subscribe to Alerts):**\
-                \n`{PREFIX}vg-join {unit_list[0]}`\
-                \n`{PREFIX}vg-join {unit_list[1]}`\
-                \n`{PREFIX}vg-join {unit_list[2]}`\
-                \n`{PREFIX}vg-join {unit_list[3]}`\
-                \n`{PREFIX}vg-join {unit_list[4]}`\
-                \n`{PREFIX}vg-join {unit_list[5]}`\
-                \n`{PREFIX}vg-join {unit_list[6]}`\
-                \n`{PREFIX}vg-join {unit_list[7]}`\
+                \n`{PREFIX}join {unit_list[0]}`\
+                \n`{PREFIX}join {unit_list[1]}`\
+                \n`{PREFIX}join {unit_list[2]}`\
+                \n`{PREFIX}join {unit_list[3]}`\
+                \n`{PREFIX}join {unit_list[4]}`\
+                \n`{PREFIX}join {unit_list[5]}`\
+                \n`{PREFIX}join {unit_list[6]}`\
+                \n`{PREFIX}join {unit_list[7]}`\
                 \n\n**Commands to Leave Team (Unsubscribe from Alerts):**\
-                \n`{PREFIX}vg-leave {unit_list[0]}`\
-                \n`{PREFIX}vg-leave {unit_list[1]}`\
-                \n`{PREFIX}vg-leave {unit_list[2]}`\
-                \n`{PREFIX}vg-leave {unit_list[3]}`\
-                \n`{PREFIX}vg-leave {unit_list[4]}`\
-                \n`{PREFIX}vg-leave {unit_list[5]}`\
-                \n`{PREFIX}vg-leave {unit_list[6]}`\
-                \n`{PREFIX}vg-leave {unit_list[7]}`\
+                \n`{PREFIX}leave {unit_list[0]}`\
+                \n`{PREFIX}leave {unit_list[1]}`\
+                \n`{PREFIX}leave {unit_list[2]}`\
+                \n`{PREFIX}leave {unit_list[3]}`\
+                \n`{PREFIX}leave {unit_list[4]}`\
+                \n`{PREFIX}leave {unit_list[5]}`\
+                \n`{PREFIX}leave {unit_list[6]}`\
+                \n`{PREFIX}leave {unit_list[7]}`\
                 \n\n**Other Commands:**\
-                \n`{PREFIX}vg-scores` Return scores of all teams in current round \
+                \n`{PREFIX}scores` Return scores of all teams in current round \
                 ')
             else:
                 await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
