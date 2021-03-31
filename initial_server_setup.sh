@@ -84,7 +84,9 @@ apt install docker-ce
 sudo usermod -aG docker ${USERNAME}
 docker pull atemosta/feh-gauntlet-bot:latest
 # docker run -it atemosta/feh-gauntlet-bot:latest /bin/bash
-# docker exec -it be4e1479af92 /bin/bash
+# docker start 2610a61df0a3 
+# docker exec -it 2610a61df0a3 /bin/bash
+# docker ps -a 
 
 ## TODO
 ## 1) Automatically update K8s Cluster with latest docker image from master
