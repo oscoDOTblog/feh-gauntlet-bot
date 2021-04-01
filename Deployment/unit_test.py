@@ -23,6 +23,10 @@ def test_get_unit_quote_random(supply_unit_names):
 	for unit_name in supply_unit_names:
 		unit_quote_random = get_unit_quote_random(unit_name)
 		assert (isinstance(unit_quote_random, str)), "assert random quote is a string"
+		quotes_url = get_unit_quotes_url(unit_name)
+		quotes = open(quotes_url, 'r+', encoding="utf-8").read().splitlines()
+		for quote in quotes:
+			assert(isinstance(quote, str)), "assert quote has no ascii issues"
 
 def test_assets(supply_unit_names):
 	# units = [round_1_unit_1, round_1_unit_2, round_1_unit_3, round_1_unit_4, round_1_unit_5, round_1_unit_6, round_1_unit_7, round_1_unit_8]
