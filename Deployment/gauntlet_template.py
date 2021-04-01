@@ -226,10 +226,9 @@ def get_unit_quotes_url(unit_name):
 ## Parse text file line by line into list, then select random quote
 def get_unit_quote_random(unit_name):
     quotes_url = get_unit_quotes_url(unit_name)
-    quotes = open(quotes_url).read().splitlines()
+    quotes = open(quotes_url, 'r+', encoding="utf-8").read().splitlines()
     secure_random = random.SystemRandom()
-    return secure_random.choice(quotes)
-
+    return secure_random.choice(quotes).strip() 
 def get_unit_image_url(unit_name):
     return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Preview.png"
 
