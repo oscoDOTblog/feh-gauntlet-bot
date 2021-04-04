@@ -21,8 +21,8 @@ round_2_unit_1 = "Wrys"
 round_2_unit_2 = "Silque"
 round_2_unit_3 = "Rhys"
 round_2_unit_4 = "Forrest"
-round_3_unit_1 = "Seiros"
-round_3_unit_2 = "Lyn"
+round_3_unit_1 = "Wrys"
+round_3_unit_2 = "Rhys"
 discord_channel_ids = {
     round_1_unit_1 : 783177258713874443,
     round_1_unit_2 : 783177296646897665,
