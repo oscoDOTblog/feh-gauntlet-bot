@@ -66,12 +66,17 @@ class MyClient(discord.Client):
         message_channel = message.channel
 
 
-        if message.content.startswith('$hello'):
+        if message.content.startswith('++hello'):
             await message.channel.send('Hello!')
 
         ## Help Command
         if message.content.startswith((f'{PREFIX}help')):
-            await message.channel.send('`Here is a list of Rebecca bot\'s commands!\nTODO`')
+            await message.channel.send(f'***Here is a list of Rebecca bot\'s commands!***\
+            \n`{PREFIX}hello`: How are you? \
+            \n`{PREFIX}declare-vg:`: When you are ready! \
+            \n`{PREFIX}setup-vg`: Creates roles and updates channels \
+            \n`{PREFIX}teardown-vg`: Deletes old roles \
+            ')
 
         # Join (Attach Role) Command
         # Checks if role exists and adds/removes role as appropriate
@@ -176,6 +181,7 @@ class MyClient(discord.Client):
                 unit_list = get_list_of_unit_names()
                 await message.channel.send(f'***A new Voting Gauntlet is coming!***\
                 \n*Join your team in <#{discord_channel_id_member_commands}> by typing `{PREFIX}join [unit name]`!*\
+                \n*Share your friend code and lead units in <#{discord_channel_id_heroes_for_hire}>*\
                 \n\n**Commands to Join Team (Subscribe to Alerts):**\
                 \n`{PREFIX}join {unit_list[0]}`\
                 \n`{PREFIX}join {unit_list[1]}`\
