@@ -284,9 +284,9 @@ def get_time_var_current_round():
     else: 
         logger.debug("~~~~~Testing VG~~~~~")
         logger.debug("Currently Round 3")
-        round_start = round_3_start
-        unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
-        round_name = 'Final Round'
+        round_start = round_1_start
+        unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
+        round_name = 'Round 1'
         
     dic = {}
     dic['round_name'] = round_name
