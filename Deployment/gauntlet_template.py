@@ -81,14 +81,17 @@ def get_unit_scores():
                logger.debug("Key: " + key + "| Value:" + y_text )
                unit_dict['MCorrin'] = y_text
                count -= 1
+               break
             elif (x_text == 'Corrin') and (not unit_dict['FCorrin']):
                logger.debug("Key: " + key + "| Value:" + y_text )
                unit_dict['FCorrin'] = y_text
                count -= 1
+               break
             if (x_text == key) and (not unit_dict[key]):
                 logger.debug("Key: " + key + "| Value:" + y_text )
                 unit_dict[key] = y_text
                 count -= 1
+                break
         # stop searching for scores if all units are accounted for (when count is 0)
         if not count:
             break
