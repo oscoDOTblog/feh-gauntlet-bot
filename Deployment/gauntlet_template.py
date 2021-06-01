@@ -76,15 +76,15 @@ def get_unit_scores():
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_dict:
-            # Check for Male Robin, then Female Robin
-            # if (x_text == 'Robin') and (not unit_dict['MRobin']):
-            #    logger.debug("Key: " + key + "| Value:" + y_text )
-            #    unit_dict['MRobin'] = y_text
-            #    count -= 1
-            # elif (x_text == 'Robin') and (not unit_dict['FRobin']):
-            #    logger.debug("Key: " + key + "| Value:" + y_text )
-            #    unit_dict['FRobin'] = y_text
-            #    count -= 1
+            # Check for Male Corrin, then Female Corrin
+            if (x_text == 'Corrin') and (not unit_dict['MCorrin']):
+               logger.debug("Key: " + key + "| Value:" + y_text )
+               unit_dict['MCorrin'] = y_text
+               count -= 1
+            elif (x_text == 'Corrin') and (not unit_dict['FCorrin']):
+               logger.debug("Key: " + key + "| Value:" + y_text )
+               unit_dict['FCorrin'] = y_text
+               count -= 1
             if (x_text == key) and (not unit_dict[key]):
                 logger.debug("Key: " + key + "| Value:" + y_text )
                 unit_dict[key] = y_text
