@@ -170,9 +170,10 @@ def check_vg(unit_scores):
     return (vg_scores)
 
 def one_hour_string(hours_remain):
-    if (hours_remain > 1):
-        return "**%d+** hours remain" % hours_remain
-    elif (hours_remain <= 1):
+    hours_left = hours_remain - 1
+    if (hours_left >= 1):
+        return "**%d+** hours remain" % hours_left
+    else:
         return "Less than **one** hour remains"
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
