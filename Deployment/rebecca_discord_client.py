@@ -93,8 +93,8 @@ class MyClient(discord.Client):
                     # Check if unit exists
                     if check_unit_validity(unit_name):
                         # Check if role exists, and add/remove if approriate
-                        # unit_name_index = unit_name.capitalize()
-                        unit_name_index = unit_name
+                        unit_name_index = unit_name.title()
+                        # unit_name_index = unit_name
                         role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                         if (role):
                             ## Add role to user if they did not have role
