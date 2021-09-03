@@ -1,5 +1,3 @@
-""" By Oscar K. Sandoval (https://github.com/mtfalls/) """
-#!/usr/bin/env python
 import sys
 import math
 import random
