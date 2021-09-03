@@ -1,6 +1,6 @@
 # **FEH Gauntlet Bot** [![Build Status](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot.svg?branch=master)](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot)
 
-![Gauntlet-Landing](Deployment/assets/gauntlet_landing.PNG)
+![Gauntlet-Landing](deployment/assets/gauntlet_landing.PNG)
 
 **FEH Gauntlet Bot** is a Twitter bot thats posts hourly updates when disadvantage multipliers are up for #FEHeroes Voting Gauntlets! [Click here to view its Twitter page!](https://twitter.com/FEHGauntletBot)
 
