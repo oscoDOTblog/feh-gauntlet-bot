@@ -1,18 +1,27 @@
+import asyncio, os
 from config import * # current VG particpants and round dates
+from easyjobs.manager import EasyJobsManager
 from fastapi import FastAPI
 import json
 
-app = FastAPI()
+server = FastAPI()
 
 def send_twitter_update():
     print("Pizza Time")
 
-@app.get('/hello')
+@server.on_event('startup')
+async def startup():
+    server.job_manager = await EasyJobsManager.create(
+        server,
+        server_secret='abcd1234'
+    )
+
+@server.get('/hello')
 def hello():
     """Test endpoint"""
     return {'hello': 'world'}
     
-@app.get('/units')
+@server.get('/units')
 def get_list_of_unit_names():
     data = [round_1_unit_1,
             round_1_unit_2,
