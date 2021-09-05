@@ -36,6 +36,7 @@ discord_channel_ids = {
 discord_channel_id_heroes_for_hire  = 815770425908527124
 discord_channel_id_member_commands  = 812878892880625726
 discord_channel_id_test_commands    = 793542106928644116
+discord_guild = "FEH-Gauntlet-Bot (Atemosta)"
 discord_hex_colours = {
     round_1_unit_1 : 0xffe666,
     round_1_unit_2 : 0xcbc4cc,
@@ -46,4 +47,5 @@ discord_hex_colours = {
     round_1_unit_7 : 0x000099,
     round_1_unit_8 : 0xb20000
 }
+discord_prefix = "++"
 discord_role_id_admin = "Galaxy Contructor"

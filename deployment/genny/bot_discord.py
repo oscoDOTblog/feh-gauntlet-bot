@@ -1,15 +1,22 @@
 import discord
 from discord.ext.commands import command
+import json
+import requests
 
-PREFIX = "++"
+BOT_NAME = "genny"
 STATUS = ["Fire Emblem Echoes: Shadows of Valentia", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
+REST_API_URL = f'http://0.0.0.0:5057/config/bot/discord/{BOT_NAME}'
+RESPONSE = json.loads(requests.get(REST_API_URL).json())
+DISCORD_GUILD = RESPONSE['guild']
+DISCORD_PREFIX = RESPONSE['prefix']
+DISCORD_TOKEN = RESPONSE['token']
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
-        self.PREFIX = PREFIX
+        self.PREFIX = DISCORD_PREFIX
         self.ready = False
         self.guild = None 
-        super().__init__(command_prefix=PREFIX)
+        super().__init__(command_prefix=DISCORD_PREFIX)
 
     # Bot Commands
     async def on_message(self, message):

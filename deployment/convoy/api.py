@@ -31,7 +31,12 @@ def get_list_of_unit_names():
 
 @app.get('/config/bot/discord/{bot_name}')
 def get_config_for_discord_bot(bot_name: str):
-    name = bot_name
-    guild = DISCORD_GUILD
-    token = DISCORD_TOKEN [name]
-    return json.dumps({"bot":[{"name":name}, {"guild": guild}, {"token": token}]})
+    return json.dumps(
+        { 
+            "name": bot_name, 
+            "guild": discord_guild, 
+            "prefix": discord_prefix, 
+            "token": DISCORD_TOKEN [bot_name]
+        }
+        
+    )
