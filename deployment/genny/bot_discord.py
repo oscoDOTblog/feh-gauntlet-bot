@@ -1,10 +1,8 @@
 import discord
 from discord.ext.commands import command
-from secrets_poets import *
 
 PREFIX = "++"
-STATUS = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
-
+STATUS = ["Fire Emblem Echoes: Shadows of Valentia", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):

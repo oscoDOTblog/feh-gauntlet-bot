@@ -1,67 +1,23 @@
-import asyncio, os
-import discord
+# uvicorn api:app --host 0.0.0.0 --port 5057
 import json
 from config import * # current VG particpants and round dates
-from discord.ext.commands import command
-from easyjobs.manager import EasyJobsManager
 from fastapi import FastAPI
-from secrets_poets import *
+from pydantic import BaseModel
+from secrets import *
 
-PREFIX = "++"
-STATUS = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
-server = FastAPI()
+app = FastAPI()
 
-class MyClient(discord.Client):
-    def __init__(self, *args, **kwargs):
-        self.PREFIX = PREFIX
-        self.ready = False
-        self.guild = None 
-        super().__init__(command_prefix=PREFIX)
+# Request body classes
+class Bot(BaseModel):
+    name: str
+    # description: str = None
 
-    # Bot Commands
-    async def on_message(self, message):
-        # Ignore all messages from bot
-        if message.author == client.user:
-            return
-
-        # Parse string from message
-        msg = message.content
-        member = message.author 
-        message_channel = message.channel
-
-
-        if message.content.startswith('++hello'):
-            await message.channel.send('Hello!')
-
-
-    async def on_ready(self):
-        await client.change_presence(activity=discord.Game(STATUS[0]))
-        self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
-        # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
-        # self.scheduler.start()
-
-def send_twitter_update():
-    print("Pizza Time")
-
-
-@server.on_event('startup')
-async def startup():
-    server.job_manager = await EasyJobsManager.create(
-        server,
-        server_secret='abcd1234'
-    )
-
-    # Discord Bot
-    client = MyClient()
-    client.run(DISCORD_TOKEN)
-
-@server.get('/hello')
+@app.get('/hello')
 def hello():
     """Test endpoint"""
     return {'hello': 'world'}
     
-@server.get('/units')
+@app.get('/units')
 def get_list_of_unit_names():
     data = [round_1_unit_1,
             round_1_unit_2,
@@ -73,6 +29,9 @@ def get_list_of_unit_names():
             round_1_unit_8]
     return json.dumps({"unit":[{"name":value} for value in data]})
 
-# Discord Bot
-# client = MyClient()
-# client.run(DISCORD_TOKEN)
+@app.get('/config/bot/discord/{bot_name}')
+def get_config_for_discord_bot(bot_name: str):
+    name = bot_name
+    guild = DISCORD_GUILD
+    token = DISCORD_TOKEN [name]
+    return json.dumps({"bot":[{"name":name}, {"guild": guild}, {"token": token}]})
