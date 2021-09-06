@@ -48,7 +48,7 @@ def get_unit_scores():
     # all round variables
     time_var_current_round = get_time_var_current_round()
     if (time_var_current_round == -1):
-        return -1
+        return {'status' : 'concluded'}
     unit_appear = time_var_current_round['unit_dict']
     unit_count = time_var_current_round['unit_count']
     unit_freq = time_var_current_round['unit_freq']
@@ -231,8 +231,6 @@ def check_unit_validity(unit_name):
     else:
         return False
 
-
-
 def get_unit_quotes_url(unit_name):
     return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Quotes.txt" 
 
@@ -301,8 +299,8 @@ def get_time_var_current_round():
     else: 
         # logger.debug("~~~~~Testing VG~~~~~")
         # logger.debug("Currently Round 3")
-        round_start = round_1_start
-        round_name = 'Round 1'
+        round_start = round_3_start
+        round_name = 'Round 3'
         unit_count = 14 
         unit_freq = 3
         # unit_count = 12 

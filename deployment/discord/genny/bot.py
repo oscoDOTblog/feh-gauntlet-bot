@@ -1,5 +1,5 @@
 ## python3 genny.py 
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 import discord
 from discord.ext.commands import command
@@ -9,6 +9,11 @@ import tweepy
 
 ## Global Variables
 BOT_NAME = "genny"
+REST_API_URL = "http://0.0.0.0:5057"
+
+# Set Up Requests Method
+def fetch_info_rest(path: str):
+    return json.loads(requests.get(f'{REST_API_URL}/{path}').json())
 
 ## Get Bot Config from REST Endpoint
 def get_bot_config(BOT_NAME: str):
@@ -16,8 +21,7 @@ def get_bot_config(BOT_NAME: str):
     global DISCORD_PREFIX 
     global DISCORD_STATUS 
     global DISCORD_TOKEN 
-    REST_API_URL = f'http://0.0.0.0:5057/config/bot/discord/{BOT_NAME}'
-    RESPONSE = json.loads(requests.get(REST_API_URL).json())
+    RESPONSE = fetch_info_rest(f'config/bot/discord/{BOT_NAME}')
     DISCORD_GUILD = RESPONSE['guild']
     DISCORD_PREFIX = RESPONSE['prefix']
     DISCORD_STATUS = RESPONSE['status']
@@ -29,23 +33,25 @@ class MyClient(discord.Client):
         self.PREFIX = DISCORD_PREFIX
         self.ready = False
         self.guild = None 
+        self.scheduler = AsyncIOScheduler()
         super().__init__(command_prefix=DISCORD_PREFIX)
 
     #Check scores and send update to discord if required
-    async def send_vg_ugdate(self):
+    async def send_twitter_ugdate(self):
         await self.wait_until_ready()
         # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
-        current_unit_scores = get_unit_scores() # TODO UPDATE TO REST ENDPOINT
-        if (current_unit_scores == -1):
+        # current_unit_scores = get_unit_scores() # TODO UPDATE TO REST ENDPOINT
+        current_unit_scores = fetch_info_rest('feh-vg-bot/get-unit-scores')
+        if (len(current_unit_scores) <= 1):
             # logger.debug("In Beween Rounds, Do Nothing")
             print("In Beween Rounds, Do Nothing")
         else:
             # self.logger.debug("During Voting Gauntlet")
-            vg_scores = check_vg(current_unit_scores) # TODO UPDATE TO REST ENDPOINT
+            # vg_scores = check_vg(current_unit_scores) # TODO UPDATE TO REST ENDPOINT
+            vg_scores  = fetch_info_rest('feh-vg-bot/check-vg')
 
             # Twitter authentication 
-            REST_API_URL = f'http://0.0.0.0:5057/config/bot/twitter/auth'
-            RESPONSE = json.loads(requests.get(REST_API_URL).json())
+            RESPONSE  = fetch_info_rest('config/bot/twitter/auth')
             auth = tweepy.OAuthHandler(RESPONSE['C_KEY'], RESPONSE['C_SECRET'])
             auth.set_access_token(RESPONSE['A_TOKEN'], RESPONSE['A_TOKEN_SECRET'])
             api = tweepy.API(auth)
