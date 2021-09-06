@@ -27,6 +27,11 @@ def get_bot_config(BOT_NAME: str):
     DISCORD_STATUS = RESPONSE['status']
     DISCORD_TOKEN = RESPONSE['token']
 
+##  Get Image URL 
+## TODO: Update to REST Endpoint)
+def get_unit_image_url(unit_name):
+    return f"../../assets/{unit_name}/{unit_name}_Preview.png"
+
 ## Discord Bot Client
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -89,16 +94,28 @@ class MyClient(discord.Client):
         message_channel = message.channel
 
         # Test Message
-        if message.content.startswith('++hello'):
+        if message.content.startswith(f'{DISCORD_PREFIX}hello'):
             await message.channel.send('Hello!')
+
+        # Debug Bot
+        if message.content.startswith(f'{DISCORD_PREFIX}debug-{BOT_NAME}'):
+            await message.channel.send('Hello!')
+
+        # Help Menu
+        if message.content.startswith(f'{DISCORD_PREFIX}help-{BOT_NAME}'):
+            em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
+            em.add_field(name = "Hello!", value = f'`{DISCORD_PREFIX}hello`')
+            em.add_field(name = "Debug", value = f'`{DISCORD_PREFIX}debug`')
+            await message.channel.send(embed = em)
+            # await message.channel.send('Hello!')
 
 
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(DISCORD_STATUS))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(second="*/5"))
+        # self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(second="*/5"))
         # self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
-        self.scheduler.start()
+        # self.scheduler.start()
 
 ## Start Discord Bot Client
 get_bot_config(BOT_NAME)

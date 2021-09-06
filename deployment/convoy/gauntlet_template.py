@@ -136,6 +136,7 @@ def check_vg(unit_scores):
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
+    vg_scores = []
     for (a, b) in pairwise_compare(unit_scores):
 
         # obtain name of units battling
@@ -166,11 +167,18 @@ def check_vg(unit_scores):
             hour_or_hours = one_hour_string(hours_remain)
             message = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
 
-        vg_scores = {}
-        vg_scores['Round'] = round_name
-        vg_scores['Hour'] = hours_remain
-        vg_scores['Losing'] = losing_unit
-        vg_scores['Message'] = message
+        dic = {}
+        dic['Round'] = round_name
+        dic['Hour'] = hours_remain
+        dic['Losing'] = losing_unit
+        dic['Message'] = message
+        vg_scores.append(dic)
+
+        # vg_scores = {}
+        # vg_scores['Round'] = round_name
+        # vg_scores['Hour'] = hours_remain
+        # vg_scores['Losing'] = losing_unit
+        # vg_scores['Message'] = message
 
     # End of Log
     # logger.debug("End of successful check")
@@ -240,6 +248,7 @@ def get_unit_quote_random(unit_name):
     quotes = open(quotes_url, 'r+', encoding="utf-8").read().splitlines()
     secure_random = random.SystemRandom()
     return secure_random.choice(quotes).strip() 
+    
 def get_unit_image_url(unit_name):
     return f"{vg_assets_root_path}/{unit_name}/{unit_name}_Preview.png"
 
