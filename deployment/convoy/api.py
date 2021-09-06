@@ -29,11 +29,6 @@ def hello():
 #     data = get_list_of_unit_names()
 #     return json.dumps({"unit":[{"name":value} for value in data]})
 
-@app.get('/feh-vg-bot/check-vg')
-def check_vg_restful():
-    current_unit_scores = [(round_3_unit_1, '6,599'), (round_3_unit_1, '8,726')] 
-    return json.dumps(check_vg(current_unit_scores))
-
 @app.get('/config/bot/discord/{bot_name}')
 def get_config_for_bot_discord(bot_name: str):
     return json.dumps(
@@ -73,3 +68,13 @@ def get_auth_for_bot_twitter():
             "A_TOKEN_SECRET": A_TOKEN_SECRET
         }
     )
+
+@app.get('/feh-vg-bot/check-vg')
+def check_vg_restful():
+    current_unit_scores = [(round_3_unit_1, '6,599'), (round_3_unit_1, '8,726')] 
+    return json.dumps(check_vg(current_unit_scores))
+
+@app.get('/feh-vg-bot/get-unit-scores')
+def gen_unit_scores_restful():
+    current_unit_scores = [(round_3_unit_1, '6,599'), (round_3_unit_1, '8,726')] 
+    return json.dumps(check_vg(current_unit_scores))

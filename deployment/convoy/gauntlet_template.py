@@ -49,8 +49,10 @@ def get_unit_scores():
     time_var_current_round = get_time_var_current_round()
     if (time_var_current_round == -1):
         return -1
-    unit_dict = time_var_current_round['unit_dict']
-    count = len(unit_dict)
+    unit_appear = time_var_current_round['unit_dict']
+    unit_count = time_var_current_round['unit_count']
+    unit_freq = time_var_current_round['unit_dict']
+    unit_scores = time_var_current_round['unit_dict']
 
     # get units' current score by interating through all p elements
     for (x, y) in pairwise_list(p):
@@ -80,26 +82,33 @@ def get_unit_scores():
             #    unit_dict['MCorrin'] = y_text
             #    count -= 1
             #    break
-            if (x_text == 'Corrin') and (not unit_dict['FCorrin']):
-               # logger.debug("Key: " + key + "| Value:" + y_text )
-               unit_dict['FCorrin'] = y_text
-               count -= 1
-               break
-            if (x_text == key) and (not unit_dict[key]):
-                # logger.debug("Key: " + key + "| Value:" + y_text )
-                unit_dict[key] = y_text
-                count -= 1
+            # if (x_text == 'Corrin') and (not unit_dict['FCorrin']):
+            #    # logger.debug("Key: " + key + "| Value:" + y_text )
+            #    unit_dict['FCorrin'] = y_text
+            #    count -= 1
+            #    break
+            if (x_text == key)
+                unit_appear[key] = unit_appear[key] + 1
+                if (not unit_scores[key]):
+                    # logger.debug("Key: " + key + "| Value:" + y_text )
+                    unit_scores[key] = y_text
+                unit_count -= 1
                 break
         # stop searching for scores if all units are accounted for (when count is 0)
-        if not count:
+        if not unit_count:
             break
 
+    # Remove Irrelevant Units
+    for key, value in unit_appear:
+            if value is not unit_freq:
+                del unit_scores[key]
+
     # custom sort dictionary values into a list
-    keyorder = [round_1_unit_1, round_1_unit_2, round_1_unit_3, round_1_unit_4, round_1_unit_5, round_1_unit_6, round_1_unit_7, round_1_unit_8]
-    unit_scores = sorted(unit_dict.items(), key=lambda i:keyorder.index(i[0]))
+    keyorder = [vg_unit_1, vg_unit_2, vg_unit_3, vg_unit_4, vg_unit_5, vg_unit_6, vg_unit_7, vg_unit_8]
+    unit_scores_sorted = sorted(unit_scores.items(), key=lambda i:keyorder.index(i[0]))
     # logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     # logger.info(unit_scores)
-    return unit_scores
+    return unit_scores_sorted
 
 def check_vg(unit_scores):
     # Set Up Logger
@@ -123,7 +132,6 @@ def check_vg(unit_scores):
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
-    vg_scores = []
     for (a, b) in pairwise_compare(unit_scores):
 
         # obtain name of units battling
@@ -154,12 +162,11 @@ def check_vg(unit_scores):
             hour_or_hours = one_hour_string(hours_remain)
             message = "No multiplier for #Team%s vs. #Team%s (%s in %s\'s %s)" % (a_name, b_name, hour_or_hours, vg_hashtag, round_name)
 
-        dic = {}
-        dic['Round'] = round_name
-        dic['Hour'] = hours_remain
-        dic['Losing'] = losing_unit
-        dic['Message'] = message
-        vg_scores.append(dic)
+        vg_scores = {}
+        vg_scores['Round'] = round_name
+        vg_scores['Hour'] = hours_remain
+        vg_scores['Losing'] = losing_unit
+        vg_scores['Message'] = message
 
     # End of Log
     # logger.debug("End of successful check")
@@ -205,14 +212,14 @@ def truncate(f, n):
     return '.'.join([i, (d+'0'*n)[:n]])
 
 def get_list_of_unit_names():
-    return [round_1_unit_1,
-            round_1_unit_2,
-            round_1_unit_3,
-            round_1_unit_4,
-            round_1_unit_5,
-            round_1_unit_6,
-            round_1_unit_7,
-            round_1_unit_8]
+    return [vg_unit_1,
+            vg_unit_2,
+            vg_unit_3,
+            vg_unit_4,
+            vg_unit_5,
+            vg_unit_6,
+            vg_unit_7,
+            vg_unit_8]
 
 def check_unit_validity(unit_name):
     if unit_name.lower() in map(str.lower, get_list_of_unit_names()):
@@ -258,6 +265,7 @@ def get_time_var_current_round():
     round_2_end = time_var['round_2_end']
     round_3_start = time_var['round_3_start']
     round_3_end = time_var['round_3_end']
+    unit_dict = {vg_unit_1: False, vg_unit_2: False, vg_unit_3: False, vg_unit_4: False, vg_unit_5: False, vg_unit_6: False, vg_unit_7: False, vg_unit_8: False}
 
     # Check if test VG or real VG
     if not (vg_test):
@@ -265,20 +273,23 @@ def get_time_var_current_round():
         if (round_1_start < time_now < round_1_end):
             # logger.debug("Currently Round 1")
             round_start = round_1_start
-            unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
             round_name = 'Round 1'
+            unit_count = 8 
+            unit_freq = 1
         # round 2 variables
         elif (round_2_start < time_now < round_2_end):
             # logger.debug("Currently Round 2")
             round_start = round_2_start
-            unit_dict = {round_2_unit_1: False, round_2_unit_2: False, round_2_unit_3: False, round_2_unit_4: False}
             round_name = 'Round 2'
+            unit_count = 12
+            unit_freq = 2
         # round 3 variables
         elif (round_3_start < time_now < round_3_end):
             # logger.debug("Currently Round 3")
             round_start = round_3_start
-            unit_dict = {round_3_unit_1: False, round_3_unit_2: False}
             round_name = 'Final Round'
+            unit_count = 14 
+            unit_freq = 3
         # else in between rounds
         else:
             # logger.debug("Current time in between rounds. Ending execution.")
@@ -287,14 +298,17 @@ def get_time_var_current_round():
         # logger.debug("~~~~~Testing VG~~~~~")
         # logger.debug("Currently Round 3")
         round_start = round_1_start
-        unit_dict = {round_1_unit_1: False, round_1_unit_2: False, round_1_unit_3: False, round_1_unit_4: False, round_1_unit_5: False, round_1_unit_6: False, round_1_unit_7: False, round_1_unit_8: False}
         round_name = 'Round 1'
+        unit_count = 14 
+        unit_freq = 3
         
     dic = {}
     dic['round_name'] = round_name
     dic['round_start'] = round_start
     dic['time_now'] = time_now
+    dic['unit_dict'] = unit_count
     dic['unit_dict'] = unit_dict
+    dic['unit_freq'] = unit_freq
     return dic  
 
 # Set up logger
