@@ -63,3 +63,14 @@ def get_status_for_bot_discord(bot_name: str):
 @app.get('/config/bot/discord/token/{bot_name}')
 def get_token_for_bot_discord(bot_name: str):
     return json.dumps({"token": DISCORD_TOKEN [bot_name]})
+
+@app.get('/config/bot/twitter/auth/')
+def get_auth_for_bot_twitter():
+    return json.dumps(
+        { 
+            "C_KEY": C_KEY, 
+            "C_SECRET": C_SECRET, 
+            "A_TOKEN": A_TOKEN, 
+            "A_TOKEN_SECRET": A_TOKEN_SECRET
+        }
+    )
