@@ -99,7 +99,12 @@ class MyClient(discord.Client):
 
         # Debug Bot
         if message.content.startswith(f'{DISCORD_PREFIX}debug-{BOT_NAME}'):
-            await message.channel.send('Hello!')
+            em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
+            unit_scores = fetch_info_rest('feh-vg-bot/get-unit-scores')
+            em.add_field(name = "Unit Scores", value = f'`{unit_scores}`')
+            check_vg = fetch_info_rest('feh-vg-bot/check-vg')
+            em.add_field(name = "Check VG", value = f'`{check_vg}`')
+            await message.channel.send(embed = em)
 
         # Help Menu
         if message.content.startswith(f'{DISCORD_PREFIX}help-{BOT_NAME}'):
