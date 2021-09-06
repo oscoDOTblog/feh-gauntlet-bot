@@ -76,5 +76,4 @@ def check_vg_restful():
 
 @app.get('/feh-vg-bot/get-unit-scores')
 def gen_unit_scores_restful():
-    current_unit_scores = [(round_3_unit_1, '6,599'), (round_3_unit_1, '8,726')] 
-    return json.dumps(check_vg(current_unit_scores))
+    return json.dumps(get_unit_scores())

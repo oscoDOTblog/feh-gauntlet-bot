@@ -18,28 +18,28 @@ vg_unit_6 = "Ephraim"
 vg_unit_7 = "Marth"
 vg_unit_8 = "Caeda"
 discord_channel_ids = {
-    round_1_unit_1 : 783177258713874443,
-    round_1_unit_2 : 783177296646897665,
-    round_1_unit_3 : 783177368126226482,
-    round_1_unit_4 : 783177409864138802,
-    round_1_unit_5 : 783177224139702274,
-    round_1_unit_6 : 783177467258994728,
-    round_1_unit_7 : 783177540532568095,
-    round_1_unit_8 : 783177505778958348
+    vg_unit_1 : 783177258713874443,
+    vg_unit_2 : 783177296646897665,
+    vg_unit_3 : 783177368126226482,
+    vg_unit_4 : 783177409864138802,
+    vg_unit_5 : 783177224139702274,
+    vg_unit_6 : 783177467258994728,
+    vg_unit_7 : 783177540532568095,
+    vg_unit_8 : 783177505778958348
 }
 discord_channel_id_heroes_for_hire  = 815770425908527124
 discord_channel_id_member_commands  = 812878892880625726
 discord_channel_id_test_commands    = 793542106928644116
 discord_guild = "FEH-Gauntlet-Bot (Atemosta)"
 discord_hex_colours = {
-    round_1_unit_1 : 0xffe666,
-    round_1_unit_2 : 0xcbc4cc,
-    round_1_unit_3 : 0x53239c,
-    round_1_unit_4 : 0x993232,
-    round_1_unit_5 : 0x5ac18e,
-    round_1_unit_6 : 0x364e4a,
-    round_1_unit_7 : 0x000099,
-    round_1_unit_8 : 0xb20000
+    vg_unit_1 : 0xffe666,
+    vg_unit_2 : 0xcbc4cc,
+    vg_unit_3 : 0x53239c,
+    vg_unit_4 : 0x993232,
+    vg_unit_5 : 0x5ac18e,
+    vg_unit_6 : 0x364e4a,
+    vg_unit_7 : 0x000099,
+    vg_unit_8 : 0xb20000
 }
 discord_prefix = "++"
 # Discord Secrets

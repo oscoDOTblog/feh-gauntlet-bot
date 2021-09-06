@@ -51,8 +51,8 @@ def get_unit_scores():
         return -1
     unit_appear = time_var_current_round['unit_dict']
     unit_count = time_var_current_round['unit_count']
-    unit_freq = time_var_current_round['unit_dict']
-    unit_scores = time_var_current_round['unit_dict']
+    unit_freq = time_var_current_round['unit_freq']
+    unit_scores = unit_appear.copy()
 
     # get units' current score by interating through all p elements
     for (x, y) in pairwise_list(p):
@@ -75,7 +75,7 @@ def get_unit_scores():
             # logger.debug("VG is NOT now!!!")
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
-        for key in unit_dict:
+        for key in unit_appear:
             # Check for Male Corrin, then Female Corrin
             # if (x_text == 'Corrin') and (not unit_dict['MCorrin']):
             #    logger.debug("Key: " + key + "| Value:" + y_text )
@@ -87,7 +87,7 @@ def get_unit_scores():
             #    unit_dict['FCorrin'] = y_text
             #    count -= 1
             #    break
-            if (x_text == key)
+            if (x_text == key):
                 unit_appear[key] = unit_appear[key] + 1
                 if (not unit_scores[key]):
                     # logger.debug("Key: " + key + "| Value:" + y_text )
@@ -98,8 +98,12 @@ def get_unit_scores():
         if not unit_count:
             break
 
+    # DEBUG 
+    print("unit_appear:" + str(unit_appear))
+    print("unit_scores:" + str(unit_scores)) 
+
     # Remove Irrelevant Units
-    for key, value in unit_appear:
+    for key, value in unit_appear.items():
             if value is not unit_freq:
                 del unit_scores[key]
 
@@ -306,7 +310,7 @@ def get_time_var_current_round():
     dic['round_name'] = round_name
     dic['round_start'] = round_start
     dic['time_now'] = time_now
-    dic['unit_dict'] = unit_count
+    dic['unit_count'] = unit_count
     dic['unit_dict'] = unit_dict
     dic['unit_freq'] = unit_freq
     return dic  
