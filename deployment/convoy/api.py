@@ -12,6 +12,12 @@ class Bot(BaseModel):
     name: str
     # description: str = None
 
+@app.get('/health')
+def hello():
+    """Test endpoint"""
+    return {'status': '200'}
+    
+
 @app.get('/hello')
 def hello():
     """Test endpoint"""
@@ -36,6 +42,7 @@ def get_config_for_discord_bot(bot_name: str):
             "name": bot_name, 
             "guild": discord_guild, 
             "prefix": discord_prefix, 
+            "status": discord_status[bot_name], 
             "token": DISCORD_TOKEN [bot_name]
         }
         

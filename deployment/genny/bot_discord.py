@@ -1,14 +1,16 @@
+# python3 bot_discord.py genny
 import discord
 from discord.ext.commands import command
 import json
 import requests
+import sys
 
-BOT_NAME = "genny"
-STATUS = ["Fire Emblem Echoes: Shadows of Valentia", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
+BOT_NAME = sys.argv[1]
 REST_API_URL = f'http://0.0.0.0:5057/config/bot/discord/{BOT_NAME}'
 RESPONSE = json.loads(requests.get(REST_API_URL).json())
 DISCORD_GUILD = RESPONSE['guild']
 DISCORD_PREFIX = RESPONSE['prefix']
+DISCORD_STATUS = RESPONSE['status']
 DISCORD_TOKEN = RESPONSE['token']
 
 class MyClient(discord.Client):
@@ -35,7 +37,7 @@ class MyClient(discord.Client):
 
 
     async def on_ready(self):
-        await client.change_presence(activity=discord.Game(STATUS[0]))
+        await client.change_presence(activity=discord.Game(DISCORD_STATUS))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
         # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(second="*/5"))
         # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)

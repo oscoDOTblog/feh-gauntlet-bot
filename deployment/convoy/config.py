@@ -48,4 +48,11 @@ discord_hex_colours = {
     round_1_unit_8 : 0xb20000
 }
 discord_prefix = "++"
+# Discord Secrets
+discord_status = {
+    "anna" : "TBD",
+    "genny" : "Fire Emblem Echoes: Shadows of Valentia",
+    "joshua" : "TBD",
+    "rebecca" : "TBD"
+}
 discord_role_id_admin = "Galaxy Contructor"
