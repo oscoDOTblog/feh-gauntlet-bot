@@ -305,6 +305,10 @@ def get_time_var_current_round():
         round_name = 'Round 1'
         unit_count = 14 
         unit_freq = 3
+        # unit_count = 12 
+        # unit_freq = 2
+        # unit_count = 8 
+        # unit_freq = 1
         
     dic = {}
     dic['round_name'] = round_name
