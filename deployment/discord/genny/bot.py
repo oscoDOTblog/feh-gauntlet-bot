@@ -4,6 +4,8 @@ from discord.ext.commands import command
 import json
 import requests
 
+BOT_NAME = "genny"
+
 def get_bot_config(BOT_NAME: str):
     global DISCORD_GUILD 
     global DISCORD_PREFIX 
@@ -46,7 +48,6 @@ class MyClient(discord.Client):
         # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         # self.scheduler.start()
 
-BOT_NAME = "genny"
 get_bot_config(BOT_NAME)
 client = MyClient()
 client.run(DISCORD_TOKEN)

@@ -36,7 +36,7 @@ def get_list_of_unit_names():
     return json.dumps({"unit":[{"name":value} for value in data]})
 
 @app.get('/config/bot/discord/{bot_name}')
-def get_config_for_discord_bot(bot_name: str):
+def get_config_for_bot_discord(bot_name: str):
     return json.dumps(
         { 
             "name": bot_name, 
@@ -47,3 +47,19 @@ def get_config_for_discord_bot(bot_name: str):
         }
         
     )
+
+@app.get('/config/bot/discord/guild/')
+def get_guild_for_bot_discord():
+    return json.dumps({"guild": discord_guild})
+
+@app.get('/config/bot/discord/prefix')
+def get_prefix_for_bot_discord():
+    return json.dumps({"prefix": discord_prefix})
+    
+@app.get('/config/bot/discord/status/{bot_name}')
+def get_status_for_bot_discord(bot_name: str):
+    return json.dumps({"status": discord_status[bot_name]})
+
+@app.get('/config/bot/discord/token/{bot_name}')
+def get_token_for_bot_discord(bot_name: str):
+    return json.dumps({"token": DISCORD_TOKEN [bot_name]})
