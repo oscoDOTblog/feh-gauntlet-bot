@@ -5,18 +5,22 @@ import json
 import requests
 import sys
 
-def get_bot_config(BOT_NAME: str):
+def get_bot_config(BOT_NAME: str){
     # BOT_NAME = sys.argv[1]
     REST_API_URL = f'http://0.0.0.0:5057/config/bot/discord/{BOT_NAME}'
     RESPONSE = json.loads(requests.get(REST_API_URL).json())
-    global DISCORD_GUILD 
-    global DISCORD_PREFIX 
-    global DISCORD_STATUS 
-    global DISCORD_TOKEN 
-    DISCORD_GUILD = RESPONSE['guild']
-    DISCORD_PREFIX = RESPONSE['prefix']
-    DISCORD_STATUS = RESPONSE['status']
-    DISCORD_TOKEN = RESPONSE['token']
+    global DISCORD_GUILD = RESPONSE['guild']
+    global DISCORD_PREFIX = RESPONSE['prefix']
+    global DISCORD_STATUS = RESPONSE['status']
+    global DISCORD_TOKEN = RESPONSE['token']
+}
+# BOT_NAME = sys.argv[1]
+# REST_API_URL = f'http://0.0.0.0:5057/config/bot/discord/{BOT_NAME}'
+# RESPONSE = json.loads(requests.get(REST_API_URL).json())
+# DISCORD_GUILD = RESPONSE['guild']
+# DISCORD_PREFIX = RESPONSE['prefix']
+# DISCORD_STATUS = RESPONSE['status']
+# DISCORD_TOKEN = RESPONSE['token']
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -48,7 +52,5 @@ class MyClient(discord.Client):
         # self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         # self.scheduler.start()
 
-BOT_NAME = sys.argv[1]
-get_bot_config(BOT_NAME)
 client = MyClient()
 client.run(DISCORD_TOKEN)
