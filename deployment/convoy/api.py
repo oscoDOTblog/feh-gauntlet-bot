@@ -29,6 +29,10 @@ def hello():
 #     data = get_list_of_unit_names()
 #     return json.dumps({"unit":[{"name":value} for value in data]})
 
+@app.get('/config/bot/assets')
+def get_assets_path_for_bot():
+    return json.dumps({"assets_path": vg_assets_root_path})
+
 @app.get('/config/bot/discord/{bot_name}')
 def get_config_for_bot_discord(bot_name: str):
     return json.dumps(
@@ -41,7 +45,7 @@ def get_config_for_bot_discord(bot_name: str):
         }
         
     )
-
+    
 @app.get('/config/bot/discord/guild/')
 def get_guild_for_bot_discord():
     return json.dumps({"guild": discord_guild})

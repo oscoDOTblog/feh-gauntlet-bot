@@ -8,10 +8,6 @@ import json
 import requests
 import tweepy
 
-## Global Variables
-# BOT_NAME = "genny"
-# REST_API_URL = "http://0.0.0.0:5057"
-
 # Set Up Requests Method
 def fetch_info_rest(path: str):
     return json.loads(requests.get(f'{REST_API_URL}/{path}').json())
@@ -29,10 +25,10 @@ def get_bot_config(BOT_NAME: str):
     DISCORD_TOKEN = RESPONSE['token']
 
 ##  Get Image URL 
-## TODO: Update to REST Endpoint)
 def get_unit_image_url(unit_name):
-    return f"../../assets/{unit_name}/{unit_name}_Preview.png"
-
+    RESPONSE  = fetch_info_rest('config/bot/assets')
+    return f"{RESPONSE['assets_path']}/{unit_name}/{unit_name}_Preview.png"
+     
 ## Discord Bot Client
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -80,7 +76,6 @@ class MyClient(discord.Client):
                 # Print out timestamp in the event of failure
                 # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
 
-
     # Bot Commands
     async def on_message(self, message):
         # Ignore all messages from bot
@@ -117,7 +112,7 @@ class MyClient(discord.Client):
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(DISCORD_STATUS))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        # self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(second="*/5"))
         # self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         # self.scheduler.start()
 
