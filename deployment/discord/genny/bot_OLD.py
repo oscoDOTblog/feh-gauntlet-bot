@@ -25,7 +25,6 @@ def get_bot_config(BOT_NAME: str):
     DISCORD_TOKEN = RESPONSE['token']
 
 ##  Get Image URL 
-## TODO: Update
 def get_unit_image_url(unit_name):
     # return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
     return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
@@ -43,7 +42,6 @@ class MyClient(discord.Client):
     async def send_twitter_update(self):
         await self.wait_until_ready()
         # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
-        print("Pizza Time")
         current_unit_scores = fetch_info_rest('feh-vg-bot/get-unit-scores')
         if (len(current_unit_scores) <= 1):
             # logger.debug("In Beween Rounds, Do Nothing")

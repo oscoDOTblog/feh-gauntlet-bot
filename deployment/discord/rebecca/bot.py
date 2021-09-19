@@ -1,41 +1,52 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config.secrets_discord import *
-from datetime import datetime
+from config import *
 import discord
 from discord.ext.commands import command
-from gauntlet_template import *
 
-PREFIX = "++"
-STATUS = ["Fire Emblem: The Blazing Blade", "Tempest Crossing (https://atemosta.com/tempest-crossing/)"]
+# Set Up Requests Method
+def fetch_info_rest(path: str):
+    return json.loads(requests.get(f'{REST_API_URL}/{path}').json())
+
+## Get Bot Config from REST Endpointfetch_info_rest
+def get_bot_config(BOT_NAME: str):
+    global DISCORD_GUILD 
+    global DISCORD_PREFIX 
+    global DISCORD_STATUS 
+    global DISCORD_TOKEN 
+    RESPONSE = fetch_info_rest(f'config/bot/discord/{BOT_NAME}')
+    DISCORD_GUILD = RESPONSE['guild']
+    DISCORD_PREFIX = RESPONSE['prefix']
+    DISCORD_STATUS = RESPONSE['status']
+    DISCORD_TOKEN = RESPONSE['token']
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
-        self.PREFIX = PREFIX
+        self.PREFIX = DISCORD_PREFIX
         self.ready = False
         self.guild = None 
-        self.logger = set_up_logger('discord')
         self.scheduler = AsyncIOScheduler()
-        super().__init__(command_prefix=PREFIX)
+        super().__init__(command_prefix=DISCORD_PREFIX)
 
     #Check scores and send update to discord if required
     async def send_vg_ugdate(self):
         await self.wait_until_ready()
-        self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
+        # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
         current_unit_scores = get_unit_scores()
         if (current_unit_scores == -1):
             logger.debug("In Beween Rounds, Do Nothing")
         else:
-            self.logger.debug("During Voting Gauntlet")
+            # self.logger.debug("During Voting Gauntlet")
             vg_scores = check_vg(current_unit_scores)
 
             # Ping if multiplier is active for losing team (other team has 3% more flags)
             for score in vg_scores:
             # try:
-                self.logger.debug(score)
+                #  self.logger.debug(score)
                 losing_unit = score["Losing"]
                 if "Tie" in losing_unit:
-                    self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
+                    #  self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
+                    print("Do nothing, Twitter Bot sends tie tweet.")
                 else:
                     img_url = get_unit_image_url(losing_unit)
                     role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
@@ -44,15 +55,10 @@ class MyClient(discord.Client):
                     channel_name = "team-" + losing_unit.lower()
                     channel = discord.utils.get(self.guild.channels, name=channel_name)
                     await channel.send(content=updated_message,file=discord.File(img_url))
-                    self.logger.debug("Ping sent successfully for #Team" + losing_unit)
+                    # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
             # except:
                 # Print out timestamp in the event of failure
                 # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
-
-    ## Ohaiyo!!!
-    @command(name="hello", aliases=["hi"])
-    async def say_hello(self, ctx):
-        await ctx.send(f"{choice(('Hello', 'Hi', 'Hey', 'Hiya'))} {ctx.author.mention}!")
 
     # Bot Commands
     async def on_message(self, message):
@@ -64,7 +70,6 @@ class MyClient(discord.Client):
         msg = message.content
         member = message.author 
         message_channel = message.channel
-
 
         if message.content.startswith('++hello'):
             await message.channel.send('Hello!')
@@ -215,5 +220,7 @@ class MyClient(discord.Client):
         self.scheduler.add_job(self.send_vg_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
+# It's Showtime
+get_bot_config(BOT_NAME)
 client = MyClient()
 client.run(DISCORD_TOKEN)
