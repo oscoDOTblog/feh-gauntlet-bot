@@ -25,9 +25,10 @@ def get_bot_config(BOT_NAME: str):
     DISCORD_TOKEN = RESPONSE['token']
 
 ##  Get Image URL 
+## TODO: Update
 def get_unit_image_url(unit_name):
-    RESPONSE  = fetch_info_rest('config/bot/assets')
-    return f"{RESPONSE['assets_path']}/{unit_name}/{unit_name}_Preview.png"
+    # return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
+    return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
      
 ## Discord Bot Client
 class MyClient(discord.Client):
@@ -39,9 +40,10 @@ class MyClient(discord.Client):
         super().__init__(command_prefix=DISCORD_PREFIX)
 
     #Check scores and send update to discord if required
-    async def send_twitter_ugdate(self):
+    async def send_twitter_update(self):
         await self.wait_until_ready()
         # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
+        print("Pizza Time")
         current_unit_scores = fetch_info_rest('feh-vg-bot/get-unit-scores')
         if (len(current_unit_scores) <= 1):
             # logger.debug("In Beween Rounds, Do Nothing")
@@ -75,6 +77,7 @@ class MyClient(discord.Client):
             # except:
                 # Print out timestamp in the event of failure
                 # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
+
 
     # Bot Commands
     async def on_message(self, message):
@@ -112,9 +115,9 @@ class MyClient(discord.Client):
     async def on_ready(self):
         await client.change_presence(activity=discord.Game(DISCORD_STATUS))
         self.guild = discord.utils.get(client.guilds, name=DISCORD_GUILD)
-        self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(second="*/5"))
-        # self.scheduler.add_job(self.send_twitter_ugdate, CronTrigger(minute="5")) # cron expression: (5 * * * *)
-        # self.scheduler.start()
+        # self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5"))
+        self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        self.scheduler.start()
 
 ## Start Discord Bot Client
 get_bot_config(BOT_NAME)

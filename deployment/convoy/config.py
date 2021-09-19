@@ -1,5 +1,5 @@
 # UTC is 7 Hours Ahead PDT
-vg_assets_root_path="assets"
+vg_assets_root_path="../assets/"
 vg_hashtag='#CF'
 vg_test=True
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/51'
