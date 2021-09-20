@@ -46,6 +46,6 @@ discord_status = {
     "anna" : "TBD",
     "genny" : "Fire Emblem Echoes: Shadows of Valentia",
     "joshua" : "TBD",
-    "rebecca" : "TBD"
+    "rebecca" : "Fire Emblem: The Blazing Blade"
 }
 discord_role_id_admin = "Galaxy Contructor"
