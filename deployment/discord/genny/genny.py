@@ -1,6 +1,7 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 from config import BOT_NAME, REST_API_URL
+import discord
 from discordclient import get_bot_token, get_unit_image_url, message_from_bot, message_parse, rest_get, MyDiscordClient
 import tweepy
 
@@ -12,10 +13,12 @@ class Genny(MyDiscordClient):
     async def on_message(self, message):
         if (not message_from_bot(client.user, message.author)):
             msg, member, message_channel = message_parse(message)
+            await super().on_message(client, message)
 
             if message.content.startswith('++hello'):
                 await message.channel.send('Heya!')
 
+            DISCORD_PREFIX = self.prefix
             # Debug Bot
             if message.content.startswith(f'{DISCORD_PREFIX}debug-{BOT_NAME}'):
                 em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
@@ -29,11 +32,9 @@ class Genny(MyDiscordClient):
             if message.content.startswith(f'{DISCORD_PREFIX}help-{BOT_NAME}'):
                 em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
                 em.add_field(name = "Hello!", value = f'`{DISCORD_PREFIX}hello`')
-                em.add_field(name = "Debug", value = f'`{DISCORD_PREFIX}debug`')
+                em.add_field(name = "Debug", value = f'`{DISCORD_PREFIX}debug-genny`')
                 await message.channel.send(embed = em)
                 # await message.channel.send('Hello!')
-
-            await super().on_message(client, message)
 
     #Check scores and send update to discord if required
     async def send_twitter_update(self):
@@ -75,10 +76,10 @@ class Genny(MyDiscordClient):
 
     async def on_ready(self):
         await super().on_ready(client)
-        # self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5"))
+        # self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) # LOCAL DEBUG
         self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
-        
+
 # It's Showtime
 client = Genny()
 client.run(get_bot_token(BOT_NAME))

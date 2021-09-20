@@ -38,7 +38,7 @@ def rest_get(path: str):
 class MyDiscordClient(discord.Client):
     def __init__(self, *args, **kwargs):
         self.config = rest_get(f'config/bot/discord/{BOT_NAME}')
-        self.PREFIX = self.config['prefix']
+        self.prefix = self.config['prefix']
         self.ready = False
         self.guild = None 
         super().__init__()
