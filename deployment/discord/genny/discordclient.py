@@ -10,6 +10,11 @@ def get_bot_token(BOT_NAME: str):
     DISCORD_TOKEN = RESPONSE['token']
     return DISCORD_TOKEN
 
+##  Get Image URL 
+def get_unit_image_url(unit_name):
+    # return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
+    return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
+
 # Skip Message if Author is Discord Client (Bot)
 def message_from_bot(client_user, message_user):
     # Ignore all messages from bot
@@ -50,7 +55,6 @@ class MyDiscordClient(discord.Client):
                 await message.channel.send(rest_get(f'config/bot/discord/{BOT_NAME}'))
 
     async def on_ready(self, client):
-        print("pizza_time")
         await client.change_presence(activity=discord.Game(self.config['status']))
         self.guild = discord.utils.get(client.guilds, name=self.config['guild'])
 
