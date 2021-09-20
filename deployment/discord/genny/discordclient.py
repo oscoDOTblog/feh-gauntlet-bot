@@ -10,6 +10,21 @@ def get_bot_token(BOT_NAME: str):
     DISCORD_TOKEN = RESPONSE['token']
     return DISCORD_TOKEN
 
+# Skip Message if Author is Discord Client (Bot)
+def message_from_bot(client_user, message_user):
+    # Ignore all messages from bot
+    # return (message.author == client.user)
+    return (client_user == message_user)
+
+# Parse Legitimate Message
+def message_parse(message):
+    # Parse string from message
+    msg = message.content
+    member = message.author 
+    message_channel = message.channel
+
+    return msg, member, message_channel
+
 # Rest Endpoint
 def rest_get(path: str):
     RESPONSE = json.loads(requests.get(f'{REST_API_URL}/{path}').json())
@@ -24,23 +39,17 @@ class MyDiscordClient(discord.Client):
         super().__init__()
 
     # Bot Commands
-    async def on_message(self, message):
-        # Ignore all messages from bot
-        if message.author == client.user:
-            return
+    async def on_message(self, client, message):
+        if (not message_from_bot(client.user, message.author)):
+            msg, member, message_channel = message_parse(message)
 
-        # Parse string from message
-        msg = message.content
-        member = message.author 
-        message_channel = message.channel
+            if message.content.startswith('++hello'):
+                await message.channel.send('Hello!')
 
-        if message.content.startswith('++hello'):
-            await message.channel.send('Hello!')
+            if message.content.startswith('++test'):
+                await message.channel.send(rest_get(f'config/bot/discord/{BOT_NAME}'))
 
-        if message.content.startswith('++test'):
-            await message.channel.send(rest_get(f'config/bot/discord/{BOT_NAME}'))
-
-    async def on_ready(self):
+    async def on_ready(self, client):
         print("pizza_time")
         await client.change_presence(activity=discord.Game(self.config['status']))
         self.guild = discord.utils.get(client.guilds, name=self.config['guild'])
