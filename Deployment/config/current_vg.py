@@ -2,7 +2,7 @@
 vg_assets_root_path="assets/"
 vg_hashtag='#AAA'
 vg_test=True
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/2'
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/52'
 round_1_start_raw = 'Oct 01 2021 7:00AM'
 round_1_end_raw = 'Oct 03 2021 4:00AM'
 round_2_start_raw = 'Oct 03 2021 7:00AM'
