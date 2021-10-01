@@ -1,6 +1,6 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config import BOT_NAME, REST_API_URL
+from config import BOT_NAME, DISCORD_CHANNEL_ID_MEMBER_COMMANDS, DISCORD_CHANNEL_ID_TEST_COMMANDS, REST_API_URL
 import discord
 from discordclient import get_bot_token, get_unit_image_url, message_from_bot, message_parse, rest_get, MyDiscordClient
 
@@ -42,16 +42,17 @@ class Rebecca(MyDiscordClient):
             # Checks if role exists and adds/removes role as appropriate
             if message.content.startswith((f'{DISCORD_PREFIX}join', f'{DISCORD_PREFIX}leave')):
                 # Check if command is being performed in test channel or members command channel 
-                test_channel        = client.get_channel(id=discord_channel_id_test_commands)
-                commands_channel_id = client.get_channel(id=discord_channel_id_member_commands)
+                test_channel        = client.get_channel(id=DISCORD_CHANNEL_ID_TEST_COMMANDS)
+                commands_channel_id = client.get_channel(id=DISCORD_CHANNEL_ID_MEMBER_COMMANDS)
                 if message_channel is test_channel or message_channel is commands_channel_id:
                     params = msg.split(" ", 1) # split on first white space only
-                    command = params[0].split(PREFIX,1)[1] ## get command name after prefix
+                    command = params[0].split(DISCORD_PREFIX,1)[1] ## get command name after prefix
                     # Check if unit exits with supplied params
                     if len(params) > 1:
                         unit_name = params[1]
                         # Check if unit exists
-                        if check_unit_validity(unit_name):
+                        # if check_unit_validity(unit_name):
+                        if (rest_get(f'/unit/check/{unit_name}'))['is_valid']:
                             # Check if role exists, and add/remove if approriate
                             unit_name_index = unit_name.title()
                             # unit_name_index = unit_name

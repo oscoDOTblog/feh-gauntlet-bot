@@ -24,10 +24,14 @@ def hello():
     """Test endpoint"""
     return {'hello': 'world'}
     
-# @app.get('/units')
-# def get_list_of_unit_names():
-#     data = get_list_of_unit_names()
-#     return json.dumps({"unit":[{"name":value} for value in data]})
+@app.get('/unit/check/{unit_name}')
+def check_if_unit_is_valid(unit_name: str):
+    return json.dumps({"is_valid": check_unit_validity(unit_name)})
+
+@app.get('/units')
+def get_list_of_unit_names():
+    data = get_list_of_unit_names()
+    return json.dumps({"unit":[{"name":value} for value in data]})
 
 @app.get('/config/bot/discord/{bot_name}')
 def get_config_for_bot_discord(bot_name: str):
