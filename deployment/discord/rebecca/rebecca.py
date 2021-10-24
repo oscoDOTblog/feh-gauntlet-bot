@@ -221,6 +221,7 @@ class Rebecca(MyDiscordClient):
                 # Send image and text
                 else:
                     losing_unit = score["Losing"]
+                    print(losing_unit)
                     img_url = get_unit_image_url(losing_unit)
                     role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
                     role_webhook = f'<@&{role_team.id}>'
@@ -235,11 +236,11 @@ class Rebecca(MyDiscordClient):
 
     async def on_ready(self):
         await super().on_ready(client)
-        # if (BOT_ENV == 'dev'):
-        #   self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) 
-        # elif (BOT_ENV == 'prod'):
-        #   self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
-        # self.scheduler.start()
+        if (BOT_ENV == 'dev'):
+          self.scheduler.add_job(self.send_discord_update, CronTrigger(second="*/5")) 
+        elif (BOT_ENV == 'prod'):
+          self.scheduler.add_job(self.send_discord_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        self.scheduler.start()
 
 # It's Showtime
 client = Rebecca()
