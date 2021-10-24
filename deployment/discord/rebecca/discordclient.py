@@ -58,4 +58,19 @@ class MyDiscordClient(discord.Client):
         await client.change_presence(activity=discord.Game(self.config['status']))
         self.guild = discord.utils.get(client.guilds, name=self.config['guild'])
 
+## Pairwise Compare
+def pairwise_compare(iterable):
+    it = iter(iterable)
+    for x in it:
+        yield (x, next(it))
+
+## Truncate Value
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+    i, p, d = s.partition('.')
+    return ''.join([i, (d+'0'*n)[:n]])
+
 

@@ -14,7 +14,9 @@ from discordclient import (
   get_unit_image_url, 
   message_from_bot, 
   message_parse, 
-  rest_get
+  pairwise_compare,
+  rest_get,
+  truncate
 )
 
 class Rebecca(MyDiscordClient):
@@ -135,7 +137,7 @@ class Rebecca(MyDiscordClient):
             # Returns Current Score
             if message.content.startswith((f'{DISCORD_PREFIX}scores')):
                 bot_msg = "***Current Scores:***\n"
-                unit_scores = get_unit_scores()
+                unit_scores =  rest_get('feh-vg-bot/get-unit-scores') #get_unit_scores()
                 for (a, b) in pairwise_compare(unit_scores):
 
                     # obtain name of units battling
@@ -143,11 +145,22 @@ class Rebecca(MyDiscordClient):
                     b_name = b[0]
 
                     # obtain integer from string literal
-                    a_score = a[1]
-                    b_score = b[1]
+                    a_score = int(a[1].replace(',', ''))
+                    b_score = int(b[1].replace(',', ''))
+
+                    ## Calculate the Percent Difference
+                    ## 1.Calculate the absolute difference between the two values
+                    abs_dif = abs(a_score - b_score)
+                    ## 2. Calculate the average of the values
+                    avg_val = (a_score + b_score)/2
+                    ## 3. Divide by the average
+                    div_avg = abs_dif/avg_val
+                    ## 4. Convert to a percentage and truncate
+                    per_dif = truncate(div_avg * 100, 0)
+                    
 
                     # Create + Append String
-                    bot_msg += f"*{a_name}* *(**{a_score}**)* *vs* *{b_name}* *(**{b_score}**)*\n"
+                    bot_msg += f"*{a_name}* *(**{a[1]}**)* *vs* *{b_name}* *(**{b[1]}**)* | **{per_dif}%** *difference*\n"
 
                 await message.channel.send(bot_msg)
 
