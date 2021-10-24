@@ -8,7 +8,8 @@ from discordclient import (
   get_unit_image_url, 
   message_from_bot, 
   message_parse, 
-  rest_get)
+  rest_get
+)
 import tweepy
 
 class Genny(MyDiscordClient):
@@ -82,7 +83,6 @@ class Genny(MyDiscordClient):
 
     async def on_ready(self):
         await super().on_ready(client)
-        print("BOT_ENV: " + BOT_ENV)
         if (BOT_ENV == 'dev'):
           self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) 
         elif (BOT_ENV == 'prod'):

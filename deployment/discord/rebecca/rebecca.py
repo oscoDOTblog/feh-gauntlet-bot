@@ -1,8 +1,21 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config import BOT_NAME, DISCORD_CHANNEL_ID_MEMBER_COMMANDS, DISCORD_CHANNEL_ID_TEST_COMMANDS, REST_API_URL
+from config import (
+  BOT_ENV, 
+  BOT_NAME, 
+  DISCORD_CHANNEL_ID_MEMBER_COMMANDS, 
+  DISCORD_CHANNEL_ID_TEST_COMMANDS, 
+  REST_API_URL
+)
 import discord
-from discordclient import get_bot_token, get_unit_image_url, message_from_bot, message_parse, rest_get, MyDiscordClient
+from discordclient import (
+  MyDiscordClient,
+  get_bot_token, 
+  get_unit_image_url, 
+  message_from_bot, 
+  message_parse, 
+  rest_get
+)
 
 class Rebecca(MyDiscordClient):
     def __init__(self, *args, **kwargs):
@@ -20,7 +33,7 @@ class Rebecca(MyDiscordClient):
             DISCORD_PREFIX = self.prefix
             # Debug Bot
             if message.content.startswith(f'{DISCORD_PREFIX}debug-{BOT_NAME}'):
-                em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.color())
+                em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.green())
                 unit_scores = rest_get('feh-vg-bot/get-unit-scores')
                 em.add_field(name = "Unit Scores", value = f'`{unit_scores}`')
                 check_vg = rest_get('feh-vg-bot/check-vg')
@@ -36,7 +49,6 @@ class Rebecca(MyDiscordClient):
                 em.add_field(name = "Setup VG", value = f'`{DISCORD_PREFIX}setup-vg`')
                 em.add_field(name = "Teardown VG", value = f'`{DISCORD_PREFIX}teardown-vg`')
                 await message.channel.send(embed = em)
-                # await message.channel.send('Hello!')
 
             # Join (Attach Role) Command
             # Checks if role exists and adds/removes role as appropriate
@@ -52,7 +64,7 @@ class Rebecca(MyDiscordClient):
                         unit_name = params[1]
                         # Check if unit exists
                         # if check_unit_validity(unit_name):
-                        if (rest_get(f'/unit/check/{unit_name}'))['is_valid']:
+                        if (rest_get(f'unit/check/{unit_name}'))['is_valid']:
                             # Check if role exists, and add/remove if approriate
                             unit_name_index = unit_name.title()
                             # unit_name_index = unit_name
@@ -73,6 +85,7 @@ class Rebecca(MyDiscordClient):
                                     else:                                
                                         await message.channel.send(f'`You cannot leave a team you never joined!`')
                             else:
+                                discord_role_id_admin = rest_get('config/bot/discord/role/admin')['role']
                                 await message.channel.send(f'There is no role for **Team {unit_name_index}**! Ping **{discord_role_id_admin}** to create this role!')
                         else: 
                             await message.channel.send(f'`There is no role for {unit_name}! Try again with a valid unit name!`')
@@ -80,18 +93,20 @@ class Rebecca(MyDiscordClient):
                     else: 
                         await message.channel.send(f"`Add a unit name after ++{command} to {command} their team!`")
                 else:
-                    await message.channel.send(f"*You cannot perform `{msg}` here! Perform this command in <#{discord_channel_id_member_commands}>*")
+                    await message.channel.send(f"*You cannot perform `{msg}` here! Perform this command in <#{DISCORD_CHANNEL_ID_MEMBER_COMMANDS}>*")
 
             # Setup/Teardown Command
             if message.content.startswith((f'{DISCORD_PREFIX}setup-vg', f'{DISCORD_PREFIX}teardown-vg')):
                 # TODO
                 # check if user has admin credentials
-                admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
+                admin_role = discord.utils.get(member.guild.roles, name=rest_get('config/bot/discord/role/admin')['role'])
                 if admin_role in member.roles:
                     params = msg.split(" ", 1) # split on first white space only
                     command = params[0].split(DISCORD_PREFIX,1)[1] ## get command name after prefix
-                    unit_list = get_list_of_unit_names()
-                    for unit_name in unit_list:
+                    unit_list = rest_get('units')
+                    print(unit_list['unit'])
+                    for unit in unit_list['unit']:
+                        unit_name = unit['name']
                         role_name = f"Team {unit_name}"
                         role = discord.utils.get(member.guild.roles, name=role_name)
                         ## If command is teardown and role exists, delete it
@@ -102,7 +117,7 @@ class Rebecca(MyDiscordClient):
                             await message.channel.send(f'`{role_name} does not exist and thus cannot be deleted!`')
                         # If command is setup and role does not exist, create it
                         if command == "setup-vg" and not role:
-                            unit_hex_colour = discord_hex_colours[unit_name] #0xffffff
+                            unit_hex_colour = rest_get(f'unit/discord/colour/{unit_name}')['colour'] #discord_hex_colours[unit_name] #0xffffff
                             role = await message.guild.create_role(name=role_name,mentionable=True,hoist=True,colour=discord.Colour(unit_hex_colour))
                             await message.channel.send(f'`{role_name} has been successfully created!`')
                         elif command == "setup-vg" and role: 
@@ -110,7 +125,7 @@ class Rebecca(MyDiscordClient):
                         ## Setup channels
                         if command == "setup-vg":
                             unit_name_lowercase = unit_name.lower()
-                            unit_channel_id = discord_channel_ids[unit_name]
+                            unit_channel_id = rest_get(f'unit/discord/channel/{unit_name}')['channel'] # discord_channel_ids[unit_name]
                             await client.get_channel(id=unit_channel_id).edit(name=f"team-{unit_name_lowercase}")
                             await message.channel.send(f'Succesfully updated channel id **{unit_channel_id}** to <#{unit_channel_id}>')
 
@@ -204,8 +219,10 @@ class Rebecca(MyDiscordClient):
 
     async def on_ready(self):
         await super().on_ready(client)
-        # self.scheduler.add_job(self.send_discord_update, CronTrigger(second="*/5")) # LOCAL DEBUG
-        # self.scheduler.add_job(self.send_discord_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        # if (BOT_ENV == 'dev'):
+        #   self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) 
+        # elif (BOT_ENV == 'prod'):
+        #   self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         # self.scheduler.start()
 
 # It's Showtime

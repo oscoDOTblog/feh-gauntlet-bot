@@ -16,7 +16,6 @@ def get_unit_image_url(unit_name):
     return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
   elif (BOT_ENV == 'prod'):
     return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
-    
 
 # Skip Message if Author is Discord Client (Bot)
 def message_from_bot(client_user, message_user):

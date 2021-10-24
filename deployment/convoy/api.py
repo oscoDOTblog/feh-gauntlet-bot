@@ -28,8 +28,17 @@ def hello():
 def check_if_unit_is_valid(unit_name: str):
     return json.dumps({"is_valid": check_unit_validity(unit_name)})
 
+@app.get('/unit/discord/channel/{unit_name}')
+def get_unit_discord_channel(unit_name: str):
+    return json.dumps({"channel": discord_channel_ids[unit_name]})
+
+@app.get('/unit/discord/colour/{unit_name}')
+def get_unit_discord_colour(unit_name: str):
+    return json.dumps({"colour": discord_hex_colours[unit_name]})
+
+
 @app.get('/units')
-def get_list_of_unit_names():
+def get_list_of_unit_names_rest():
     data = get_list_of_unit_names()
     return json.dumps({"unit":[{"name":value} for value in data]})
 
@@ -53,6 +62,10 @@ def get_guild_for_bot_discord():
 @app.get('/config/bot/discord/prefix')
 def get_prefix_for_bot_discord():
     return json.dumps({"prefix": discord_prefix})
+    
+@app.get('/config/bot/discord/role/admin')
+def get_prefix_for_bot_discord():
+    return json.dumps({"role": discord_role_id_admin})
     
 @app.get('/config/bot/discord/status/{bot_name}')
 def get_status_for_bot_discord(bot_name: str):
