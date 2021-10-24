@@ -62,16 +62,22 @@ def get_status_for_bot_discord(bot_name: str):
 def get_token_for_bot_discord(bot_name: str):
     return json.dumps({"token": DISCORD_TOKEN [bot_name]})
 
-@app.get('/config/bot/twitter/auth/')
-def get_auth_for_bot_twitter():
-    return json.dumps(
-        { 
-            "C_KEY": C_KEY, 
-            "C_SECRET": C_SECRET, 
-            "A_TOKEN": A_TOKEN, 
-            "A_TOKEN_SECRET": A_TOKEN_SECRET
-        }
-    )
+@app.get('/config/bot/twitter/auth/{bot_env}')
+def get_auth_for_bot_twitter(bot_env: str):
+  if (bot_env == 'prod'):
+    return json.dumps({ 
+        "C_KEY": C_KEY_PROD, 
+        "C_SECRET": C_SECRET_PROD, 
+        "A_TOKEN": A_TOKEN_PROD, 
+        "A_TOKEN_SECRET": A_TOKEN_SECRET_PROD
+    }) 
+  elif (bot_env == 'dev'): 
+    return json.dumps({ 
+        "C_KEY": C_KEY_DEV, 
+        "C_SECRET": C_SECRET_DEV, 
+        "A_TOKEN": A_TOKEN_DEV, 
+        "A_TOKEN_SECRET": A_TOKEN_SECRET_DEV
+    })
 
 @app.get('/feh-vg-bot/check-vg')
 def check_vg_restful():

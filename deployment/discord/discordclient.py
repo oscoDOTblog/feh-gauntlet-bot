@@ -1,4 +1,4 @@
-from config import BOT_NAME, REST_API_URL
+from config import BOT_ENV, BOT_NAME, REST_API_URL
 import discord
 from discord.ext.commands import command
 import json
@@ -12,13 +12,14 @@ def get_bot_token(BOT_NAME: str):
 
 ##  Get Image URL 
 def get_unit_image_url(unit_name):
-    # return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
+  if (BOT_ENV == 'dev'):
+    return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
+  elif (BOT_ENV == 'prod'):
     return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
+    
 
 # Skip Message if Author is Discord Client (Bot)
 def message_from_bot(client_user, message_user):
-    # Ignore all messages from bot
-    # return (message.author == client.user)
     return (client_user == message_user)
 
 # Parse Legitimate Message
@@ -58,6 +59,4 @@ class MyDiscordClient(discord.Client):
         await client.change_presence(activity=discord.Game(self.config['status']))
         self.guild = discord.utils.get(client.guilds, name=self.config['guild'])
 
-# client = MyDiscordClient()
-# client.run(get_bot_token(BOT_NAME))
 

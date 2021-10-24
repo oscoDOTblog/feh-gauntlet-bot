@@ -1,8 +1,14 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config import BOT_NAME, REST_API_URL
+from config import BOT_ENV, BOT_NAME, REST_API_URL
 import discord
-from discordclient import get_bot_token, get_unit_image_url, message_from_bot, message_parse, rest_get, MyDiscordClient
+from discordclient import ( 
+  MyDiscordClient,
+  get_bot_token, 
+  get_unit_image_url, 
+  message_from_bot, 
+  message_parse, 
+  rest_get)
 import tweepy
 
 class Genny(MyDiscordClient):
@@ -19,7 +25,7 @@ class Genny(MyDiscordClient):
                 await message.channel.send('Heya!')
 
             DISCORD_PREFIX = self.prefix
-            # Debug Bot
+            ## ----- Debug Bot ----- ##
             if message.content.startswith(f'{DISCORD_PREFIX}debug-{BOT_NAME}'):
                 em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
                 unit_scores = rest_get('feh-vg-bot/get-unit-scores')
@@ -28,7 +34,7 @@ class Genny(MyDiscordClient):
                 em.add_field(name = "Check VG", value = f'`{check_vg}`')
                 await message.channel.send(embed = em)
 
-            # Help Menu
+            ## ----- Help Menu ----- ## 
             if message.content.startswith(f'{DISCORD_PREFIX}help-{BOT_NAME}'):
                 em = discord.Embed(title = f"{BOT_NAME.capitalize()} Bot: Welcome and Twitter Bot",color = discord.Color.dark_magenta())
                 em.add_field(name = "Hello!", value = f'`{DISCORD_PREFIX}hello`')
@@ -36,7 +42,7 @@ class Genny(MyDiscordClient):
                 await message.channel.send(embed = em)
                 # await message.channel.send('Hello!')
 
-    #Check scores and send update to discord if required
+    ## ----- Check scores and send update to discord if required ----- ##
     async def send_twitter_update(self):
         await self.wait_until_ready()
         # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
@@ -48,20 +54,20 @@ class Genny(MyDiscordClient):
             # self.logger.debug("During Voting Gauntlet")
             vg_scores  = rest_get('feh-vg-bot/check-vg')
 
-            # Twitter authentication 
-            RESPONSE  = rest_get('config/bot/twitter/auth')
+            ## ----- Twitter authentication ----- ##
+            RESPONSE  = rest_get(f'config/bot/twitter/auth/{BOT_ENV}')
             auth = tweepy.OAuthHandler(RESPONSE['C_KEY'], RESPONSE['C_SECRET'])
             auth.set_access_token(RESPONSE['A_TOKEN'], RESPONSE['A_TOKEN_SECRET'])
             api = tweepy.API(auth)
 
-            # Ping if multiplier is active for losing team (other team has 3% more flags)
+            ## ----- Ping if multiplier is active for losing team (other team has 3% more flags) ----- ##
             for score in vg_scores:
                 message = score["Message"]
                 # Send only text tweet
                 if "Tie" in score["Losing"]:
                     api.update_status(message)
                     # logger.debug("Tweet Sent Successfully")
-                # Send image and text
+                ## ----- Send image and text ----- ##
                 else:
                     losing_unit = score["Losing"]
                     updated_message = "#Team" + losing_unit + message
@@ -76,11 +82,16 @@ class Genny(MyDiscordClient):
 
     async def on_ready(self):
         await super().on_ready(client)
-        # self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) # LOCAL DEBUG
-        self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
+        print("BOT_ENV: " + BOT_ENV)
+        if (BOT_ENV == 'dev'):
+          self.scheduler.add_job(self.send_twitter_update, CronTrigger(second="*/5")) 
+        elif (BOT_ENV == 'prod'):
+          self.scheduler.add_job(self.send_twitter_update, CronTrigger(minute="5")) # cron expression: (5 * * * *)
         self.scheduler.start()
 
-# It's Showtime
+## ----- It's Showtime ----- ##
+# if (BOT_ENV == 'dev'):
+# elif (BOT_ENV == 'prod'):
 client = Genny()
 client.run(get_bot_token(BOT_NAME))
 
