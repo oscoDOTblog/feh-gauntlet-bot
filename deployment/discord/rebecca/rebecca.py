@@ -3,6 +3,7 @@ from apscheduler.triggers.cron import CronTrigger
 from config import (
   BOT_ENV, 
   BOT_NAME, 
+  DISCORD_CHANNEL_ID_HEROES_FOR_HIRE,
   DISCORD_CHANNEL_ID_MEMBER_COMMANDS, 
   DISCORD_CHANNEL_ID_TEST_COMMANDS, 
   REST_API_URL
@@ -106,8 +107,7 @@ class Rebecca(MyDiscordClient):
                     params = msg.split(" ", 1) # split on first white space only
                     command = params[0].split(DISCORD_PREFIX,1)[1] ## get command name after prefix
                     unit_list = rest_get('units')
-                    print(unit_list['unit'])
-                    for unit in unit_list['unit']:
+                    for unit in unit_list['units']:
                         unit_name = unit['name']
                         role_name = f"Team {unit_name}"
                         role = discord.utils.get(member.guild.roles, name=role_name)
@@ -157,7 +157,6 @@ class Rebecca(MyDiscordClient):
                     div_avg = abs_dif/avg_val
                     ## 4. Convert to a percentage and truncate
                     per_dif = truncate(div_avg * 100, 0)
-                    
 
                     # Create + Append String
                     bot_msg += f"*{a_name}* *(**{a[1]}**)* *vs* *{b_name}* *(**{b[1]}**)* | **{per_dif}%** *difference*\n"
@@ -166,12 +165,16 @@ class Rebecca(MyDiscordClient):
 
             # Announce Command
             if message.content.startswith((f'{DISCORD_PREFIX}declare-vg')):
+                discord_role_id_admin = rest_get('config/bot/discord/role/admin')['role']
                 admin_role = discord.utils.get(member.guild.roles, name=discord_role_id_admin)
                 if admin_role in member.roles:
-                    unit_list = get_list_of_unit_names()
+                    unit_list_rest = rest_get('units') # get_list_of_unit_names()
+                    unit_list = []
+                    for unit in unit_list_rest['units']:
+                      unit_list.append(unit['name'])
                     await message.channel.send(f'***A new Voting Gauntlet is coming!***\
-                    \n*Join your team in <#{discord_channel_id_member_commands}> by typing `{DISCORD_PREFIX}join [unit name]`!*\
-                    \n*Share your friend code and lead units in <#{discord_channel_id_heroes_for_hire}>*\
+                    \n*Join your team in <#{DISCORD_CHANNEL_ID_MEMBER_COMMANDS}> by typing `{DISCORD_PREFIX}join [unit name]`!*\
+                    \n*Share your friend code and lead units in <#{DISCORD_CHANNEL_ID_HEROES_FOR_HIRE}>*\
                     \n\n**Commands to Join Team (Subscribe to Alerts):**\
                     \n`{DISCORD_PREFIX}join {unit_list[0]}`\
                     \n`{DISCORD_PREFIX}join {unit_list[1]}`\

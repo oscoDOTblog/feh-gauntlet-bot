@@ -40,7 +40,7 @@ def get_unit_discord_colour(unit_name: str):
 @app.get('/units')
 def get_list_of_unit_names_rest():
     data = get_list_of_unit_names()
-    return json.dumps({"unit":[{"name":value} for value in data]})
+    return json.dumps({"units":[{"name":value} for value in data]})
 
 @app.get('/config/bot/discord/{bot_name}')
 def get_config_for_bot_discord(bot_name: str):
