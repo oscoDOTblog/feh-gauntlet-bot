@@ -16,7 +16,6 @@ def get_unit_image_url(unit_name):
     return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
   elif (BOT_ENV == 'prod'):
     return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
-    
 
 # Skip Message if Author is Discord Client (Bot)
 def message_from_bot(client_user, message_user):
@@ -58,5 +57,20 @@ class MyDiscordClient(discord.Client):
     async def on_ready(self, client):
         await client.change_presence(activity=discord.Game(self.config['status']))
         self.guild = discord.utils.get(client.guilds, name=self.config['guild'])
+
+## Pairwise Compare
+def pairwise_compare(iterable):
+    it = iter(iterable)
+    for x in it:
+        yield (x, next(it))
+
+## Truncate Value
+def truncate(f, n):
+    '''Truncates/pads a float f to n decimal places without rounding'''
+    s = '{}'.format(f)
+    if 'e' in s or 'E' in s:
+        return '{0:.{1}f}'.format(f, n)
+    i, p, d = s.partition('.')
+    return ''.join([i, (d+'0'*n)[:n]])
 
 
