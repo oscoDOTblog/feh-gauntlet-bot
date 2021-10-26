@@ -23,3 +23,12 @@ docker tag atemosta/feh-gauntlet-bot atemosta/feh-gauntlet-bot:latest
 docker inspect <container-id>
 docker logs <container-id>
 docker stop <container-id>
+
+# Convoy
+docker build -t atemosta/feh-convoy .
+docker run -it atemosta/feh-convoy 
+docker tag atemosta/feh-convoy atemosta/feh-convoy:latest
+
+# Genny
+
+# Rebecca

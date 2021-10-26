@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  convoy:
+    build: convoy
+    command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
+    # volumes:
+    #   - /convoy:/app
+    ports:
+      - 5057:5057
+# services:
+#   mongo-db:
+#     container_name: mongo-db
+#     image: mongo
+#     networks:
+#       - mongo-compose-network
+#     ports:
+#       - '27017:27017'
+#     volumes:
+#       - mongodb-data:/data/db
+#   # UI: http://127.0.0.1:8081
+#   mongo-express:
+#     container_name: mongo-express
+#     image: mongo-express
+#     depends_on:
+#       - mongo-db
+#     networks:
+#       - mongo-compose-network
+#     environment:
+#       - ME_CONFIG_MONGODB_SERVER=mongo-db
+#     ports:
+#       - '8081:8081'
+#     volumes:
+#       - mongodb-data
+# volumes:
+#   mongodb-data:
+#     name: mongodb-data
+# networks:
+#   mongo-compose-network:
+#     driver: bridge
