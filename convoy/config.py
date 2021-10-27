@@ -1,14 +1,14 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
 vg_hashtag='#CF'
-vg_test=True
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/51'
-round_1_start_raw = 'Sep 01 2021 7:00AM'
-round_1_end_raw = 'Sep 03 2021 4:00AM'
-round_2_start_raw = 'Sep 03 2021 7:00AM'
-round_2_end_raw = 'Sep 05 2021 4:00AM'
-round_3_start_raw = 'Sep 05 2021 7:00AM'
-round_3_end_raw = 'Sep 07 2021 4:00AM'
+vg_test=False
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/53'
+round_1_start_raw = 'Oct 30 2021 7:00AM'
+round_1_end_raw = 'Nov 01 2021 4:00AM'
+round_2_start_raw = 'Nov 01 2021 7:00AM'
+round_2_end_raw = 'Nov 03 2021 4:00AM'
+round_3_start_raw = 'Nov 03 2021 7:00AM'
+round_3_end_raw = 'Nov 05 2021 4:00AM'
 vg_unit_1 = "Gatekeeper"
 vg_unit_2 = "Byleth"
 vg_unit_3 = "Marianne"
