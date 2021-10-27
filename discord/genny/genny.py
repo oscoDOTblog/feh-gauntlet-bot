@@ -1,6 +1,6 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from config import BOT_ENV, BOT_NAME, REST_API_URL
+from config import BOT_ENV, BOT_NAME
 import discord
 from discordclient import ( 
   MyDiscordClient,

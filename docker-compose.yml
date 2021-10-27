@@ -4,10 +4,22 @@ services:
   convoy:
     build: convoy
     command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
-    # volumes:
-    #   - /convoy:/app
+    networks:
+      - feh-compose-network
     ports:
       - 5057:5057
+  genny:
+    build: discord/genny
+    command: python genny.py
+    depends_on:
+      - convoy
+    networks:
+      - feh-compose-network
+    ports:
+      - 4545:4545
+    volumes:
+      - /assets:/app/assets/
+
 # services:
 #   mongo-db:
 #     container_name: mongo-db
@@ -35,6 +47,6 @@ services:
 # volumes:
 #   mongodb-data:
 #     name: mongodb-data
-# networks:
-#   mongo-compose-network:
-#     driver: bridge
+networks:
+  feh-compose-network:
+    driver: bridge
