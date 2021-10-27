@@ -5,8 +5,7 @@ from config import (
   BOT_NAME, 
   DISCORD_CHANNEL_ID_HEROES_FOR_HIRE,
   DISCORD_CHANNEL_ID_MEMBER_COMMANDS, 
-  DISCORD_CHANNEL_ID_TEST_COMMANDS, 
-  REST_API_URL
+  DISCORD_CHANNEL_ID_TEST_COMMANDS 
 )
 import discord
 from discordclient import (
@@ -19,6 +18,7 @@ from discordclient import (
   rest_get,
   truncate
 )
+import time
 
 class Rebecca(MyDiscordClient):
     def __init__(self, *args, **kwargs):
@@ -243,6 +243,7 @@ class Rebecca(MyDiscordClient):
         self.scheduler.start()
 
 # It's Showtime
+time.sleep(1)
 client = Rebecca()
 client.run(get_bot_token(BOT_NAME))
 

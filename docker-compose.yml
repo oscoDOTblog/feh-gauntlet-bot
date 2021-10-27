@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   convoy:
     build: convoy
@@ -21,31 +20,17 @@ services:
       - 4545:4545
     volumes:
       - ./assets:/app/assets
-
-# services:
-#   mongo-db:
-#     container_name: mongo-db
-#     image: mongo
-#     networks:
-#       - mongo-compose-network
-#     ports:
-#       - '27017:27017'
-#     volumes:
-#       - mongodb-data:/data/db
-#   # UI: http://127.0.0.1:8081
-#   mongo-express:
-#     container_name: mongo-express
-#     image: mongo-express
-#     depends_on:
-#       - mongo-db
-#     networks:
-#       - mongo-compose-network
-#     environment:
-#       - ME_CONFIG_MONGODB_SERVER=mongo-db
-#     ports:
-#       - '8081:8081'
-#     volumes:
-#       - mongodb-data
+  rebecca:
+    build: discord/rebecca
+    command: python rebecca.py
+    depends_on:
+      - convoy
+    networks:
+      - feh-compose-network
+    ports:
+      - 4546:4546
+    volumes:
+      - ./assets:/app/assets
 # volumes:
 #   mongodb-data:
 #     name: mongodb-data

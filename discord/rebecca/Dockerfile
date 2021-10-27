@@ -13,9 +13,8 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 # Bundle app source
-COPY api.py /app
+COPY rebecca.py /app
 COPY config.py /app
-COPY gauntlet_template.py /app
-COPY secrets.py /app
+COPY discordclient.py /app
 
 

@@ -1,4 +1,4 @@
-from config import BOT_ENV, BOT_NAME, REST_API_URL
+from config import BOT_ENV, BOT_NAME
 import discord
 from discord.ext.commands import command
 import json
@@ -12,9 +12,9 @@ def get_bot_token(BOT_NAME: str):
 
 ##  Get Image URL 
 def get_unit_image_url(unit_name):
-  if (BOT_ENV == 'dev'):
+  if (BOT_ENV == 'local'):
     return f"../../assets/{unit_name}/{unit_name}_Preview.png" # LOCAL PATH
-  elif (BOT_ENV == 'prod'):
+  elif (BOT_ENV == 'dev') or (BOT_ENV == 'prod') :
     return f"assets/{unit_name}/{unit_name}_Preview.png" # CONTAINER PATH
 
 # Skip Message if Author is Discord Client (Bot)
@@ -32,6 +32,10 @@ def message_parse(message):
 
 # Rest Endpoint
 def rest_get(path: str):
+    if (BOT_ENV == 'local'):
+      REST_API_URL = "http://0.0.0.0:5057" # LOCAL URL
+    elif (BOT_ENV == 'dev') or (BOT_ENV == 'prod') :
+      REST_API_URL = "http://convoy:5057" # CONTAINER NETWORK URL
     RESPONSE = json.loads(requests.get(f'{REST_API_URL}/{path}').json())
     return RESPONSE
 
