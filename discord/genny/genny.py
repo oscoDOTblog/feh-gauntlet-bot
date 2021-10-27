@@ -10,6 +10,7 @@ from discordclient import (
   message_parse, 
   rest_get
 )
+import time
 import tweepy
 
 class Genny(MyDiscordClient):
@@ -92,6 +93,7 @@ class Genny(MyDiscordClient):
 ## ----- It's Showtime ----- ##
 # if (BOT_ENV == 'dev'):
 # elif (BOT_ENV == 'prod'):
+time.sleep(1)
 client = Genny()
 client.run(get_bot_token(BOT_NAME))
 

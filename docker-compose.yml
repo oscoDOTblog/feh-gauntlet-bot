@@ -8,6 +8,8 @@ services:
       - feh-compose-network
     ports:
       - 5057:5057
+    volumes:
+      - ./assets:/app/assets
   genny:
     build: discord/genny
     command: python genny.py
@@ -18,7 +20,7 @@ services:
     ports:
       - 4545:4545
     volumes:
-      - /assets:/app/assets/
+      - ./assets:/app/assets
 
 # services:
 #   mongo-db:
