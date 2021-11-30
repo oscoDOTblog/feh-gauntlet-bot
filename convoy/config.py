@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#ToB'
+vg_hashtag='#ST'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/53'
-round_1_start_raw = 'Oct 30 2021 7:00AM'
-round_1_end_raw = 'Nov 01 2021 4:00AM'
-round_2_start_raw = 'Nov 01 2021 7:00AM'
-round_2_end_raw = 'Nov 03 2021 4:00AM'
-round_3_start_raw = 'Nov 03 2021 7:00AM'
-round_3_end_raw = 'Nov 05 2021 4:00AM'
-vg_unit_1 = "Tiki"
-vg_unit_2 = "Ena"
-vg_unit_3 = "Dheginsea"
-vg_unit_4 = "Kurthnaga"
-vg_unit_5 = "Sothis"
-vg_unit_6 = "Rhea"
-vg_unit_7 = "Xane"
-vg_unit_8 = "Sophia"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/54'
+round_1_start_raw = 'Dec 01 2021 7:00AM'
+round_1_end_raw = 'Dec 03 2021 4:00AM'
+round_2_start_raw = 'Dec 03 2021 7:00AM'
+round_2_end_raw = 'Dec 05 2021 4:00AM'
+round_3_start_raw = 'Dec 05 2021 7:00AM'
+round_3_end_raw = 'Dec 07 2021 4:00AM'
+vg_unit_1 = "Larum"
+vg_unit_2 = "Tethys"
+vg_unit_3 = "Tsubasa"
+vg_unit_4 = "Mamori"
+vg_unit_5 = "Nils"
+vg_unit_6 = "Ninian"
+vg_unit_7 = "Phina"
+vg_unit_8 = "Eldigan"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
