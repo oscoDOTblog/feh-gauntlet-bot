@@ -3,6 +3,7 @@ import discord
 from discord.ext.commands import command
 import json
 import requests
+import math
 
 # Get Bot Secret
 def get_bot_token(BOT_NAME: str):
@@ -69,12 +70,18 @@ def pairwise_compare(iterable):
         yield (x, next(it))
 
 ## Truncate Value
-def truncate(f, n):
-    '''Truncates/pads a float f to n decimal places without rounding'''
-    s = '{}'.format(f)
-    if 'e' in s or 'E' in s:
-        return '{0:.{1}f}'.format(f, n)
-    i, p, d = s.partition('.')
-    return ''.join([i, (d+'0'*n)[:n]])
+def truncate(number, decimals=0):
+    """
+    Returns a value truncated to a specific number of decimal places.
+    """
+    if not isinstance(decimals, int):
+        raise TypeError("decimal places must be an integer.")
+    elif decimals < 0:
+        raise ValueError("decimal places has to be 0 or more.")
+    elif decimals == 0:
+        return math.trunc(number)
+
+    factor = 10.0 ** decimals
+    return math.trunc(number * factor) / factor
 
 
