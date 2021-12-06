@@ -156,7 +156,7 @@ class Rebecca(MyDiscordClient):
                     ## 3. Divide by the average
                     div_avg = abs_dif/avg_val
                     ## 4. Convert to a percentage and truncate
-                    per_dif = truncate(div_avg * 100, 0)
+                    per_dif = truncate(div_avg * 100, 2)
 
                     # Create + Append String
                     bot_msg += f"*{a_name}* *(**{a[1]}**)* *vs* *{b_name}* *(**{b[1]}**)* | **{per_dif}%** *difference*\n"
