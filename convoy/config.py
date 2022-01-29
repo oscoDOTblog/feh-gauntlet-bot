@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#BtM'
+vg_hashtag='#DD'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/55'
-round_1_start_raw = 'Dec 26 2021 7:00AM'
-round_1_end_raw = 'Dec 28 2021 4:00AM'
-round_2_start_raw = 'Dec 28 2021 7:00AM'
-round_2_end_raw = 'Dec 30 2021 4:00AM'
-round_3_start_raw = 'Dec 30 2021 7:00AM'
-round_3_end_raw = 'Jan 01 2022 4:00AM'
-vg_unit_1 = "Rolf"
-vg_unit_2 = "Gordin"
-vg_unit_3 = "Erk"
-vg_unit_4 = "Asbel"
-vg_unit_5 = "Leonie"
-vg_unit_6 = "Ewan"
-vg_unit_7 = "Lilina"
-vg_unit_8 = "Gharnef"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/56'
+round_1_start_raw = 'Jan 29 2021 7:00AM'
+round_1_end_raw = 'Jan 31 2021 4:00AM'
+round_2_start_raw = 'Jan 31 2021 7:00AM'
+round_2_end_raw = 'Feb 02 2021 4:00AM'
+round_3_start_raw = 'Feb 02 2021 7:00AM'
+round_3_end_raw = 'Feb 04 2022 4:00AM'
+vg_unit_1 = "Dorothea"
+vg_unit_2 = "Azura"
+vg_unit_3 = "Tharja"
+vg_unit_4 = "Nailah"
+vg_unit_5 = "Kris"
+vg_unit_6 = "Karla"
+vg_unit_7 = "Raphael"
+vg_unit_8 = "Deen"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
