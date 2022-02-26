@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#DD'
+vg_hashtag='#AHR2022'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/56'
-round_1_start_raw = 'Jan 29 2022 7:00AM'
-round_1_end_raw = 'Jan 31 2022 4:00AM'
-round_2_start_raw = 'Jan 31 2022 7:00AM'
-round_2_end_raw = 'Feb 02 2022 4:00AM'
-round_3_start_raw = 'Feb 02 2022 7:00AM'
-round_3_end_raw = 'Feb 04 2022 4:00AM'
-vg_unit_1 = "Dorothea"
-vg_unit_2 = "Azura"
-vg_unit_3 = "Tharja"
-vg_unit_4 = "Nailah"
-vg_unit_5 = "Kris"
-vg_unit_6 = "Karla"
-vg_unit_7 = "Raphael"
-vg_unit_8 = "Deen"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/57'
+round_1_start_raw = 'Feb 26 2022 7:00AM'
+round_1_end_raw = 'Feb 28 2022 4:00AM'
+round_2_start_raw = 'Feb 28 2022 7:00AM'
+round_2_end_raw = 'Mar 02 2022 4:00AM'
+round_3_start_raw = 'Mar 02 2022 7:00AM'
+round_3_end_raw = 'Mar 04 2022 4:00AM'
+vg_unit_1 = "Corrin"
+vg_unit_2 = "Dagr"
+vg_unit_3 = "Thorr"
+vg_unit_4 = "Eitri"
+vg_unit_5 = "Edelgard"
+vg_unit_6 = "Azura"
+vg_unit_7 = "Sigurd"
+vg_unit_8 = "Byleth"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
