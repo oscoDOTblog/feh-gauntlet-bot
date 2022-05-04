@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#ID'
+vg_hashtag='#CS'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/58'
-round_1_start_raw = 'Apr 01 2022 7:00AM'
-round_1_end_raw = 'Apr 03 2022 4:00AM'
-round_2_start_raw = 'Apr 03 2022 7:00AM'
-round_2_end_raw = 'Apr 05 2022 4:00AM'
-round_3_start_raw = 'Apr 05 2022 7:00AM'
-round_3_end_raw = 'Apr 07 2022 4:00AM'
-vg_unit_1 = "Arden"
-vg_unit_2 = "Draug"
-vg_unit_3 = "Benny"
-vg_unit_4 = "Valbar"
-vg_unit_5 = "Dedue"
-vg_unit_6 = "Zephiel"
-vg_unit_7 = "Amelia"
-vg_unit_8 = "Kjelle"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/59'
+round_1_start_raw = 'May 04 2022 7:00AM'
+round_1_end_raw = 'May 06 2022 4:00AM'
+round_2_start_raw = 'May 06 2022 7:00AM'
+round_2_end_raw = 'May 08 2022 4:00AM'
+round_3_start_raw = 'May 08 2022 7:00AM'
+round_3_end_raw = 'May 10 2022 4:00AM'
+vg_unit_1 = "Ingrid"
+vg_unit_2 = "Titania"
+vg_unit_3 = "Xander"
+vg_unit_4 = "Jagen"
+vg_unit_5 = "Seth"
+vg_unit_6 = "Conrad"
+vg_unit_7 = "Frederick"
+vg_unit_8 = "Perceval"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
