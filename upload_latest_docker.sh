@@ -40,10 +40,10 @@ echo "----------Success!!!----------"
 
 
 # Clear Docker Containers and Images
-# echo "Clearing old docker images..."
-# docker stop $(docker ps -a -q)
-# docker rm $(docker ps -a -q)
-# export IMAGE_PATTERN=feh-gauntlet-bot
-# docker images -a |  grep ${IMAGE_PATTERN}
-# docker images -a | grep ${IMAGE_PATTERN} | awk '{print $3}' | xargs docker rmi -f
-# echo "----------Success!!!----------"
+echo "Clearing old docker images..."
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+export IMAGE_PATTERN=feh-gauntlet-bot
+docker images -a |  grep ${IMAGE_PATTERN}
+docker images -a | grep ${IMAGE_PATTERN} | awk '{print $3}' | xargs docker rmi -f
+echo "----------Success!!!----------"
