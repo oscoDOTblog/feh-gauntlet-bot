@@ -9,11 +9,11 @@ See more at [https://atemosta.com/projects/feh-gauntlet-bot/](https://atemosta.c
 ## To Build and Upload the Docker Images
 ```
 chmod +x upload_latest_docker.sh
-sudo ./upload_latest_docker.sh
+./upload_latest_docker.sh
 ```
 
 ## To Deploy the Docker Services
 ```
 chmod +x deploy_docker_services.sh
-sudo ./deploy_docker_services.sh
+./deploy_docker_services.sh
 ```

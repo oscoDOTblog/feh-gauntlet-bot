@@ -9,4 +9,4 @@ echo "Successfully copied secret credentials!"
 echo "Attempting to update Docker images..."
 docker-compose down
 docker-compose up -d
-echo "Successfully update Docker images!"
+echo "Successfully updated Docker images!"

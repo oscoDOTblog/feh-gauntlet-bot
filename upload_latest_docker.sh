@@ -3,7 +3,10 @@ export DOCKER_VERSION=1.59
 
 # Build, Deploy, and Tear Down Docker Containers
 echo "Attempting to build Docker containers..."
-docker-compose build
+docker build -t feh-gauntlet-bot_convoy ./convoy/
+docker build -t feh-gauntlet-bot_genny ./discord/genny/
+docker build -t feh-gauntlet-bot_rebecca ./discord/rebecca/
+
 echo "----------Success!!!----------"
 
 # Log Into Docker
@@ -37,8 +40,10 @@ echo "----------Success!!!----------"
 
 
 # Clear Docker Containers and Images
-echo "Clearing old docker images..."
-export IMAGE_PATTERN=feh-gauntlet-bot
-docker images -a |  grep ${IMAGE_PATTERN}
-docker images -a | grep ${IMAGE_PATTERN} | awk '{print $3}' | xargs docker rmi
-echo "----------Success!!!----------"
+# echo "Clearing old docker images..."
+# docker stop $(docker ps -a -q)
+# docker rm $(docker ps -a -q)
+# export IMAGE_PATTERN=feh-gauntlet-bot
+# docker images -a |  grep ${IMAGE_PATTERN}
+# docker images -a | grep ${IMAGE_PATTERN} | awk '{print $3}' | xargs docker rmi -f
+# echo "----------Success!!!----------"
