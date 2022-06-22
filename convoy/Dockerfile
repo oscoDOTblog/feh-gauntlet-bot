@@ -10,13 +10,13 @@ ENV PYTHONUNBUFFERED 1
 
 # Install app dependencies
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
 RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 # Bundle app source
 COPY api.py /app
 COPY config.py /app
 COPY gauntlet_template.py /app
-COPY secrets.py /app
+# COPY secrets.py /app
 
 

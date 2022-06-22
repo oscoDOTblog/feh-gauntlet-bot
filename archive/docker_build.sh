@@ -14,7 +14,7 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q)
 
 # Upload
-docker login atemosta
+docker login
 docker tag atemosta/feh-gauntlet-bot atemosta/feh-gauntlet-bot:1.11
 docker tag atemosta/feh-gauntlet-bot atemosta/feh-gauntlet-bot:latest
 # docker push atemosta/feh-gauntlet-bot:1.11

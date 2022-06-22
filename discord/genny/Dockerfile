@@ -10,8 +10,8 @@ ENV PYTHONUNBUFFERED 1
 
 # Install app dependencies
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
 RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 # Bundle app source
 COPY genny.py /app
