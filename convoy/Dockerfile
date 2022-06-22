@@ -1,5 +1,5 @@
 # Select Docker image
-FROM python:3.8-slim
+FROM python:3.8-slim-buster
 
 # Create app directory
 WORKDIR /app
@@ -16,6 +16,6 @@ RUN pip install -r requirements.txt
 COPY api.py /app
 COPY config.py /app
 COPY gauntlet_template.py /app
-COPY secrets.py /app
+# COPY secrets.py /app
 
 

@@ -6,7 +6,7 @@ from pydantic import BaseModel
 # --- Local Config Imports --- #
 from config import * # current VG particpants and round dates
 from gauntlet_template import *
-from secrets import *
+from assets.secrets import *
 
 app = FastAPI()
 
