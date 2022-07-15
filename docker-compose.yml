@@ -1,7 +1,8 @@
 version: "3.8"
 services:
   convoy:
-    image: atemosta/feh-gauntlet-bot:convoy-latest
+    build: convoy
+    # image: atemosta/feh-gauntlet-bot:convoy-latest
     command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
     networks:
       - feh-compose-network
@@ -10,7 +11,8 @@ services:
     volumes:
       - ./assets:/app/assets
   genny:
-    image: atemosta/feh-gauntlet-bot:genny-latest
+    build: discord/genny
+    # image: atemosta/feh-gauntlet-bot:genny-latest
     command: python genny.py
     depends_on:
       - convoy
@@ -21,7 +23,8 @@ services:
     volumes:
       - ./assets:/app/assets
   rebecca:
-    image: atemosta/feh-gauntlet-bot:rebecca-latest
+    build: discord/rebecca
+    # image: atemosta/feh-gauntlet-bot:rebecca-latest
     command: python rebecca.py
     depends_on:
       - convoy
@@ -31,9 +34,6 @@ services:
       - 4546:4546
     volumes:
       - ./assets:/app/assets
-# volumes:
-#   mongodb-data:
-#     name: mongodb-data
 networks:
   feh-compose-network:
     driver: bridge
