@@ -11,7 +11,8 @@ ENV PYTHONUNBUFFERED 1
 # Install app dependencies
 COPY Pipfile /app
 COPY Pipfile.lock /app
-RUN pip install pipenv
+RUN pip install --upgrade pip
+RUN pip install pipenv --upgrade
 RUN pipenv install --system --deploy
 
 # Bundle app source
