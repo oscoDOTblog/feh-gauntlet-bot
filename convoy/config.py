@@ -48,4 +48,4 @@ discord_status = {
     "joshua" : "TBD",
     "rebecca" : "Fire Emblem: The Blazing Blade"
 }
-discord_role_id_admin = "Galaxy Contructor"
+discord_role_id_admin = "Galaxy Constructor"
