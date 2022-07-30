@@ -10,4 +10,6 @@ echo "Attempting to update Docker images..."
 docker compose down
 docker compose build
 docker compose up -d
+docker compose -f docker-compose.yml restart genny
+docker compose -f docker-compose.yml restart rebecca
 echo "Successfully updated Docker images!"
