@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#DD'
+vg_hashtag='#SSS'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/61'
-round_1_start_raw = 'Jul 01 2022 7:00AM'
-round_1_end_raw = 'Jul 03 2022 4:00AM'
-round_2_start_raw = 'Jul 03 2022 7:00AM'
-round_2_end_raw = 'Jul 05 2022 4:00AM'
-round_3_start_raw = 'Jul 05 2022 7:00AM'
-round_3_end_raw = 'Jul 07 2022 4:00AM'
-vg_unit_1 = "Haar"
-vg_unit_2 = "Jill"
-vg_unit_3 = "Cormag"
-vg_unit_4 = "Valter"
-vg_unit_5 = "Travant"
-vg_unit_6 = "Altena"
-vg_unit_7 = "Michalis"
-vg_unit_8 = "Minerva"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/62'
+round_1_start_raw = 'Jul 30 2022 7:00AM'
+round_1_end_raw = 'Aug 01 2022 4:00AM'
+round_2_start_raw = 'Aug 01 2022 7:00AM'
+round_2_end_raw = 'Aug 03 2022 4:00AM'
+round_3_start_raw = 'Aug 05 2022 7:00AM'
+round_3_end_raw = 'Aug 07 2022 4:00AM'
+vg_unit_1 = "Claude"
+vg_unit_2 = "Dimitri"
+vg_unit_3 = "Edelgard"
+vg_unit_4 = "Micaiah"
+vg_unit_5 = "Eirika"
+vg_unit_6 = "Seth"
+vg_unit_7 = "Thorr"
+vg_unit_8 = "Nifl"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
