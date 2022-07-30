@@ -2,6 +2,7 @@ version: "3.8"
 services:
   convoy:
     build: convoy
+    container_name: convoy
     # image: atemosta/feh-gauntlet-bot:convoy-latest
     command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
     networks:
@@ -12,6 +13,7 @@ services:
       - ./assets:/app/assets
   genny:
     build: discord/genny
+    container_name: genny
     # image: atemosta/feh-gauntlet-bot:genny-latest
     command: python genny.py
     depends_on:
@@ -24,6 +26,7 @@ services:
       - ./assets:/app/assets
   rebecca:
     build: discord/rebecca
+    container_name: rebecca
     # image: atemosta/feh-gauntlet-bot:rebecca-latest
     command: python rebecca.py
     depends_on:
