@@ -38,14 +38,8 @@ def rest_get(path: str):
       REST_API_URL = "http://0.0.0.0:5057" # LOCAL URL
     elif (BOT_ENV == 'dev') or (BOT_ENV == 'prod') :
       REST_API_URL = "http://convoy:5057" # CONTAINER NETWORK URL
-    # RESPONSE = json.loads(requests.get(f'{REST_API_URL}/{path}').json())
-    RESPONSE_RAW = requests.get(f'{REST_API_URL}/{path}')
-    print(RESPONSE_RAW)
-    RESPONSE_JSON = RESPONSE_RAW.json()
-    print(RESPONSE_JSON)
-    RESPONSE_LOADS = json.loads()
-    print(RESPONSE_LOADS)
-    return RESPONSE_LOADS
+    RESPONSE = json.loads(requests.get(f'{REST_API_URL}/{path}').json())
+    return RESPONSE
 
 class MyDiscordClient(discord.Client):
     def __init__(self, *args, **kwargs):
