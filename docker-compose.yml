@@ -5,6 +5,7 @@ services:
     container_name: convoy
     # image: atemosta/feh-gauntlet-bot:convoy-latest
     command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
+    restart: always
     networks:
       - feh-compose-network
     ports:
@@ -16,6 +17,7 @@ services:
     container_name: genny
     # image: atemosta/feh-gauntlet-bot:genny-latest
     command: python genny.py
+    restart: always
     depends_on:
       - convoy
     networks:
@@ -29,6 +31,7 @@ services:
     container_name: rebecca
     # image: atemosta/feh-gauntlet-bot:rebecca-latest
     command: python rebecca.py
+    restart: always
     depends_on:
       - convoy
     networks:

@@ -1,4 +1,4 @@
-TBD# **FEH Gauntlet Bot** [![Build Status](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot.svg?branch=master)](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot)
+**FEH Gauntlet Bot** [![Build Status](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot.svg?branch=master)](https://www.travis-ci.com/Atemosta/FEH-Gauntlet-Bot)
 
 ![Gauntlet-Landing](assets/gauntlet_landing.PNG)
 
