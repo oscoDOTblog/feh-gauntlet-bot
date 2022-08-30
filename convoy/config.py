@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#SSS'
+vg_hashtag='#BC'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/62'
-round_1_start_raw = 'Jul 30 2022 7:00AM'
-round_1_end_raw = 'Aug 01 2022 4:00AM'
-round_2_start_raw = 'Aug 01 2022 7:00AM'
-round_2_end_raw = 'Aug 03 2022 4:00AM'
-round_3_start_raw = 'Aug 03 2022 7:00AM'
-round_3_end_raw = 'Aug 05 2022 4:00AM'
-vg_unit_1 = "Claude"
-vg_unit_2 = "Dimitri"
-vg_unit_3 = "Edelgard"
-vg_unit_4 = "Micaiah"
-vg_unit_5 = "Eirika"
-vg_unit_6 = "Seth"
-vg_unit_7 = "Thorr"
-vg_unit_8 = "Nifl"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/63'
+round_1_start_raw = 'Aug 31 2022 7:00AM'
+round_1_end_raw = 'Sep 02 2022 4:00AM'
+round_2_start_raw = 'Sep 02 2022 7:00AM'
+round_2_end_raw = 'Sep 04 2022 4:00AM'
+round_3_start_raw = 'Sep 04 2022 7:00AM'
+round_3_end_raw = 'Sep 06 2022 4:00AM'
+vg_unit_1 = "Chrom"
+vg_unit_2 = "Marth"
+vg_unit_3 = "Tiki"
+vg_unit_4 = "Marianne"
+vg_unit_5 = "Byleth"
+vg_unit_6 = "Gatekeeper"
+vg_unit_7 = "Seliph"
+vg_unit_8 = "Eirika"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
