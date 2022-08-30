@@ -198,6 +198,41 @@ class Rebecca(MyDiscordClient):
                     ')
                 else:
                     await message.channel.send(f'You do not have the **{discord_role_id_admin}** role needed to perform this action!')
+           
+            # Announce Command
+            if message.content.startswith((f'{DISCORD_PREFIX}force-multiplier')):
+                await self.wait_until_ready()
+                # self.logger.debug(f'~~~~~starting rebecca_discord_client.send_vg_ugdate()~~~~~')
+                current_unit_scores = rest_get('feh-vg-bot/get-unit-scores')
+                if (len(current_unit_scores) <= 1):
+                    # logger.debug("In Beween Rounds, Do Nothing")
+                    print("In Beween Rounds, Do Nothing")
+                else:
+                    # self.logger.debug("During Voting Gauntlet")
+                    vg_scores  = rest_get('feh-vg-bot/check-vg')
+
+                    # Ping if multiplier is active for losing team (other team has 3% more flags)
+                    for score in vg_scores:
+                        message = score["Message"]
+                        # Send only text tweet
+                        if "Tie" in score["Losing"]:
+                            # self.logger.debug("Do nothing, Twitter Bot sends tie tweet.")
+                            print("Do nothing, Twitter Bot sends tie tweet.")
+                        # Send image and text
+                        else:
+                            losing_unit = score["Losing"]
+                            print(losing_unit)
+                            img_url = get_unit_image_url(losing_unit)
+                            role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
+                            role_webhook = f'<@&{role_team.id}>'
+                            updated_message =  role_webhook + score["Message"]
+                            channel_name = "team-" + losing_unit.lower()
+                            channel = discord.utils.get(self.guild.channels, name=channel_name)
+                            await channel.send(content=updated_message,file=discord.File(img_url))
+                            # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
+                    # except:
+                        # Print out timestamp in the event of failure
+                        # self.logger.debug(f"Ping failed for #Team{losing_unit}") 
 
     #Check scores and send update to discord if required
     async def send_discord_update(self):
