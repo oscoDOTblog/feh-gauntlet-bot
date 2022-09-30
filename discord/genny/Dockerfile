@@ -1,5 +1,5 @@
 # Select Docker image
-FROM python:3.9-slim-buster
+FROM python:3.8-slim-buster
 
 # Create app directory
 WORKDIR /app
@@ -9,15 +9,10 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Install app dependencies
-COPY Pipfile /app
-COPY Pipfile.lock /app
-RUN pip install --upgrade pip
-RUN pip install pipenv --upgrade
-RUN pipenv install --system --deploy
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
 
 # Bundle app source
 COPY genny.py /app
 COPY config.py /app
 COPY discordclient.py /app
-
-
