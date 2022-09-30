@@ -9,7 +9,7 @@ discord==1.7.3
 discord.py==1.7.3
 idna==3.2
 multidict==5.1.0
-oauthlib==3.1.1
+oauthlib==3.2.1
 PySocks==1.7.1
 pytz==2021.1
 requests==2.26.0
