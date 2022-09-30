@@ -62,9 +62,9 @@ def get_unit_scores():
         # 3) save value in dictionary
         # 4) reduce value of count by 1
         x_text = x.get_text()
-        if "Th" in x_text and "rr" in x_text:
+        if "M" in x_text and "spell" in x_text:
             # logger.debug("Changing text to Thorr")
-            x_text = "Thorr"
+            x_text = "Muspell"
         # if "Black" in x_text and "Knight" in x_text:
         #     logger.debug("Changing text to BlackKnight")
         #     x_text = "BlackKnight"
