@@ -1,22 +1,22 @@
 # UTC is 7 Hours Ahead PDT
 vg_assets_root_path="assets"
-vg_hashtag='#FFwF'
+vg_hashtag='#LL'
 vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/64'
-round_1_start_raw = 'Sep 30 2022 7:00AM'
-round_1_end_raw = 'Oct 02 2022 4:00AM'
-round_2_start_raw = 'Oct 02 2022 7:00AM'
-round_2_end_raw = 'Oct 04 2022 4:00AM'
-round_3_start_raw = 'Oct 04 2022 7:00AM'
-round_3_end_raw = 'Oct 06 2022 4:00AM'
-vg_unit_1 = "Tana"
-vg_unit_2 = "Laevatein"
-vg_unit_3 = "Muspell"
-vg_unit_4 = "Laegjarn"
-vg_unit_5 = "Mordecai"
-vg_unit_6 = "Surtr"
-vg_unit_7 = "Rinkah"
-vg_unit_8 = "Lyn"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/65'
+round_1_start_raw = 'Nov 02 2022 7:00AM'
+round_1_end_raw = 'Nov 04 2022 4:00AM'
+round_2_start_raw = 'Nov 04 2022 7:00AM'
+round_2_end_raw = 'Nov 06 2022 4:00AM'
+round_3_start_raw = 'Nov 07 2022 7:00AM'
+round_3_end_raw = 'Nov 08 2022 4:00AM'
+vg_unit_1 = "Finn"
+vg_unit_2 = "Kent"
+vg_unit_3 = "Selena"
+vg_unit_4 = "Brunnya"
+vg_unit_5 = "Hubert"
+vg_unit_6 = "August"
+vg_unit_7 = "Tanith"
+vg_unit_8 = "Wolf"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
