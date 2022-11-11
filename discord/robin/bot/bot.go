@@ -22,7 +22,7 @@ func Start() {
 	}
 	// Making our bot a user using User function .
 	u, err := goBot.User("@me")
-	//Handlinf error
+	//Handling error
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -31,8 +31,8 @@ func Start() {
 	BotId = u.ID
 
 	// Adding handler function to handle our messages using AddHandler from discordgo package. We will declare messageHandler function later.
+	goBot.AddHandler(setPresence)
 	goBot.AddHandler(messageHandler)
-
 
 	err = goBot.Open()
 	//Error handling
@@ -42,6 +42,11 @@ func Start() {
 	}
 		//If every thing works fine we will be printing this.
 	fmt.Println("Bot is running !")
+	}
+
+	// Set Bot Activity
+	func setPresence(s *discordgo.Session, event *discordgo.Ready) {
+		s.UpdateGameStatus(0,"Fire Emblem: Awakening")
 	}
 
 	//Definition of messageHandler function it takes two arguments first one is discordgo.Session which is s , second one is discordgo.MessageCreate which is m.

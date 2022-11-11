@@ -35,3 +35,4 @@ job_manager.db
 # vendor/
 
 # Go workspace file
+config.json
