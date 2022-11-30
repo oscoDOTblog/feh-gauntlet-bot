@@ -6,7 +6,7 @@ set -euo pipefail
 ########################
 
 # Name of the user to create and grant sudo privileges
-USERNAME=do_argo
+USERNAME=argo
 
 # Whether to copy over the root user's `authorized_keys` file to the new sudo
 # user.
@@ -96,5 +96,9 @@ docker pull atemosta/feh-gauntlet-bot:latest
 # nohup python3 genny_twitter_bot.py &
 # nohup python3 rebecca_discord_client.py &
 
+### Change User Password
+sudo passwd argo
+# Log in as argo
+sudo deluser --remove-home root --no-preserve-root
 
 
