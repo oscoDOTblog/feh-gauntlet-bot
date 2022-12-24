@@ -8,7 +8,8 @@ import (
 	"log"
 	"net/http"
 	"time"
-	// "go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"github.com/gorilla/mux"
@@ -22,6 +23,12 @@ type Article struct {
 }
 
 type Command struct {
+	Name 	string
+	Value string
+}
+
+type CommandDB struct {
+	ID		primitive.ObjectID `bson:"_id"`
 	Name 	string
 	Value string
 }
@@ -126,6 +133,59 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+func updateExistingCommand(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Endpoint Hit: updateExistingCommand")
+	// get the body of our POST request
+	// unmarshal this into a new Article struct
+	// append this to our Articles array.    
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	var command Command 
+	json.Unmarshal(reqBody, &command)
+	cName 	:= command.Name
+	cValue 	:= command.Value 
+
+	// Add command to our database
+	// mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root:pass12345@localhost"))
+	if err != nil {
+			log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+			log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	/* Get Document by Filter */
+	collection := client.Database("feh").Collection("robin")
+	filterFind := bson.D{{"name", cName}}
+	var result CommandDB
+	err = collection.FindOne(context.TODO(), filterFind).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result.ID.Hex())
+	fmt.Println(result.Name)
+	fmt.Println(result.Value)
+
+	/* Update Document by Id */
+	id, _ := primitive.ObjectIDFromHex(result.ID.Hex())
+	filterUpdate := bson.D{{"_id", id}}
+	valueUpdate := bson.D{{"$set", bson.D{{"value", cValue}}}}
+	resultUpdate, err := collection.UpdateOne(context.TODO(), filterUpdate, valueUpdate)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(resultUpdate)
+
+	// Return Statement
+	returnStatement := "Successfully update command: ||" + cName + "|| with value: ||" + cValue + "||"
+	fmt.Fprintf(w, returnStatement)
+	fmt.Println(returnStatement)
+}
+
+// REST Endpoints
 func handleRequests() {
 	// Creates a new instance of a mux router
 	myRouter := mux.NewRouter().StrictSlash(true)
@@ -135,9 +195,11 @@ func handleRequests() {
 	myRouter.HandleFunc("/article/{id}", deleteArticle).Methods("DELETE")
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
 	myRouter.HandleFunc("/command", createNewCommand).Methods("POST")
+	myRouter.HandleFunc("/command", updateExistingCommand).Methods("PATCH")
 	log.Fatal(http.ListenAndServe(":4545", myRouter))
 }
 
+// Main Function
 func main() {
 	fmt.Println("Starting Server...")
 	Articles = []Article{
