@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  golembane:
+    build: ./
+    container_name: golembane
+    command: go run main.go
+    restart: unless-stopped
+    networks:
+      - feh-vg-bot
+    # volumes:
+    #   - ../../assets:/app/assets
+networks:
+  feh-vg-bot:
+    external: true
