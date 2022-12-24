@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-
+	"time"
+	// "go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"github.com/gorilla/mux"
 )
 
@@ -15,6 +19,11 @@ type Article struct {
 	Title   string `json:"Title"`
 	Desc    string `json:"desc"`
 	Content string `json:"content"`
+}
+
+type Command struct {
+	Name 	string
+	Value string
 }
 
 // let's declare a global Articles array
@@ -34,16 +43,52 @@ func returnAllArticles(w http.ResponseWriter, r *http.Request) {
 
 func createNewArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: createNewArticle")
-    // get the body of our POST request
-    // unmarshal this into a new Article struct
-    // append this to our Articles array.    
-    reqBody, _ := ioutil.ReadAll(r.Body)
-    var article Article 
-    json.Unmarshal(reqBody, &article)
-    // update our global Articles array to include
-    // our new Article
-    Articles = append(Articles, article)
-    json.NewEncoder(w).Encode(article)
+	// get the body of our POST request
+	// unmarshal this into a new Article struct
+	// append this to our Articles array.    
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	var article Article 
+	json.Unmarshal(reqBody, &article)
+	// update our global Articles array to include
+	// our new Article
+	Articles = append(Articles, article)
+	json.NewEncoder(w).Encode(article)
+}
+
+func createNewCommand(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Endpoint Hit: createNewCommand")
+	// get the body of our POST request
+	// unmarshal this into a new Article struct
+	// append this to our Articles array.    
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	var command Command 
+	json.Unmarshal(reqBody, &command)
+
+	// Add command to our database
+	// mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root:pass12345@localhost"))
+	if err != nil {
+			log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+			log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	/* List Get Robin Bot Collection */
+	fehDatabase := client.Database("feh")
+	robinCollection := fehDatabase.Collection("robin")
+	robinResult, err := robinCollection.InsertOne(ctx, command)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print Return Statement
+	fmt.Println(command)
+	fmt.Println(robinResult)
+	json.NewEncoder(w).Encode(command)
 }
 
 func deleteArticle(w http.ResponseWriter, r *http.Request) {
@@ -89,7 +134,8 @@ func handleRequests() {
 	myRouter.HandleFunc("/article", createNewArticle).Methods("POST")
 	myRouter.HandleFunc("/article/{id}", deleteArticle).Methods("DELETE")
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
-	log.Fatal(http.ListenAndServe(":10000", myRouter))
+	myRouter.HandleFunc("/command", createNewCommand).Methods("POST")
+	log.Fatal(http.ListenAndServe(":4545", myRouter))
 }
 
 func main() {

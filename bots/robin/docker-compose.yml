@@ -4,4 +4,11 @@ services:
     build: ./
     container_name: robin
     command: go run main.go
-    restart: always
+    restart: unless-stopped
+    networks:
+      - feh-vg-bot
+    # volumes:
+    #   - ../../assets:/app/assets
+networks:
+  feh-vg-bot:
+    external: true

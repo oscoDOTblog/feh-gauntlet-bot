@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  mongo-db-feh:
+    container_name: mongo-db-feh
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=feh
+    networks:
+      - feh-vg-bot
+    ports:
+      - '27017:27017'
+    restart: unless-stopped
+    volumes:
+      - mongodb-data-feh:/data/db
+networks:
+  feh-vg-bot:
+    external: true
