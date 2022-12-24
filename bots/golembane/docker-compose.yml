@@ -11,41 +11,43 @@ services:
     restart: unless-stopped
     # volumes:
     #   - ../../assets:/app/assets
-  mongo-db:
-    container_name: mongo-db
+  mongo-db-feh:
+    container_name: mongo-db-feh
     image: mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=pass12345
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
       - MONGO_INITDB_DATABASE=feh
     networks:
       - feh-vg-bot
     ports:
       - '27017:27017'
+    restart: unless-stopped
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data-feh:/data/db
   # UI: http://127.0.0.1:8081
-  mongo-express:
-    container_name: mongo-express
+  mongo-express-feh:
+    container_name: mongo-express-feh
     image: mongo-express
     depends_on:
-      - mongo-db
+      - mongo-db-feh
     networks:
       - feh-vg-bot
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo-db
+      - ME_CONFIG_MONGODB_SERVER=mongo-db-feh
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass12345
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_BASICAUTH_USERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_BASICAUTH_PASSWORD}
     ports:
       - '8081:8081'
+    restart: unless-stopped
     volumes:
-      - mongodb-data
+      - mongodb-data-feh
 volumes:
-  mongodb-data:
-    name: mongodb-data
+  mongodb-data-feh:
+    name: mongodb-data-feh
 networks:
   feh-vg-bot:
     external: true
