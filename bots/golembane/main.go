@@ -98,6 +98,7 @@ func createNewCommand(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(command)
 }
 
+
 func deleteArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: deleteArticle")
 	// once again, we will need to parse the path parameters
@@ -117,6 +118,38 @@ func deleteArticle(w http.ResponseWriter, r *http.Request) {
 			}
 	}
 	fmt.Fprintf(w, "Successfully delete Article Id: " + id)
+}
+
+func getCommandValue(w http.ResponseWriter, r *http.Request){
+	fmt.Println("Endpoint Hit: getCommandValue")
+	vars := mux.Vars(r)
+	name := vars["name"]
+
+	// Connect to our DB
+	// mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://root:pass12345@localhost"))
+	if err != nil {
+			log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+			log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	/* Get Document by Filter */
+	collection := client.Database("feh").Collection("robin")
+	filterFind := bson.D{{"name", name}}
+	var result Command
+	err = collection.FindOne(context.TODO(), filterFind).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Command Name: " 	+ result.Name)
+	fmt.Println("Command Value: " + result.Value)
+	json.NewEncoder(w).Encode(result)
+	fmt.Println("Successfully returned command value!")
 }
 
 func returnSingleArticle(w http.ResponseWriter, r *http.Request){
@@ -196,6 +229,7 @@ func handleRequests() {
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
 	myRouter.HandleFunc("/command", createNewCommand).Methods("POST")
 	myRouter.HandleFunc("/command", updateExistingCommand).Methods("PATCH")
+	myRouter.HandleFunc("/command/{name}", getCommandValue).Methods("GET")
 	log.Fatal(http.ListenAndServe(":4545", myRouter))
 }
 
