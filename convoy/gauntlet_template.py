@@ -65,9 +65,9 @@ def get_unit_scores():
         if "M" in x_text and "spell" in x_text:
             # logger.debug("Changing text to Thorr")
             x_text = "Muspell"
-        # if "Black" in x_text and "Knight" in x_text:
-        #     logger.debug("Changing text to BlackKnight")
-        #     x_text = "BlackKnight"
+        if "Black" in x_text and "Knight" in x_text:
+            logger.debug("Changing text to BlackKnight")
+            x_text = "BlackKnight"
         if not (vg_test):
             # logger.debug("VG is NOW!!!")
             y_text = y.get_text()

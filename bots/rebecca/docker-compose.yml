@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  rebecca:
+    build: .
+    container_name: rebecca
+    # image: atemosta/feh-gauntlet-bot:rebecca-latest
+    command: python rebecca.py
+    restart: unless-stopped
+    networks:
+      - feh-vg-bot
+    volumes:
+      - ../../assets:/app/assets
+networks:
+  feh-vg-bot:
+    external: true
