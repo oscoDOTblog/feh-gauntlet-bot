@@ -1,5 +1,5 @@
 # Golembane
-Golang API for FEH-VG-Bots
+Golang API for FEH-VG-Bots based on [this tutorial ](https://dev.to/aurelievache/learning-go-by-examples-part-2-create-an-http-rest-api-server-in-go-1cdm)
 
 ## Requirements
 * Install [Taskfile](https://taskfile.dev/installation/)
@@ -11,3 +11,4 @@ Golang API for FEH-VG-Bots
 * `swagger version`
 * `task swagger.validate`
 * `task swagger.doc`
+* `task swagger.gen`
