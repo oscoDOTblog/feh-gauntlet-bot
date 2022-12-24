@@ -4,7 +4,14 @@ tasks:
     build:
         desc: Build the app
         cmds:
+        # Default Build
         - GOFLAGS=-mod=mod go build -o bin/go-rest-api internal/main.go 
+        # Linux 32 bits
+        # - GOOS=linux GOARCH=386 go build -o bin/go-rest-api-linux-386 internal/main.go
+        # Linux 64 bits
+        # - GOOS=linux GOARCH=amd64 go build -o bin/go-rest-api-linux-64 internal/main.go
+        # MacOS 64 bits for M1 chip
+        # - GOOS=darwin GOARCH=arm64 go build -o bin/go-rest-api-darwin-arm64 internal/main.go
 
     run: 
         desc: Run the app
