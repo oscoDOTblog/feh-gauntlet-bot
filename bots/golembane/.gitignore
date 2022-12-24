@@ -19,3 +19,6 @@
 
 # Go workspace file
 config.json
+
+# Docker
+.env
