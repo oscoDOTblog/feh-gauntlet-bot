@@ -69,10 +69,11 @@ class Rebecca(MyDiscordClient):
                         # if check_unit_validity(unit_name):
                         if (rest_get(f'unit/check/{unit_name}'))['is_valid']:
                             # Check if role exists, and add/remove if approriate
-                            unit_name_index = unit_name.title()
+                            # unit_name_index = unit_name.title()
+                            unit_name_index = unit_name
                             # Rename index if you are special
-                            if unit_name == "BlackKnight":
-                                unit_name_index = "BlackKnight"
+                            # if unit_name == "BlackKnight":
+                            #     unit_name_index = "BlackKnight"
                             # unit_name_index = unit_name
                             role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                             if (role):
