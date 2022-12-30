@@ -9,7 +9,7 @@ services:
     networks:
       - feh-vg-bot
     volumes:
-      - ../../assets:/app/assets
+      - ../../assets-discord:/app/assets
 networks:
   feh-vg-bot:
     external: true
