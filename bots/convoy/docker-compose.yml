@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  convoy:
+    build: .
+    container_name: convoy
+    # image: atemosta/feh-gauntlet-bot:convoy-latest
+    command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
+    restart: unless-stopped
+    networks:
+      - feh-vg-bot
+    ports:
+      - 5057:5057
+    volumes:
+      - ../../assets:/app/assets
+networks:
+  feh-vg-bot:
+    external: true

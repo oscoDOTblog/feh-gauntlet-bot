@@ -13,8 +13,6 @@ from config import * # current VG particpants and round dates
 
 # main method (called every 30 minutes)
 def get_unit_scores():
-    # Set Up Logger
-    # logger = set_up_logger("gauntlet_template")
 
     # Use mechanize to set the locale's select value to 'en-US'
     br = mechanize.Browser()
@@ -37,7 +35,7 @@ def get_unit_scores():
     # Use BeautifulSoup to parse the response
     r = br.response().read()
     soup = BeautifulSoup(r, 'html.parser')
-    #logger.debug(p.prettify());
+    #print(p.prettify());
 
     # find all p elements (which contain the current scores)
     p = soup.find_all("p")
@@ -63,34 +61,34 @@ def get_unit_scores():
         # 4) reduce value of count by 1
         x_text = x.get_text()
         if "M" in x_text and "spell" in x_text:
-            # logger.debug("Changing text to Thorr")
+            # print("Changing text to Thorr")
             x_text = "Muspell"
-        # if "Black" in x_text and "Knight" in x_text:
-        #     logger.debug("Changing text to BlackKnight")
-        #     x_text = "BlackKnight"
+        if "Black" in x_text and "Knight" in x_text:
+            print("Changing text to BlackKnight")
+            x_text = "BlackKnight"
         if not (vg_test):
-            # logger.debug("VG is NOW!!!")
+            # print("VG is NOW!!!")
             y_text = y.get_text()
         else:
-            # logger.debug("VG is NOT now!!!")
+            # print("VG is NOT now!!!")
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_appear:
             # Check for Male Corrin, then Female Corrin
             # if (x_text == 'Corrin') and (not unit_dict['MCorrin']):
-            #    logger.debug("Key: " + key + "| Value:" + y_text )
+            #    print("Key: " + key + "| Value:" + y_text )
             #    unit_dict['MCorrin'] = y_text
             #    count -= 1
             #    break
             # if (x_text == 'Corrin') and (not unit_dict['FCorrin']):
-            #    # logger.debug("Key: " + key + "| Value:" + y_text )
+            #    # print("Key: " + key + "| Value:" + y_text )
             #    unit_dict['FCorrin'] = y_text
             #    count -= 1
             #    break
             if (x_text == key):
                 unit_appear[key] = unit_appear[key] + 1
                 if (not unit_scores[key]):
-                    # logger.debug("Key: " + key + "| Value:" + y_text )
+                    # print("Key: " + key + "| Value:" + y_text )
                     unit_scores[key] = y_text
                 unit_count -= 1
                 break
@@ -110,13 +108,11 @@ def get_unit_scores():
     # custom sort dictionary values into a list
     keyorder = [vg_unit_1, vg_unit_2, vg_unit_3, vg_unit_4, vg_unit_5, vg_unit_6, vg_unit_7, vg_unit_8]
     unit_scores_sorted = sorted(unit_scores.items(), key=lambda i:keyorder.index(i[0]))
-    # logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    # logger.info(unit_scores)
+    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    # print(unit_scores)
     return unit_scores_sorted
 
 def check_vg(unit_scores):
-    # Set Up Logger
-    # logger = set_up_logger("gauntlet_template")
 
     # Get Current Round Time Variables
     time_var_current_round = get_time_var_current_round()
@@ -132,7 +128,7 @@ def check_vg(unit_scores):
     time_elapsed =  time_now - round_start
     current_hour = divmod(time_elapsed.total_seconds(), 60*60)[0]
     hours_remain = 45 - current_hour
-    # logger.info("hours_remain: " + str(hours_remain))
+    # print("hours_remain: " + str(hours_remain))
     multiplier = (current_hour * 0.2) + 3.2
 
     # pairwise compare units in battle to detect disadvantages
@@ -150,9 +146,9 @@ def check_vg(unit_scores):
         # variables for checking if multiplier is up for either team
         disadvantage_a = float(truncate(float(a_score) / float(b_score),4))
         disadvantage_b = float(truncate(float(b_score) / float(a_score),4))
-        # logger.debug(disadvantage_a)
-        # logger.debug(disadvantage_b)
-        # logger.info(f"disadvantage_a: {disadvantage_a} | disadvantage_b: {disadvantage_b}")
+        # print(disadvantage_a)
+        # print(disadvantage_b)
+        # print(f"disadvantage_a: {disadvantage_a} | disadvantage_b: {disadvantage_b}")
         
         # Create Dictionary Per Pairwise Comparison, then add to list
         losing_unit = ''
@@ -181,7 +177,7 @@ def check_vg(unit_scores):
         # vg_scores['Message'] = message
 
     # End of Log
-    # logger.debug("End of successful check")
+    # print("End of successful check")
 
     # return time elapsed
     return (vg_scores)
@@ -194,12 +190,11 @@ def one_hour_string(hours_remain):
         return "Less than **one** hour remains"
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
-    # logger = set_up_logger("gauntlet_template")
-    # logger.debug("Starting tweet_multiplier()")
+    # print("Starting tweet_multiplier()")
     unit_random_quote = get_unit_quote_random(name)
     hour_or_hours = one_hour_string(hours_remain)
     message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, unit_random_quote, hour_or_hours, vg_hashtag, round_name)
-    # logger.info(message)
+    # print(message)
     return message
 
 def pairwise_list(iterable):
@@ -254,7 +249,6 @@ def get_unit_image_url(unit_name):
 
 ## Get Time Variables from config
 def get_time_var():
-    # logger = set_up_logger("gauntlet_template")
     dic = {}
     dic['time_now'] = datetime.now()
     dic['round_1_start'] = datetime.strptime(round_1_start_raw, '%b %d %Y %I:%M%p')
@@ -267,7 +261,6 @@ def get_time_var():
 
 ## Get Time Variables for Current Round
 def get_time_var_current_round():
-    # logger = set_up_logger("gauntlet_template")
     time_var = get_time_var()
     time_now = time_var['time_now']
     round_1_start = time_var['round_1_start']
@@ -282,32 +275,32 @@ def get_time_var_current_round():
     if not (vg_test):
         # round 1 variables
         if (round_1_start < time_now < round_1_end):
-            # logger.debug("Currently Round 1")
+            # print("Currently Round 1")
             round_start = round_1_start
             round_name = 'Round 1'
             unit_count = 8 
             unit_freq = 1
         # round 2 variables
         elif (round_2_start < time_now < round_2_end):
-            # logger.debug("Currently Round 2")
+            # print("Currently Round 2")
             round_start = round_2_start
             round_name = 'Round 2'
             unit_count = 12
             unit_freq = 2
         # round 3 variables
         elif (round_3_start < time_now < round_3_end):
-            # logger.debug("Currently Round 3")
+            # print("Currently Round 3")
             round_start = round_3_start
             round_name = 'Final Round'
             unit_count = 14 
             unit_freq = 3
         # else in between rounds
         else:
-            # logger.debug("Current time in between rounds. Ending execution.")
+            # print("Current time in between rounds. Ending execution.")
             return (-1)
     else: 
-        # logger.debug("~~~~~Testing VG~~~~~")
-        # logger.debug("Currently Round 3")
+        # print("~~~~~Testing VG~~~~~")
+        # print("Currently Round 3")
         round_start = round_3_start
         round_name = 'Round 3'
         unit_count = 14 
@@ -325,22 +318,3 @@ def get_time_var_current_round():
     dic['unit_dict'] = unit_dict
     dic['unit_freq'] = unit_freq
     return dic  
-
-# Set up logger
-# def set_up_logger(module_name):
-#     # Gets or creates a logger
-#     # logger = logging.getLogger(module_name)  
-
-#     # set log level
-#     # logger.setLevel(logging.DEBUG)
-#     # logger.setLevel(logging.INFO)
-
-#     # define file handler and set formatter
-#     file_name = 'logs/' + module_name + '.log'
-#     file_handler = logging.FileHandler(filename=file_name, encoding='utf-8', mode='w')
-#     formatter    = logging.Formatter('%(asctime)s : %(levelname)s : %(name)s : %(message)s')
-#     file_handler.setFormatter(formatter)
-
-#     # add file handler to logger
-#     # logger.addHandler(file_handler)
-#     return logger
