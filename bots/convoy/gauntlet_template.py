@@ -74,17 +74,17 @@ def get_unit_scores():
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_appear:
-            # Check for Male Corrin, then Female Corrin
-            # if (x_text == 'Corrin') and (not unit_dict['MCorrin']):
-            #    print("Key: " + key + "| Value:" + y_text )
-            #    unit_dict['MCorrin'] = y_text
-            #    count -= 1
-            #    break
-            # if (x_text == 'Corrin') and (not unit_dict['FCorrin']):
-            #    # print("Key: " + key + "| Value:" + y_text )
-            #    unit_dict['FCorrin'] = y_text
-            #    count -= 1
-            #    break
+            ## -- Check for Male Corrin, then Female Corrin -- ##
+            if (x_text == 'Edelgard') and (not unit_dict['SEdelgard']):
+               print("Key: " + key + "| Value:" + y_text )
+               unit_dict['Edelgard'] = y_text
+               count -= 1
+               break
+            if (x_text == 'Edelgard') and (not unit_dict['FEdelgard']):
+               # print("Key: " + key + "| Value:" + y_text )
+               unit_dict['FEdelgard'] = y_text
+               count -= 1
+               break
             if (x_text == key):
                 unit_appear[key] = unit_appear[key] + 1
                 if (not unit_scores[key]):
