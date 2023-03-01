@@ -1,7 +1,7 @@
 # UTC is 8 Hours Ahead PST
 vg_assets_root_path="assets"
 vg_hashtag='#NC'
-vg_test=False
+vg_test=True # True
 vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/69'
 round_1_start_raw = 'Mar 01 2023 7:00AM'
 round_1_end_raw = 'Mar 03 2023 4:00AM'

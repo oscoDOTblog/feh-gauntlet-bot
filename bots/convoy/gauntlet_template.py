@@ -66,24 +66,28 @@ def get_unit_scores():
         if "Black" in x_text and "Knight" in x_text:
             print("Changing text to BlackKnight")
             x_text = "BlackKnight"
+        ## -- This is a live VG! -- ## 
         if not (vg_test):
             # print("VG is NOW!!!")
             y_text = y.get_text()
+        ## -- Calculate Random Numbers for VG in Test Env -- ## 
         else:
             # print("VG is NOT now!!!")
             y_text = format (random.randint(0, 10000), ',d')
         # Iterate through keys to update their values
         for key in unit_appear:
             ## -- Check for Male Corrin, then Female Corrin -- ##
-            if (x_text == 'Edelgard') and (not unit_dict['SEdelgard']):
+            if (x_text == 'Edelgard') and (not unit_appear['SEdelgard']):
                print("Key: " + key + "| Value:" + y_text )
-               unit_dict['Edelgard'] = y_text
-               count -= 1
+               unit_appear['SEdelgard'] += 1
+               unit_scores['SEdelgard'] = y_text
+               unit_count -= 1
                break
-            if (x_text == 'Edelgard') and (not unit_dict['FEdelgard']):
+            if (x_text == 'Edelgard') and (not unit_appear['FEdelgard']):
                # print("Key: " + key + "| Value:" + y_text )
-               unit_dict['FEdelgard'] = y_text
-               count -= 1
+               unit_appear['FEdelgard'] += 1
+               unit_scores['FEdelgard'] = y_text
+               unit_count -= 1
                break
             if (x_text == key):
                 unit_appear[key] = unit_appear[key] + 1
@@ -191,10 +195,11 @@ def one_hour_string(hours_remain):
 
 def tweet_multiplier(name, multiplier, hours_remain, vg_hashtag, round_name):
     # print("Starting tweet_multiplier()")
-    unit_random_quote = get_unit_quote_random(name)
+    # unit_random_quote = get_unit_quote_random(name)
     hour_or_hours = one_hour_string(hours_remain)
-    message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, unit_random_quote, hour_or_hours, vg_hashtag, round_name)
-    # print(message)
+    # message = ' is losing with a **%.1fx** multiplier up!\n"%s"\n(%s in %s\'s %s)' % (multiplier, unit_random_quote, hour_or_hours, vg_hashtag, round_name)
+    message = ' is losing with a **%.1fx** multiplier up!\n(%s in %s\'s %s)' % (multiplier, hour_or_hours, vg_hashtag, round_name)
+    print(name + message)
     return message
 
 def pairwise_list(iterable):
@@ -298,17 +303,14 @@ def get_time_var_current_round():
         else:
             # print("Current time in between rounds. Ending execution.")
             return (-1)
+    ## -- Testing VG Locally -- ##
     else: 
         # print("~~~~~Testing VG~~~~~")
         # print("Currently Round 3")
-        round_start = round_3_start
-        round_name = 'Round 3'
-        unit_count = 14 
-        unit_freq = 3
-        # unit_count = 12 
-        # unit_freq = 2
-        # unit_count = 8 
-        # unit_freq = 1
+        round_start = round_1_start
+        round_name = 'Round 1'
+        unit_count = 8 
+        unit_freq = 1
         
     dic = {}
     dic['round_name'] = round_name

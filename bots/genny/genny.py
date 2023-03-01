@@ -68,16 +68,17 @@ class Genny(MyDiscordClient):
                 # Send only text tweet
                 if "Tie" in score["Losing"]:
                     api.update_status(message)
-                    # logger.debug("Tweet Sent Successfully")
+                    print("Tweet Sent Successfully: " + message)
                 ## ----- Send image and text ----- ##
                 else:
                     losing_unit = score["Losing"]
                     updated_message = "#Team" + losing_unit + message
-                    response = api.media_upload(get_unit_image_url(losing_unit))
-                    media_list = list()
-                    media_list.append(response.media_id_string)
-                    api.update_status(status=updated_message, media_ids=media_list)
-                    # logger.debug("Tweet Sent Successfully")
+                    # response = api.media_upload(get_unit_image_url(losing_unit))
+                    # media_list = list()
+                    # media_list.append(response.media_id_string)
+                    # api.update_status(status=updated_message, media_ids=media_list)
+                    api.update_status(status=updated_message)
+                    print("Tweet Sent Successfully:" + updated_message)
             # except:
                 # Print out timestamp in the event of failure
                 # self.logger.debug(f"Ping failed for #Team{losing_unit}") 

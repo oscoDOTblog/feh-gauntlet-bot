@@ -1,2 +1,2 @@
-BOT_ENV = "prod"
+BOT_ENV = "dev"
 BOT_NAME = "genny"

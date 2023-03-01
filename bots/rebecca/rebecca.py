@@ -226,13 +226,14 @@ class Rebecca(MyDiscordClient):
                         else:
                             losing_unit = score["Losing"]
                             print(losing_unit)
-                            img_url = get_unit_image_url(losing_unit)
+                            # img_url = get_unit_image_url(losing_unit)
                             role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
                             role_webhook = f'<@&{role_team.id}>'
                             updated_message =  role_webhook + score["Message"]
                             channel_name = "team-" + losing_unit.lower()
                             channel = discord.utils.get(self.guild.channels, name=channel_name)
-                            await channel.send(content=updated_message,file=discord.File(img_url))
+                            # await channel.send(content=updated_message,file=discord.File(img_url))
+                            await channel.send(content=updated_message)
                             # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
                     # except:
                         # Print out timestamp in the event of failure
@@ -261,13 +262,14 @@ class Rebecca(MyDiscordClient):
                 else:
                     losing_unit = score["Losing"]
                     print(losing_unit)
-                    img_url = get_unit_image_url(losing_unit)
+                    # img_url = get_unit_image_url(losing_unit)
                     role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
                     role_webhook = f'<@&{role_team.id}>'
                     updated_message =  role_webhook + score["Message"]
                     channel_name = "team-" + losing_unit.lower()
                     channel = discord.utils.get(self.guild.channels, name=channel_name)
-                    await channel.send(content=updated_message,file=discord.File(img_url))
+                    # await channel.send(content=updated_message,file=discord.File(img_url))
+                    await channel.send(content=updated_message)
                     # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
             # except:
                 # Print out timestamp in the event of failure
