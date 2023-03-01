@@ -72,9 +72,10 @@ class Rebecca(MyDiscordClient):
                             unit_name_index = unit_name.title()
                             # unit_name_index = unit_name
                             # Rename index if you are special
-                            # if unit_name == "BlackKnight":
-                            #     unit_name_index = "BlackKnight"
-                            # unit_name_index = unit_name
+                            if unit_name == "Sedelgard":
+                                unit_name_index = "SEdelgard"
+                            elif unit_name == "Fedelgard":
+                                unit_name_index = "FEdelgard"
                             role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                             if (role):
                                 ## Add role to user if they did not have role
