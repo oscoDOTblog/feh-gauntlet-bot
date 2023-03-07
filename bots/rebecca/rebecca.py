@@ -69,12 +69,12 @@ class Rebecca(MyDiscordClient):
                         # if check_unit_validity(unit_name):
                         if (rest_get(f'unit/check/{unit_name}'))['is_valid']:
                             # Check if role exists, and add/remove if approriate
-                            # unit_name_index = unit_name.title()
-                            unit_name_index = unit_name
+                            unit_name_index = unit_name.title()
                             # Rename index if you are special
-                            # if unit_name == "BlackKnight":
-                            #     unit_name_index = "BlackKnight"
-                            # unit_name_index = unit_name
+                            if unit_name_index == "Sedelgard":
+                                unit_name_index = "SEdelgard"
+                            elif unit_name_index == "Fedelgard":
+                                unit_name_index = "FEdelgard"
                             role = discord.utils.get(member.guild.roles, name=f"Team {unit_name_index}")
                             if (role):
                                 ## Add role to user if they did not have role
@@ -226,13 +226,14 @@ class Rebecca(MyDiscordClient):
                         else:
                             losing_unit = score["Losing"]
                             print(losing_unit)
-                            img_url = get_unit_image_url(losing_unit)
+                            # img_url = get_unit_image_url(losing_unit)
                             role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
                             role_webhook = f'<@&{role_team.id}>'
                             updated_message =  role_webhook + score["Message"]
                             channel_name = "team-" + losing_unit.lower()
                             channel = discord.utils.get(self.guild.channels, name=channel_name)
-                            await channel.send(content=updated_message,file=discord.File(img_url))
+                            # await channel.send(content=updated_message,file=discord.File(img_url))
+                            await channel.send(content=updated_message)
                             # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
                     # except:
                         # Print out timestamp in the event of failure
@@ -261,13 +262,14 @@ class Rebecca(MyDiscordClient):
                 else:
                     losing_unit = score["Losing"]
                     print(losing_unit)
-                    img_url = get_unit_image_url(losing_unit)
+                    # img_url = get_unit_image_url(losing_unit)
                     role_team = discord.utils.get(client.guild.roles, name=f"Team {losing_unit}")
                     role_webhook = f'<@&{role_team.id}>'
                     updated_message =  role_webhook + score["Message"]
                     channel_name = "team-" + losing_unit.lower()
                     channel = discord.utils.get(self.guild.channels, name=channel_name)
-                    await channel.send(content=updated_message,file=discord.File(img_url))
+                    # await channel.send(content=updated_message,file=discord.File(img_url))
+                    await channel.send(content=updated_message)
                     # self.logger.debug("Ping sent successfully for #Team" + losing_unit)
             # except:
                 # Print out timestamp in the event of failure
