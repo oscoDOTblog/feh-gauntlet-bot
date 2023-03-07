@@ -1,22 +1,22 @@
 # UTC is 8 Hours Ahead PST
 vg_assets_root_path="assets"
-vg_hashtag='#SF!'
-vg_test=False
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/67'
-round_1_start_raw = 'Dec 26 2022 7:00AM'
-round_1_end_raw = 'Dec 28 2022 4:00AM'
-round_2_start_raw = 'Dec 28 2022 7:00AM'
-round_2_end_raw = 'Dec 30 2022 4:00AM'
-round_3_start_raw = 'Dec 30 2022 7:00AM'
-round_3_end_raw = 'Jan 01 2023 4:00AM'
-vg_unit_1 = "Lysithea"
-vg_unit_2 = "Cordelia"
-vg_unit_3 = "Artur"
-vg_unit_4 = "Mirabilis"
-vg_unit_5 = "BlackKnight"
-vg_unit_6 = "Bruno"
-vg_unit_7 = "Dorothea"
-vg_unit_8 = "Annette"
+vg_hashtag='#NC'
+vg_test=False # True <- set to 'True' when testing 
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/69'
+round_1_start_raw = 'Mar 01 2023 7:00AM'
+round_1_end_raw = 'Mar 03 2023 4:00AM'
+round_2_start_raw = 'Mar 03 2023 7:00AM'
+round_2_end_raw = 'Mar 05 2023 4:00AM'
+round_3_start_raw = 'Mar 05 2023 7:00AM'
+round_3_end_raw = 'Mar 07 2023 4:00AM'
+vg_unit_1 = "SEdelgard"
+vg_unit_2 = "Veronica"
+vg_unit_3 = "Camilla"
+vg_unit_4 = "FEdelgard"
+vg_unit_5 = "Fomortiis"
+vg_unit_6 = "Robin"
+vg_unit_7 = "Chrom"
+vg_unit_8 = "Ophelia"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
