@@ -66,6 +66,9 @@ def get_unit_scores():
         if "Black" in x_text and "Knight" in x_text:
             print("Changing text to BlackKnight")
             x_text = "BlackKnight"
+        if "C" in x_text and "line" in x_text:
+            print("Changing text to Celine")
+            x_text = "Celine"
         ## -- This is a live VG! -- ## 
         if not (vg_test):
             # print("VG is NOW!!!")
