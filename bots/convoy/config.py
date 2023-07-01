@@ -1,22 +1,22 @@
 # UTC is 8 Hours Ahead PST
 vg_assets_root_path="assets"
-vg_hashtag='#PD'
+vg_hashtag='#HitR'
 vg_test=False # True <- set to 'True' when testing 
-vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/72'
-round_1_start_raw = 'Jun 02 2023 8:00AM'
-round_1_end_raw = 'Jun 04 2023 5:00AM'
-round_2_start_raw = 'Jun 04 2023 8:00AM'
-round_2_end_raw = 'Jun 06 2023 5:00AM'
-round_3_start_raw = 'Jun 06 2023 8:00AM'
-round_3_end_raw = 'Jun 08 2023 5:00AM'
-vg_unit_1 = "Byleth"
-vg_unit_2 = "Shez"
-vg_unit_3 = "Maria"
-vg_unit_4 = "Minerva"
-vg_unit_5 = "Anankos"
-vg_unit_6 = "Corrin"
-vg_unit_7 = "Chrom"
-vg_unit_8 = "Robin"
+vg_url='https://support.fire-emblem-heroes.com/voting_gauntlet/tournaments/73'
+round_1_start_raw = 'Jul 01 2023 8:00AM'
+round_1_end_raw = 'Jul 03 2023 5:00AM'
+round_2_start_raw = 'Jul 03 2023 8:00AM'
+round_2_end_raw = 'Jul 05 2023 5:00AM'
+round_3_start_raw = 'Jul 05 2023 8:00AM'
+round_3_end_raw = 'Jul 07 2023 5:00AM'
+vg_unit_1 = "Hardin"
+vg_unit_2 = "Darros"
+vg_unit_3 = "Nephenee"
+vg_unit_4 = "Donnel"
+vg_unit_5 = "Nanna"
+vg_unit_6 = "Ena"
+vg_unit_7 = "Ignatz"
+vg_unit_8 = "Joshua"
 discord_channel_ids = {
     vg_unit_1 : 783177258713874443,
     vg_unit_2 : 783177296646897665,
